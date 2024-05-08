@@ -71,57 +71,6 @@ class _HomePageNavigationState extends State<HomePageNavigation> {
   }
 }
 
-// class _HomePageNavigationState extends State<HomePageNavigation> {
-//   int currentIndexPage = 0;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: [
-//         const HomePage(),
-//         const RiwayatPage(),
-//         const ProfilePage()
-//       ][currentIndexPage],
-//       bottomNavigationBar: NavigationBarTheme(
-//         data: const NavigationBarThemeData(
-//           indicatorColor: Color.fromRGBO(76, 76, 220, 0.25),
-//           height: 65,
-//           labelTextStyle: MaterialStatePropertyAll(TextStyle(
-//               color: Color.fromRGBO(76, 76, 220, 1),
-//               fontWeight: FontWeight.bold)),
-//           labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-//           iconTheme: MaterialStatePropertyAll(
-//               IconThemeData(color: Color.fromRGBO(76, 76, 220, 1))),
-//         ),
-//         child: NavigationBar(
-//             onDestinationSelected: (value) {
-//               setState(() {
-//                 currentIndexPage = value;
-//               });
-//             },
-//             selectedIndex: currentIndexPage,
-//             destinations: const <Widget>[
-//               NavigationDestination(
-//                 icon: Icon(Icons.home_outlined),
-//                 selectedIcon: Icon(Icons.home),
-//                 label: 'Beranda',
-//               ),
-//               NavigationDestination(
-//                 icon: Icon(Icons.view_list_outlined),
-//                 selectedIcon: Icon(Icons.view_list_rounded),
-//                 label: 'Riwayat',
-//               ),
-//               NavigationDestination(
-//                 icon: Icon(Icons.person_outlined),
-//                 selectedIcon: Icon(Icons.person),
-//                 label: 'Profile',
-//               ),
-//             ]),
-//       ),
-//     );
-//   }
-// }
-
 class HomePage extends StatelessWidget {
   const HomePage({
     super.key,
@@ -139,12 +88,12 @@ class HomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                'Pilih Lapangan',
+                'Tempat populer',
                 style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20.0),
               SportsFieldCard(
-                fieldName: 'Lapangan A',
+                fieldName: 'Tempat A',
                 fieldImage: 'assets/field_a.jpg',
                 fieldLocation: 'Lokasi A',
                 onPressed: () {
@@ -152,13 +101,13 @@ class HomePage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            const FieldDetailPage(fieldName: 'Lapangan A')),
+                            const FieldDetailPage(fieldName: 'Tempat A')),
                   );
                 },
               ),
               const SizedBox(height: 20.0),
               SportsFieldCard(
-                fieldName: 'Lapangan B',
+                fieldName: 'Tempat B',
                 fieldImage: 'assets/field_b.jpg',
                 fieldLocation: 'Lokasi B',
                 onPressed: () {
@@ -166,21 +115,21 @@ class HomePage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            const FieldDetailPage(fieldName: 'Lapangan B')),
+                            const FieldDetailPage(fieldName: 'Tempat B')),
                   );
                 },
               ),
               const SizedBox(height: 20.0),
               SportsFieldCard(
-                fieldName: 'Lapangan C',
+                fieldName: 'Tempat C',
                 fieldImage: 'assets/field_b.jpg',
-                fieldLocation: 'Lokasi B',
+                fieldLocation: 'Lokasi C',
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            const FieldDetailPage(fieldName: 'Lapangan B')),
+                            const FieldDetailPage(fieldName: 'Tempat B')),
                   );
                 },
               ),
@@ -270,39 +219,144 @@ class FieldDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(fieldName),
+        title: const Text('Detail'),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Jam Tersedia untuk Disewakan',
-              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+            Container(
+              height: 250,
+              // width: 300,
+              decoration: BoxDecoration(
+                  color: Colors.grey, borderRadius: BorderRadius.circular(8)),
             ),
-            const SizedBox(height: 20.0),
-            Expanded(
-              child: ListView(
-                children: [
-                  TimeSlotItem(
-                      time: '08:00 - 10:00',
-                      onPressed: () {
-                        // Tambahkan logika untuk menyewa pada jam ini
-                      }),
-                  TimeSlotItem(
-                      time: '10:00 - 12:00',
-                      onPressed: () {
-                        // Tambahkan logika untuk menyewa pada jam ini
-                      }),
-                  TimeSlotItem(
-                      time: '12:00 - 14:00',
-                      onPressed: () {
-                        // Tambahkan logika untuk menyewa pada jam ini
-                      }),
-                  // Tambahkan jam-jam lainnya sesuai kebutuhan
-                ],
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  height: 25,
+                  width: 60,
+                  decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(8)),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Container(
+                  height: 25,
+                  width: 60,
+                  decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(8)),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Container(
+                  height: 25,
+                  width: 60,
+                  decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(8)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.star,
+                        color: Colors.yellow,
+                        size: 15,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text('5.0')
+                    ],
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text('Nama Tempat'),
+            Text('harga /jam'),
+            Text('lokasi'),
+
+            SizedBox(
+              height: 10,
+            ),
+
+            Text('Preview'),
+
+            SizedBox(
+              height: 105,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Container(
+                      width: 105,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(8)),
+                    ),
+                  );
+                },
               ),
             ),
+
+            SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: 50,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromRGBO(76, 76, 220, 1),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12))),
+                    onPressed: () {},
+                    child: Text(
+                      'Pesan Sekarang',
+                      style: TextStyle(color: Colors.white),
+                    ))),
+
+            // const Text(
+            //   'Jam Tersedia untuk Disewakan',
+            //   style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+            // ),
+            // const SizedBox(height: 20.0),
+            // Expanded(
+            //   child: ListView(
+            //     children: [
+            //       TimeSlotItem(
+            //           time: '08:00 - 10:00',
+            //           onPressed: () {
+            //             // Tambahkan logika untuk menyewa pada jam ini
+            //           }),
+            //       TimeSlotItem(
+            //           time: '10:00 - 12:00',
+            //           onPressed: () {
+            //             // Tambahkan logika untuk menyewa pada jam ini
+            //           }),
+            //       TimeSlotItem(
+            //           time: '12:00 - 14:00',
+            //           onPressed: () {
+            //             // Tambahkan logika untuk menyewa pada jam ini
+            //           }),
+            //       // Tambahkan jam-jam lainnya sesuai kebutuhan
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),
