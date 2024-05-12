@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class BookingPage extends StatefulWidget {
   const BookingPage({super.key});
@@ -59,11 +58,15 @@ class _BookingPageState extends State<BookingPage> {
                     ],
                   ),
                   const Spacer(),
-                  Text('Tanggal yang dipilih'),
-                  Text('19 Jan 2024')
+                  const Text('Tanggal yang dipilih'),
+                  const Text('19 Jan 2024')
                 ],
               ),
             )),
+            const SizedBox(
+              height: 10,
+            ),
+            const Text("Lapangan Tersedia"),
             const SizedBox(
               height: 10,
             ),
@@ -76,7 +79,7 @@ class _BookingPageState extends State<BookingPage> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             SizedBox(
@@ -99,7 +102,6 @@ class _BookingPageState extends State<BookingPage> {
   }
 
   GestureDetector selectedDayBox3(int boxSelected) {
-    print(boxSelected.toString());
     if (boxSelected == 2) {
       return GestureDetector(
         onTap: () {
@@ -110,7 +112,8 @@ class _BookingPageState extends State<BookingPage> {
         child: Container(
           height: 50,
           width: 100,
-          decoration: BoxDecoration(color: Colors.purple),
+          decoration: BoxDecoration(
+              color: Colors.purple, borderRadius: BorderRadius.circular(8)),
         ),
       );
     } else {
@@ -123,14 +126,14 @@ class _BookingPageState extends State<BookingPage> {
         child: Container(
           height: 50,
           width: 100,
-          decoration: BoxDecoration(color: Colors.grey),
+          decoration: BoxDecoration(
+              color: Colors.grey, borderRadius: BorderRadius.circular(8)),
         ),
       );
     }
   }
 
   GestureDetector selectedDayBox2(int boxSelected) {
-    print(boxSelected.toString());
     if (boxSelected == 1) {
       return GestureDetector(
         onTap: () {
@@ -141,7 +144,8 @@ class _BookingPageState extends State<BookingPage> {
         child: Container(
           height: 50,
           width: 100,
-          decoration: BoxDecoration(color: Colors.purple),
+          decoration: BoxDecoration(
+              color: Colors.purple, borderRadius: BorderRadius.circular(8)),
         ),
       );
     } else {
@@ -155,14 +159,14 @@ class _BookingPageState extends State<BookingPage> {
         child: Container(
           height: 50,
           width: 100,
-          decoration: BoxDecoration(color: Colors.grey),
+          decoration: BoxDecoration(
+              color: Colors.grey, borderRadius: BorderRadius.circular(8)),
         ),
       );
     }
   }
 
   GestureDetector selectedDayBox(int boxSelected) {
-    print(boxSelected.toString());
     if (boxSelected == 0) {
       return GestureDetector(
         onTap: () {
@@ -173,7 +177,8 @@ class _BookingPageState extends State<BookingPage> {
         child: Container(
           height: 50,
           width: 100,
-          decoration: BoxDecoration(color: Colors.purple),
+          decoration: BoxDecoration(
+              color: Colors.purple, borderRadius: BorderRadius.circular(8)),
         ),
       );
     } else {
@@ -188,7 +193,8 @@ class _BookingPageState extends State<BookingPage> {
         child: Container(
           height: 50,
           width: 100,
-          decoration: BoxDecoration(color: Colors.grey),
+          decoration: BoxDecoration(
+              color: Colors.grey, borderRadius: BorderRadius.circular(8)),
         ),
       );
     }
@@ -205,17 +211,69 @@ class JadwalView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (selected == 0) {
-      return Container(
-        child: Text('0'),
-      );
+      return const TimeSlotView();
     } else if (selected == 1) {
-      return Container(
-        child: Text('1'),
-      );
+      return const Text('1');
     } else {
-      return Container(
-        child: Text('2'),
-      );
+      return const Text('2');
     }
+  }
+}
+
+class TimeSlotView extends StatelessWidget {
+  const TimeSlotView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+        child: ListView.builder(
+      shrinkWrap: true,
+      itemCount: 3,
+      itemBuilder: (context, index) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [Text('Lapangan A'), Text('Rp 10.000 / jam')],
+            ),
+            SizedBox(
+              height: 170,
+              child: GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4, // number of items in each row
+                    mainAxisSpacing: 8.0, // spacing between rows
+                    crossAxisSpacing: 8.0, // spacing between columns
+                    childAspectRatio: (1 / .4)),
+                padding: const EdgeInsets.all(8.0), // padding around the grid
+                itemCount: 12, // total number of items
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.blue, // color of grid items
+                          borderRadius: BorderRadius.circular(8)),
+                      child: const Center(
+                        child: Text(
+                          '07.00',
+                          style: TextStyle(fontSize: 18.0, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    onTap: () {
+                      print(index);
+                    },
+                  );
+                },
+              ),
+            )
+          ],
+        );
+      },
+    ));
   }
 }
