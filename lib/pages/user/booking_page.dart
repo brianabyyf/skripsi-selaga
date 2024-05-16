@@ -230,7 +230,7 @@ class TimeSlotView extends StatefulWidget {
 }
 
 class _TimeSlotViewState extends State<TimeSlotView> {
-  int selectedGridIndex = 0;
+  int selectedGridIndex = -1;
   var dataList = {
     "lapangan": [
       {
@@ -248,8 +248,13 @@ class _TimeSlotViewState extends State<TimeSlotView> {
     ]
   };
   int _dropdownValue = 1;
-
   List items = [];
+
+  @override
+  void initState() {
+    items = dataList['lapangan']![_dropdownValue - 1]['jam'] as List;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
