@@ -220,60 +220,216 @@ class JadwalView extends StatelessWidget {
   }
 }
 
-class TimeSlotView extends StatelessWidget {
+class TimeSlotView extends StatefulWidget {
   const TimeSlotView({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-        child: ListView.builder(
-      shrinkWrap: true,
-      itemCount: 3,
-      itemBuilder: (context, index) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text('Lapangan A'), Text('Rp 10.000 / jam')],
-            ),
-            SizedBox(
-              height: 170,
-              child: GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4, // number of items in each row
-                    mainAxisSpacing: 8.0, // spacing between rows
-                    crossAxisSpacing: 8.0, // spacing between columns
-                    childAspectRatio: (1 / .4)),
-                padding: const EdgeInsets.all(8.0), // padding around the grid
-                itemCount: 12, // total number of items
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.blue, // color of grid items
-                          borderRadius: BorderRadius.circular(8)),
-                      child: const Center(
-                        child: Text(
-                          '07.00',
-                          style: TextStyle(fontSize: 18.0, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                    onTap: () {
-                      print(index);
-                    },
-                  );
-                },
-              ),
-            )
-          ],
-        );
+  State<TimeSlotView> createState() => _TimeSlotViewState();
+}
+
+class _TimeSlotViewState extends State<TimeSlotView> {
+  int selectedGridIndex = 0;
+  var dataList = {
+    "lapangan": [
+      {
+        "id": 1,
+        "jam": ['7', '8', '9', '10', '12', '13', '14', '15', '16', '17']
       },
+      {
+        "id": 2,
+        "jam": ['13', '14', '15', '16', '17']
+      },
+      {
+        "id": 3,
+        "jam": ['12', '13', '14', '15', '16', '17']
+      },
+    ]
+  };
+  int _dropdownValue = 1;
+
+  List items = [];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Column(
+      children: [
+        Row(
+          children: [
+            const Text('Pilih Lapangan: '),
+            DropdownButton(
+              items: dataList['lapangan']!.map((e) {
+                return DropdownMenuItem(
+                    value: e['id'], child: Text(e['id'].toString()));
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  _dropdownValue = value as int;
+                  items =
+                      dataList['lapangan']![_dropdownValue - 1]['jam'] as List;
+                });
+              },
+              value: _dropdownValue,
+              borderRadius: BorderRadius.circular(10),
+              underline: const SizedBox(),
+            ),
+            // DropdownButton(
+            //   items: _items.map((String item) {
+            //     return DropdownMenuItem(value: item, child: Text(item));
+            //   }).toList(),
+            //   onChanged: (String? newValue) {
+            //     setState(() {
+            //       _dropdownValue = newValue!;
+            //     });
+            //   },
+            //   value: _dropdownValue,
+            //   borderRadius: BorderRadius.circular(10),
+            //   icon: const Icon(Icons.keyboard_arrow_down),
+            //   iconSize: 50,
+            //   style: TextStyle(fontSize: 30, color: Colors.black),
+            //   underline: Container(),
+            // ),
+          ],
+        ),
+        jadwal(items)
+      ],
     ));
   }
+
+  SizedBox jadwal(List infoJam) {
+    return SizedBox(
+      height: 170,
+      child: GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4, // number of items in each row
+            mainAxisSpacing: 8.0, // spacing between rows
+            crossAxisSpacing: 8.0, // spacing between columns
+            childAspectRatio: (1 / .4)),
+        padding: const EdgeInsets.all(8.0), // padding around the grid
+        itemCount: items.length, // total number of items
+        itemBuilder: (context, index) {
+          bool tapped = index == selectedGridIndex;
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                selectedGridIndex = index;
+              });
+              print(_dropdownValue - 1);
+              print(items[index]);
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                  color:
+                      tapped ? Colors.blue : Colors.grey, // color of grid items
+                  borderRadius: BorderRadius.circular(8)),
+              child: Center(
+                child: Text(
+                  '${items[index]}.00',
+                  style: TextStyle(fontSize: 18.0, color: Colors.white),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
+
+// class TimeSlotView extends StatefulWidget {
+//   const TimeSlotView({
+//     super.key,
+//   });
+
+//   @override
+//   State<TimeSlotView> createState() => _TimeSlotViewState();
+// }
+
+// class _TimeSlotViewState extends State<TimeSlotView> {
+//   int selectedGridIndex = 0;
+//   late int selectedListIndex;
+//   var dataList = {
+//     "lapangan": [
+//       {
+//         "id": 1,
+//         "jam": [7, 8, 9, 10, 12, 13, 14, 15, 16, 17]
+//       },
+//       {
+//         "id": 2,
+//         "jam": [13, 14, 15, 16, 17]
+//       },
+//       {
+//         "id": 3,
+//         "jam": [12, 13, 14, 15, 16, 17]
+//       },
+//     ]
+//   };
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return SafeArea(
+//         child: ListView.builder(
+//       shrinkWrap: true,
+//       itemCount: dataList['lapangan']!.length,
+//       itemBuilder: (context, index) {
+//         Map<String, Object> info = dataList['lapangan']![index];
+//         List infoJam = info['jam'] as List;
+//         return Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: [
+//                 Text('Lapangan ${info['id']}'),
+//                 Text('Rp 10.000 / jam')
+//               ],
+//             ),
+//             SizedBox(
+//               height: 170,
+//               child: GridView.builder(
+//                 physics: const NeverScrollableScrollPhysics(),
+//                 shrinkWrap: true,
+//                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+//                     crossAxisCount: 4, // number of items in each row
+//                     mainAxisSpacing: 8.0, // spacing between rows
+//                     crossAxisSpacing: 8.0, // spacing between columns
+//                     childAspectRatio: (1 / .4)),
+//                 padding: const EdgeInsets.all(8.0), // padding around the grid
+//                 itemCount: infoJam.length, // total number of items
+//                 itemBuilder: (context, index) {
+//                   bool tapped = index == selectedGridIndex;
+//                   return GestureDetector(
+//                     onTap: () {
+//                       setState(() {
+//                         selectedGridIndex = index;
+//                       });
+//                       print(info);
+//                       print(selectedGridIndex);
+//                     },
+//                     child: Container(
+//                       decoration: BoxDecoration(
+//                           color: tapped
+//                               ? Colors.blue
+//                               : Colors.grey, // color of grid items
+//                           borderRadius: BorderRadius.circular(8)),
+//                       child: const Center(
+//                         child: Text(
+//                           '07.00',
+//                           style: TextStyle(fontSize: 18.0, color: Colors.white),
+//                         ),
+//                       ),
+//                     ),
+//                   );
+//                 },
+//               ),
+//             )
+//           ],
+//         );
+//       },
+//     ));
+//   }
+// }

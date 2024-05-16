@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:selaga_ver1/pages/components/auth_field.dart';
 import 'package:selaga_ver1/pages/components/my_button.dart';
 
-import 'home_page.dart';
-import 'register_page.dart';
+import 'mitra_home_page.dart';
+import 'mitra_register_page.dart';
 
 class MitraLoginPage extends StatefulWidget {
   const MitraLoginPage({super.key});
@@ -112,7 +112,7 @@ class _MitraLoginPageState extends State<MitraLoginPage> {
                           );
                         },
                         child: const Text(
-                          'Daftar di sini',
+                          'Daftar disini',
                           style: TextStyle(
                             color: Color.fromRGBO(76, 76, 220, 1),
                             fontWeight: FontWeight.bold,

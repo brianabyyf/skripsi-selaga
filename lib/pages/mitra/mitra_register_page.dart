@@ -102,7 +102,7 @@ class _MitraRegisterPageState extends State<MitraRegisterPage> {
                         Navigator.pop(context);
                       },
                       child: const Text(
-                        'Login di sini',
+                        'Login disini',
                         style: TextStyle(
                           color: Color.fromRGBO(76, 76, 220, 1),
                           fontWeight: FontWeight.bold,
