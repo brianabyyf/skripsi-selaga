@@ -274,11 +274,11 @@ class JadwalView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (selected == 0) {
-      return TimeSlotView();
+      return const TimeSlotView();
     } else if (selected == 1) {
-      return TimeSlotView();
+      return const TimeSlotView();
     } else {
-      return TimeSlotView();
+      return const TimeSlotView();
     }
   }
 }
