@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:selaga_ver1/pages/user/payment_page.dart';
 
 class DetailConfirmationPage extends StatelessWidget {
   const DetailConfirmationPage({super.key});
@@ -56,6 +57,11 @@ class DetailConfirmationPage extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12))),
                         onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const PaymentPage()),
+                          );
                         },
                         child: const Text(
                           'Lanjutkan',
