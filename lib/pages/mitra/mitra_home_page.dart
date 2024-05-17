@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:selaga_ver1/pages/landing_page.dart';
 import 'package:selaga_ver1/pages/mitra/daftar_venue_page.dart';
+import 'package:selaga_ver1/pages/mitra/mitra_profile_page.dart';
 
 class MitraHomePageNavigation extends StatefulWidget {
   const MitraHomePageNavigation({super.key});
@@ -143,15 +144,6 @@ class ConfirmationPage extends StatelessWidget {
 
 class MemberPage extends StatelessWidget {
   const MemberPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
-
-class MitraProfilePage extends StatelessWidget {
-  const MitraProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {

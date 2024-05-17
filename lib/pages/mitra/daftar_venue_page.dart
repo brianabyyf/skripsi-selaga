@@ -19,7 +19,7 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
     if (selectedImages.isNotEmpty) {
       imageFileList!.addAll(selectedImages);
     }
-    print("Image List Length:" + imageFileList!.length.toString());
+    print("Image List Length: ${imageFileList!.length.toString()}");
     print(imageFileList!.first.path);
     setState(() {});
   }

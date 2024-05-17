@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:selaga_ver1/pages/components/format.dart';
+import 'package:selaga_ver1/pages/user/confirmation_page.dart';
 
 class BookingPage extends StatefulWidget {
   const BookingPage({super.key});
@@ -14,6 +17,16 @@ class _BookingPageState extends State<BookingPage> {
   void initState() {
     selected = 0;
     super.initState();
+  }
+
+  int selectedDate(int selected) {
+    if (selected == 1) {
+      return DateTime.now().day + 1;
+    } else if (selected == 2) {
+      return DateTime.now().day + 2;
+    } else {
+      return DateTime.now().day;
+    }
   }
 
   @override
@@ -33,7 +46,7 @@ class _BookingPageState extends State<BookingPage> {
               decoration: BoxDecoration(color: Colors.grey[300]),
               child: Column(
                 children: [
-                  const Text('JANUARI 2024'),
+                  Text('${DateTimeFormat.convertToString(DateTime.now().month)} ${DateTime.now().year}'),
                   const SizedBox(
                     height: 10,
                   ),
@@ -59,7 +72,7 @@ class _BookingPageState extends State<BookingPage> {
                   ),
                   const Spacer(),
                   const Text('Tanggal yang dipilih'),
-                  const Text('19 Jan 2024')
+                  Text('${selectedDate(selected)} ${DateTimeFormat.convertToString(DateTime.now().month)} ${DateTime.now().year}')
                 ],
               ),
             )),
@@ -75,7 +88,7 @@ class _BookingPageState extends State<BookingPage> {
               child: Container(
                 decoration: BoxDecoration(color: Colors.grey[300]),
                 child: JadwalView(
-                  selected: selected,
+                  selected: selected
                 ),
               ),
             ),
@@ -90,7 +103,14 @@ class _BookingPageState extends State<BookingPage> {
                         backgroundColor: const Color.fromRGBO(76, 76, 220, 1),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12))),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const DetailConfirmationPage()),
+                      );
+
+                    },
                     child: const Text(
                       'Pesan Sekarang',
                       style: TextStyle(color: Colors.white),
@@ -114,6 +134,13 @@ class _BookingPageState extends State<BookingPage> {
           width: 100,
           decoration: BoxDecoration(
               color: Colors.purple, borderRadius: BorderRadius.circular(8)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(DateFormat('EEEE').format(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2))),
+              Text('${DateTime.now().day + 2}')
+            ],
+          ),
         ),
       );
     } else {
@@ -128,6 +155,13 @@ class _BookingPageState extends State<BookingPage> {
           width: 100,
           decoration: BoxDecoration(
               color: Colors.grey, borderRadius: BorderRadius.circular(8)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(DateFormat('EEEE').format(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2))),
+              Text('${DateTime.now().day + 2}')
+            ],
+          ),
         ),
       );
     }
@@ -146,6 +180,13 @@ class _BookingPageState extends State<BookingPage> {
           width: 100,
           decoration: BoxDecoration(
               color: Colors.purple, borderRadius: BorderRadius.circular(8)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(DateFormat('EEEE').format(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 1))),
+              Text('${DateTime.now().day + 1}')
+            ],
+          ),
         ),
       );
     } else {
@@ -161,6 +202,13 @@ class _BookingPageState extends State<BookingPage> {
           width: 100,
           decoration: BoxDecoration(
               color: Colors.grey, borderRadius: BorderRadius.circular(8)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(DateFormat('EEEE').format(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 1))),
+              Text('${DateTime.now().day + 1}')
+            ],
+          ),
         ),
       );
     }
@@ -179,6 +227,13 @@ class _BookingPageState extends State<BookingPage> {
           width: 100,
           decoration: BoxDecoration(
               color: Colors.purple, borderRadius: BorderRadius.circular(8)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(DateFormat('EEEE').format(DateTime.now())),
+              Text('${DateTime.now().day}')
+            ],
+          ),
         ),
       );
     } else {
@@ -195,6 +250,13 @@ class _BookingPageState extends State<BookingPage> {
           width: 100,
           decoration: BoxDecoration(
               color: Colors.grey, borderRadius: BorderRadius.circular(8)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(DateFormat('EEEE').format(DateTime.now())),
+              Text('${DateTime.now().day}')
+            ],
+          ),
         ),
       );
     }
@@ -203,6 +265,7 @@ class _BookingPageState extends State<BookingPage> {
 
 class JadwalView extends StatelessWidget {
   final int selected;
+
   const JadwalView({
     required this.selected,
     super.key,
@@ -211,16 +274,17 @@ class JadwalView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (selected == 0) {
-      return const TimeSlotView();
+      return TimeSlotView();
     } else if (selected == 1) {
-      return const Text('1');
+      return TimeSlotView();
     } else {
-      return const Text('2');
+      return TimeSlotView();
     }
   }
 }
 
 class TimeSlotView extends StatefulWidget {
+
   const TimeSlotView({
     super.key,
   });
@@ -274,6 +338,7 @@ class _TimeSlotViewState extends State<TimeSlotView> {
                   _dropdownValue = value as int;
                   items =
                       dataList['lapangan']![_dropdownValue - 1]['jam'] as List;
+                  selectedGridIndex = -1;
                 });
               },
               value: _dropdownValue,
@@ -334,7 +399,7 @@ class _TimeSlotViewState extends State<TimeSlotView> {
               child: Center(
                 child: Text(
                   '${items[index]}.00',
-                  style: TextStyle(fontSize: 18.0, color: Colors.white),
+                  style: const TextStyle(fontSize: 18.0, color: Colors.white),
                 ),
               ),
             ),
