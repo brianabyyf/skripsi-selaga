@@ -14,7 +14,6 @@ class MitraHomePageNavigation extends StatefulWidget {
 
 class _MitraHomePageNavigationState extends State<MitraHomePageNavigation> {
   int _currentIndexPage = 0;
-  List currentField = [];
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,6 @@ class _MitraHomePageNavigationState extends State<MitraHomePageNavigation> {
       ][_currentIndexPage],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          // color: Colors.white,
           boxShadow: [
             BoxShadow(
               blurRadius: 20,
@@ -39,8 +37,6 @@ class _MitraHomePageNavigationState extends State<MitraHomePageNavigation> {
             child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
           child: GNav(
-            // rippleColor: const Color.fromRGBO(76, 76, 220, 0.5),
-            // hoverColor: const Color.fromRGBO(76, 76, 220, 0.5),
             gap: 8,
             color: Colors.grey,
             activeColor: const Color.fromRGBO(76, 76, 220, 1),

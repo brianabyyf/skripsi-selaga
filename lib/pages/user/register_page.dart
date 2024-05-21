@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:selaga_ver1/pages/components/auth_field.dart';
-import 'package:selaga_ver1/pages/components/my_button.dart';
+import 'package:selaga_ver1/repositories/api_repository.dart';
+import 'package:selaga_ver1/repositories/models/register_user_model.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -10,15 +11,50 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmController = TextEditingController();
-  final nameController = TextEditingController();
-  final phoneController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  var _isSending = false;
 
-  void signUpUser() {
-    if (formKey.currentState!.validate()) {
+  void _signUpUser() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isSending = true;
+      });
+      var data = await ApiRepository().userRegister(RegisterUserModel(
+          name: _nameController.text,
+          email: _emailController.text,
+          phone: _phoneController.text,
+          password: _passwordController.text));
+      print(data.error);
+
+      if (data.result != null) {
+        if (!context.mounted) {
+          return;
+        }
+        // Navigator.pushAndRemoveUntil(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => const HomePageNavigation()),
+        //   (Route<dynamic> route) => false,
+        // );
+      } else {
+        setState(() {
+          _isSending = false;
+        });
+        if (!context.mounted) {
+          return;
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Email atau Nomor Handphone sudah digunakan'),
+            duration: Duration(milliseconds: 1100),
+          ),
+        );
+      }
+
       // Navigator.pushAndRemoveUntil(
       //   context,
       //   MaterialPageRoute(builder: (context) => const LoginPage()),
@@ -34,7 +70,7 @@ class _RegisterPageState extends State<RegisterPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
-            key: formKey,
+            key: _formKey,
             child: Column(
               children: [
                 const SizedBox(height: 10),
@@ -65,35 +101,60 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 35),
 
                 AuthField(
-                  controller: nameController,
+                  controller: _nameController,
                   hintText: 'Nama Lengkap',
                 ),
                 const SizedBox(height: 10),
                 AuthField(
-                  controller: emailController,
+                  controller: _emailController,
                   hintText: 'Email',
                 ),
                 const SizedBox(height: 10),
                 AuthField(
-                  controller: phoneController,
+                  controller: _phoneController,
                   hintText: 'Nomor Handphone',
                 ),
                 const SizedBox(height: 10),
                 AuthField(
-                  controller: passwordController,
+                  controller: _passwordController,
                   hintText: 'Password',
                   isObscureText: true,
                 ),
                 const SizedBox(height: 10),
                 AuthField(
-                  controller: confirmController,
+                  controller: _confirmController,
                   hintText: 'Confirm Password',
                   isObscureText: true,
                 ),
                 const SizedBox(height: 20),
-                MyButton(
-                  onTap: signUpUser,
-                  buttonText: 'Register',
+                InkWell(
+                  onTap: _isSending ? null : _signUpUser,
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    margin: const EdgeInsets.symmetric(horizontal: 25),
+                    decoration: BoxDecoration(
+                      color: const Color.fromRGBO(76, 76, 220, 1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Center(
+                      child: _isSending
+                          ? const SizedBox(
+                              height: 25,
+                              width: 25,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            )
+                          : const Text(
+                              'Register',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 20.0),
                 Row(

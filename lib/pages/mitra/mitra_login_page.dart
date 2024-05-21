@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:selaga_ver1/pages/components/auth_field.dart';
-import 'package:selaga_ver1/pages/components/my_button.dart';
+import 'package:selaga_ver1/pages/components/decoration.dart';
+import 'package:selaga_ver1/repositories/api_repository.dart';
+import 'package:selaga_ver1/repositories/models/login_user_model.dart';
 
 import 'mitra_home_page.dart';
 import 'mitra_register_page.dart';
@@ -13,18 +15,43 @@ class MitraLoginPage extends StatefulWidget {
 }
 
 class _MitraLoginPageState extends State<MitraLoginPage> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  var _isSending = false;
 
-  void signInUser() {
-    if (formKey.currentState!.validate()) {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-            builder: (context) => const MitraHomePageNavigation()),
-        (Route<dynamic> route) => false,
-      );
+  void _signInUser() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isSending = true;
+      });
+      var data = await ApiRepository().mitraLogin(LoginUserModel(
+          email: _emailController.text, password: _passwordController.text));
+
+      if (data.result != null) {
+        if (!context.mounted) {
+          return;
+        }
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const MitraHomePageNavigation()),
+          (Route<dynamic> route) => false,
+        );
+      } else {
+        setState(() {
+          _isSending = false;
+        });
+        if (!context.mounted) {
+          return;
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Email atau Password yang diberikan salah'),
+            duration: Duration(milliseconds: 1100),
+          ),
+        );
+      }
     }
   }
 
@@ -36,7 +63,7 @@ class _MitraLoginPageState extends State<MitraLoginPage> {
         child: Center(
           child: SingleChildScrollView(
             child: Form(
-              key: formKey,
+              key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -69,16 +96,33 @@ class _MitraLoginPageState extends State<MitraLoginPage> {
                   const SizedBox(height: 35),
 
                   // email textfield
-                  AuthField(
-                    controller: emailController,
-                    hintText: 'Email',
+                  // email textfield
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: TextFormField(
+                      controller: _emailController,
+                      decoration: myAuthDecoration('Email'),
+                      validator: (value) {
+                        RegExp regex = RegExp(
+                            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+                        if (value!.isEmpty) {
+                          return 'Email can\'t be empty';
+                        } else {
+                          if (!regex.hasMatch(value)) {
+                            return 'Enter valid email address';
+                          } else {
+                            return null;
+                          }
+                        }
+                      },
+                    ),
                   ),
 
                   const SizedBox(height: 10),
 
                   // password textfield
                   AuthField(
-                    controller: passwordController,
+                    controller: _passwordController,
                     hintText: 'Password',
                     isObscureText: true,
                   ),
@@ -86,9 +130,34 @@ class _MitraLoginPageState extends State<MitraLoginPage> {
                   const SizedBox(height: 20),
 
                   // sign in button
-                  MyButton(
-                    onTap: signInUser,
-                    buttonText: 'Login',
+                  InkWell(
+                    onTap: _isSending ? null : _signInUser,
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      margin: const EdgeInsets.symmetric(horizontal: 25),
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(76, 76, 220, 1),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Center(
+                        child: _isSending
+                            ? const SizedBox(
+                                height: 25,
+                                width: 25,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              )
+                            : const Text(
+                                'Login',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                      ),
+                    ),
                   ),
 
                   const SizedBox(height: 50),
