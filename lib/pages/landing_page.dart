@@ -135,25 +135,6 @@ class LandingPage extends StatelessWidget {
                 ],
               ),
             ),
-            // const SizedBox(
-            //   height: 25,
-            // ),
-            // const SizedBox(
-            //   height: 25,
-            // ),
-            // TextButton(
-            //   style: const ButtonStyle(
-            //       foregroundColor:
-            //           MaterialStatePropertyAll(Color.fromRGBO(76, 76, 220, 1))),
-            //   onPressed: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //           builder: (context) => const MitraLoginPage()),
-            //     );
-            //   },
-            //   child: const Text('Masuk sebagai Mitra'),
-            // ),
           ],
         ),
       ),

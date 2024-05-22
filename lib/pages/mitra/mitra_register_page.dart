@@ -10,14 +10,14 @@ class MitraRegisterPage extends StatefulWidget {
 }
 
 class _MitraRegisterPageState extends State<MitraRegisterPage> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final nameController = TextEditingController();
-  final phoneController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   void signUpUser() {
-    if (formKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate()) {
       // Navigator.pushAndRemoveUntil(
       //   context,
       //   MaterialPageRoute(builder: (context) => const LoginPage()),
@@ -33,7 +33,7 @@ class _MitraRegisterPageState extends State<MitraRegisterPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
-            key: formKey,
+            key: _formKey,
             child: Column(
               children: [
                 const SizedBox(height: 50),
@@ -64,22 +64,22 @@ class _MitraRegisterPageState extends State<MitraRegisterPage> {
                 const SizedBox(height: 35),
 
                 AuthField(
-                  controller: nameController,
+                  controller: _nameController,
                   hintText: 'Nama Lengkap',
                 ),
                 const SizedBox(height: 10),
                 AuthField(
-                  controller: emailController,
+                  controller: _emailController,
                   hintText: 'Email',
                 ),
                 const SizedBox(height: 10),
                 AuthField(
-                  controller: phoneController,
+                  controller: _phoneController,
                   hintText: 'Nomor Handphone',
                 ),
                 const SizedBox(height: 10),
                 AuthField(
-                  controller: passwordController,
+                  controller: _passwordController,
                   hintText: 'Password',
                   isObscureText: true,
                 ),
