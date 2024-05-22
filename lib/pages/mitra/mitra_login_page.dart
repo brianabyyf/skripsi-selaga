@@ -5,7 +5,6 @@ import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/login_user_model.dart';
 
 import 'mitra_home_page.dart';
-import 'mitra_register_page.dart';
 
 class MitraLoginPage extends StatefulWidget {
   const MitraLoginPage({super.key});
@@ -160,36 +159,36 @@ class _MitraLoginPageState extends State<MitraLoginPage> {
                     ),
                   ),
 
-                  const SizedBox(height: 50),
+                  // const SizedBox(height: 50),
 
                   // not a member? register now
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Belum punya akun?',
-                        style: TextStyle(color: Colors.grey[700]),
-                      ),
-                      const SizedBox(width: 2),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const MitraRegisterPage()),
-                          );
-                        },
-                        child: const Text(
-                          'Daftar disini',
-                          style: TextStyle(
-                            color: Color.fromRGBO(76, 76, 220, 1),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     Text(
+                  //       'Belum punya akun?',
+                  //       style: TextStyle(color: Colors.grey[700]),
+                  //     ),
+                  //     const SizedBox(width: 2),
+                  //     TextButton(
+                  //       onPressed: () {
+                  //         Navigator.push(
+                  //           context,
+                  //           MaterialPageRoute(
+                  //               builder: (context) =>
+                  //                   const MitraRegisterPage()),
+                  //         );
+                  //       },
+                  //       child: const Text(
+                  //         'Daftar disini',
+                  //         style: TextStyle(
+                  //           color: Color.fromRGBO(76, 76, 220, 1),
+                  //           fontWeight: FontWeight.bold,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // )
                 ],
               ),
             ),
@@ -199,43 +198,3 @@ class _MitraLoginPageState extends State<MitraLoginPage> {
     );
   }
 }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: const Text('Login'),
-  //     ),
-  //     body: Form(
-  //       key: formKey,
-  //       child: Padding(
-  //         padding: const EdgeInsets.all(20.0),
-  //         child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           children: [
-  //             AuthField(hintText: "Email", controller: emailController),
-  //             const SizedBox(height: 20.0),
-  //             AuthField(
-  //                 hintText: "Password",
-  //                 controller: passwordController,
-  //                 isObscureText: true),
-  //             const SizedBox(height: 20.0),
-  //             MyButton(onTap: signInUser, buttonText: "Login"),
-  //             const SizedBox(height: 10.0),
-  //             TextButton(
-  //               onPressed: () {
-  //                 Navigator.push(
-  //                   context,
-  //                   MaterialPageRoute(
-  //                       builder: (context) => const MitraRegisterPage()),
-  //                 );
-  //               },
-  //               child: const Text('Belum punya akun mitra? Daftar di sini'),
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-// }

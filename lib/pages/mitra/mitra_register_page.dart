@@ -47,7 +47,7 @@ class _MitraRegisterPageState extends State<MitraRegisterPage> {
 
                 const SizedBox(height: 25),
                 Text(
-                  'Jadilah Bagian dari Komunitas Kami ',
+                  'Jadilah Bagian dari Mitra Kami ',
                   style: TextStyle(
                       color: Colors.grey[700],
                       fontSize: 16,

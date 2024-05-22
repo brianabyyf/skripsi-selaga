@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:selaga_ver1/pages/mitra/mitra_login_page.dart';
+import 'package:selaga_ver1/pages/mitra/mitra_register_page.dart';
 import 'package:selaga_ver1/pages/user/login_page.dart';
+import 'package:selaga_ver1/pages/user/register_page.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
@@ -113,11 +115,56 @@ class LandingPage extends StatelessWidget {
                             const SizedBox(width: 2),
                             TextButton(
                               onPressed: () {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (context) => const RegisterPage()),
-                                // );
+                                showModalBottomSheet(
+                                  useSafeArea: true,
+                                  context: context,
+                                  builder: (context) {
+                                    return SizedBox(
+                                      height: 130,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          ListTile(
+                                            trailing:
+                                                const Icon(Icons.login_sharp),
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const RegisterPage()),
+                                              );
+                                            },
+                                            title: const Text(
+                                              'Daftar',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                          ListTile(
+                                            trailing:
+                                                const Icon(Icons.login_sharp),
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const MitraRegisterPage()));
+                                            },
+                                            title: const Text(
+                                              'Daftar sebagai mitra',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
                               },
                               child: const Text(
                                 'Daftar disini',
