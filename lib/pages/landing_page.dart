@@ -120,7 +120,7 @@ class LandingPage extends StatelessWidget {
                                   context: context,
                                   builder: (context) {
                                     return SizedBox(
-                                      height: 130,
+                                      height: 135,
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -142,6 +142,11 @@ class LandingPage extends StatelessWidget {
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
+                                          ),
+                                          const Divider(
+                                            indent: 15,
+                                            endIndent: 15,
+                                            thickness: 2,
                                           ),
                                           ListTile(
                                             trailing:

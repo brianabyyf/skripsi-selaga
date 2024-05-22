@@ -4,7 +4,6 @@ import 'package:selaga_ver1/pages/components/decoration.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/login_user_model.dart';
 import 'home_page.dart';
-import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

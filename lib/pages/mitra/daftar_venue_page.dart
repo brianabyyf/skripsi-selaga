@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:selaga_ver1/pages/components/my_checkbox.dart';
+import 'package:selaga_ver1/pages/mitra/success_daftar_venue_page.dart';
 
 class DaftarVenuePage extends StatefulWidget {
   const DaftarVenuePage({super.key});
@@ -116,89 +118,45 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
                       children: [
                         Row(
                           children: [
-                            Row(
-                              children: [
-                                Checkbox(
-                                  checkColor:
-                                      const Color.fromRGBO(76, 76, 220, 1),
-                                  fillColor: const MaterialStatePropertyAll(
-                                      Colors.white),
-                                  value: _boxChecked,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _boxChecked = value!;
-                                    });
-                                  },
-                                ),
-                                const Text(
-                                  'Free Wifi',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ],
+                            MyCheckBox(
+                              hintText: 'Free Wifi',
+                              velue: _boxChecked,
+                              onChanged: (value) {
+                                setState(() {
+                                  _boxChecked = value!;
+                                });
+                              },
                             ),
-                            Row(
-                              children: [
-                                Checkbox(
-                                  checkColor:
-                                      const Color.fromRGBO(76, 76, 220, 1),
-                                  fillColor: const MaterialStatePropertyAll(
-                                      Colors.white),
-                                  value: _boxChecked2,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _boxChecked2 = value!;
-                                    });
-                                  },
-                                ),
-                                const Text(
-                                  'Warung/Cafe',
-                                  style: TextStyle(fontSize: 16),
-                                )
-                              ],
+                            MyCheckBox(
+                              hintText: 'Warung/Cafe',
+                              velue: _boxChecked2,
+                              onChanged: (value) {
+                                setState(() {
+                                  _boxChecked2 = value!;
+                                });
+                              },
                             ),
                           ],
                         ),
                         Row(
                           children: [
-                            Row(
-                              children: [
-                                Checkbox(
-                                  checkColor:
-                                      const Color.fromRGBO(76, 76, 220, 1),
-                                  fillColor: const MaterialStatePropertyAll(
-                                      Colors.white),
-                                  value: _boxChecked3,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _boxChecked3 = value!;
-                                    });
-                                  },
-                                ),
-                                const Text(
-                                  'Parkir Motor',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ],
+                            MyCheckBox(
+                              hintText: 'Parkir Motor',
+                              velue: _boxChecked3,
+                              onChanged: (value) {
+                                setState(() {
+                                  _boxChecked3 = value!;
+                                });
+                              },
                             ),
-                            Row(
-                              children: [
-                                Checkbox(
-                                  checkColor:
-                                      const Color.fromRGBO(76, 76, 220, 1),
-                                  fillColor: const MaterialStatePropertyAll(
-                                      Colors.white),
-                                  value: _boxChecked4,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _boxChecked4 = value!;
-                                    });
-                                  },
-                                ),
-                                const Text(
-                                  'Parkir Mobil',
-                                  style: TextStyle(fontSize: 16),
-                                )
-                              ],
+                            MyCheckBox(
+                              hintText: 'Parkir Mobil',
+                              velue: _boxChecked4,
+                              onChanged: (value) {
+                                setState(() {
+                                  _boxChecked4 = value!;
+                                });
+                              },
                             ),
                           ],
                         ),
@@ -295,6 +253,13 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
               ),
               InkWell(
                 // onTap: _isSending ? null : _signInUser,
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SuccesssDaftarVenuePage()),
+                  );
+                },
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   // margin: const EdgeInsets.symmetric(horizontal: 25),
