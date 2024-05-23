@@ -65,7 +65,7 @@ class ApiRepository {
       final result = await api.post("/loginMitra", data: user.toRawJson());
       return ApiResponse(result: result.data['token'].toString());
     } on DioException catch (e) {
-      return ApiResponse(error: e.toString());
+      return ApiResponse(error: e.response?.data['message'].toString());
     }
   }
 
