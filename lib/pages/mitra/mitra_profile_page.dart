@@ -22,9 +22,10 @@ class MitraProfilePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10.0),
-            const Text('Nama GOR', style: TextStyle(
-              color: Color.fromRGBO(76, 76, 220, 1)
-            ),),
+            const Text(
+              'Nama GOR',
+              style: TextStyle(color: Color.fromRGBO(76, 76, 220, 1)),
+            ),
             const SizedBox(height: 30.0),
             const ListTile(
               title: Text('Penghasilan'),
@@ -56,9 +57,8 @@ class MitraProfilePage extends StatelessWidget {
               onTap: () {
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => const LandingPage()),
-                      (Route<dynamic> route) => false,
+                  MaterialPageRoute(builder: (context) => const LandingPage()),
+                  (Route<dynamic> route) => false,
                 );
               },
             ),

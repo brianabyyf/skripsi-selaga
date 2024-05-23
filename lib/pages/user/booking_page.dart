@@ -46,7 +46,8 @@ class _BookingPageState extends State<BookingPage> {
               decoration: BoxDecoration(color: Colors.grey[300]),
               child: Column(
                 children: [
-                  Text('${DateTimeFormat.convertToString(DateTime.now().month)} ${DateTime.now().year}'),
+                  Text(
+                      '${DateTimeFormat.convertToString(DateTime.now().month)} ${DateTime.now().year}'),
                   const SizedBox(
                     height: 10,
                   ),
@@ -72,7 +73,8 @@ class _BookingPageState extends State<BookingPage> {
                   ),
                   const Spacer(),
                   const Text('Tanggal yang dipilih'),
-                  Text('${selectedDate(selected)} ${DateTimeFormat.convertToString(DateTime.now().month)} ${DateTime.now().year}')
+                  Text(
+                      '${selectedDate(selected)} ${DateTimeFormat.convertToString(DateTime.now().month)} ${DateTime.now().year}')
                 ],
               ),
             )),
@@ -87,9 +89,7 @@ class _BookingPageState extends State<BookingPage> {
               flex: 2,
               child: Container(
                 decoration: BoxDecoration(color: Colors.grey[300]),
-                child: JadwalView(
-                  selected: selected
-                ),
+                child: JadwalView(selected: selected),
               ),
             ),
             const SizedBox(
@@ -107,9 +107,9 @@ class _BookingPageState extends State<BookingPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const DetailConfirmationPage()),
+                            builder: (context) =>
+                                const DetailConfirmationPage()),
                       );
-
                     },
                     child: const Text(
                       'Pesan Sekarang',
@@ -137,7 +137,8 @@ class _BookingPageState extends State<BookingPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(DateFormat('EEEE').format(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2))),
+              Text(DateFormat('EEEE').format(DateTime(DateTime.now().year,
+                  DateTime.now().month, DateTime.now().day + 2))),
               Text('${DateTime.now().day + 2}')
             ],
           ),
@@ -158,7 +159,8 @@ class _BookingPageState extends State<BookingPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(DateFormat('EEEE').format(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2))),
+              Text(DateFormat('EEEE').format(DateTime(DateTime.now().year,
+                  DateTime.now().month, DateTime.now().day + 2))),
               Text('${DateTime.now().day + 2}')
             ],
           ),
@@ -183,7 +185,8 @@ class _BookingPageState extends State<BookingPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(DateFormat('EEEE').format(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 1))),
+              Text(DateFormat('EEEE').format(DateTime(DateTime.now().year,
+                  DateTime.now().month, DateTime.now().day + 1))),
               Text('${DateTime.now().day + 1}')
             ],
           ),
@@ -205,7 +208,8 @@ class _BookingPageState extends State<BookingPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(DateFormat('EEEE').format(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 1))),
+              Text(DateFormat('EEEE').format(DateTime(DateTime.now().year,
+                  DateTime.now().month, DateTime.now().day + 1))),
               Text('${DateTime.now().day + 1}')
             ],
           ),
@@ -284,7 +288,6 @@ class JadwalView extends StatelessWidget {
 }
 
 class TimeSlotView extends StatefulWidget {
-
   const TimeSlotView({
     super.key,
   });

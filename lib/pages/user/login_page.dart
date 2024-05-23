@@ -25,14 +25,17 @@ class _LoginPageState extends State<LoginPage> {
       });
       var data = await ApiRepository().userLogin(LoginUserModel(
           email: _emailController.text, password: _passwordController.text));
-      print(data.error);
+
+      print(data.result);
       if (data.result != null) {
+        String token = data.result!;
         if (!context.mounted) {
           return;
         }
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const HomePageNavigation()),
+          MaterialPageRoute(
+              builder: (context) => HomePageNavigation(token: token)),
           (Route<dynamic> route) => false,
         );
       } else {

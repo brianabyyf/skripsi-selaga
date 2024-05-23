@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:selaga_ver1/pages/components/my_button.dart';
-import 'package:selaga_ver1/pages/user/home_page.dart';
+import 'package:selaga_ver1/pages/mitra/mitra_home_page.dart';
 
 class SuccesssDaftarLapanganPage extends StatelessWidget {
   const SuccesssDaftarLapanganPage({super.key});
@@ -49,7 +49,7 @@ class SuccesssDaftarLapanganPage extends StatelessWidget {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const HomePageNavigation()),
+                      builder: (context) => const MitraHomePageNavigation()),
                   (Route<dynamic> route) => false,
                 );
               },

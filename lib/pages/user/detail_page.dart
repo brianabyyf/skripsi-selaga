@@ -75,9 +75,10 @@ class _FieldDetailPageState extends State<FieldDetailPage> {
                   )
                 ],
               ),
-              const Text(
-                'Nama Tempat',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Text(
+                widget.fieldName,
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const Row(
                 children: [
