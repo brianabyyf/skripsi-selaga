@@ -29,7 +29,6 @@ class _RegisterPageState extends State<RegisterPage> {
           email: _emailController.text,
           phone: _phoneController.text,
           password: _passwordController.text));
-      print(data.error);
 
       if (data.result != null) {
         if (!context.mounted) {
@@ -48,9 +47,9 @@ class _RegisterPageState extends State<RegisterPage> {
           return;
         }
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Email atau Nomor Handphone sudah digunakan'),
-            duration: Duration(milliseconds: 1100),
+          SnackBar(
+            content: Text('${data.error}'),
+            duration: const Duration(milliseconds: 1200),
           ),
         );
       }

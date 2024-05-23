@@ -25,8 +25,6 @@ class _LoginPageState extends State<LoginPage> {
       });
       var data = await ApiRepository().userLogin(LoginUserModel(
           email: _emailController.text, password: _passwordController.text));
-
-      print(data.result);
       if (data.result != null) {
         String token = data.result!;
         if (!context.mounted) {
@@ -47,9 +45,9 @@ class _LoginPageState extends State<LoginPage> {
           return;
         }
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Email atau Password yang diberikan salah'),
-            duration: Duration(milliseconds: 1100),
+          SnackBar(
+            content: Text('${data.error}'),
+            duration: const Duration(milliseconds: 1200),
           ),
         );
       }

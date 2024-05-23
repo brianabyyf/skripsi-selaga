@@ -34,7 +34,9 @@ class _MitraLoginPageState extends State<MitraLoginPage> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) => const MitraHomePageNavigation()),
+              builder: (context) => MitraHomePageNavigation(
+                    token: data.result!,
+                  )),
           (Route<dynamic> route) => false,
         );
       } else {
@@ -45,9 +47,9 @@ class _MitraLoginPageState extends State<MitraLoginPage> {
           return;
         }
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Email atau Password yang diberikan salah'),
-            duration: Duration(milliseconds: 1100),
+          SnackBar(
+            content: Text('${data.error}'),
+            duration: const Duration(milliseconds: 1100),
           ),
         );
       }

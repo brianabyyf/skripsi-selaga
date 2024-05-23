@@ -10,6 +10,7 @@ class LapanganModel {
   String decs;
   String? timetableDays;
   String? timetableHours;
+  int mitraId;
 
   LapanganModel({
     required this.id,
@@ -21,6 +22,7 @@ class LapanganModel {
     required this.decs,
     required this.timetableDays,
     required this.timetableHours,
+    required this.mitraId,
   });
 
   factory LapanganModel.fromRawJson(String str) =>
@@ -38,6 +40,7 @@ class LapanganModel {
         decs: json["decs"],
         timetableDays: json["timetableDays"],
         timetableHours: json["timetableHours"],
+        mitraId: json["mitraId"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -50,5 +53,6 @@ class LapanganModel {
         "decs": decs,
         "timetableDays": timetableDays,
         "timetableHours": timetableHours,
+        "mitraId": mitraId,
       };
 }

@@ -143,12 +143,14 @@ class _HomePageState extends State<HomePage> {
                       scrollDirection: Axis.horizontal,
                       itemCount: venue.length,
                       itemBuilder: (context, index) {
+                        var img = venue[index].image;
+                        var imgList = img?.split(',');
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: SportsFieldCard(
                             fieldName: venue[index].name,
-                            fieldImage: venue[index].image != null
-                                ? 'http://192.168.0.106/skripsi-selaga/storage/app/image/${venue[index].image}'
+                            fieldImage: imgList != null
+                                ? 'http://192.168.0.106/skripsi-selaga/storage/app/image/${imgList.first}'
                                 : null,
                             fieldLocation: venue[index].address,
                             onPressed: () {

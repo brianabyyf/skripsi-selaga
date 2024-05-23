@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:selaga_ver1/pages/components/auth_field.dart';
-import 'package:selaga_ver1/pages/components/my_button.dart';
+import 'package:selaga_ver1/pages/mitra/mitra_home_page.dart';
+import 'package:selaga_ver1/repositories/api_repository.dart';
+import 'package:selaga_ver1/repositories/models/register_user_model.dart';
 
 class MitraRegisterPage extends StatefulWidget {
   const MitraRegisterPage({super.key});
@@ -15,14 +17,45 @@ class _MitraRegisterPageState extends State<MitraRegisterPage> {
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  var _isSending = false;
 
-  void signUpUser() {
+  void _signUpUser() async {
     if (_formKey.currentState!.validate()) {
-      // Navigator.pushAndRemoveUntil(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => const LoginPage()),
-      //   (Route<dynamic> route) => false,
-      // );
+      setState(() {
+        _isSending = true;
+      });
+      var data = await ApiRepository().mitraRegister(RegisterUserModel(
+          name: _nameController.text,
+          email: _emailController.text,
+          phone: _phoneController.text,
+          password: _passwordController.text));
+      print(data.error);
+      if (data.result != null) {
+        if (!context.mounted) {
+          return;
+        }
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MitraHomePageNavigation(
+                    token: data.result!.toString(),
+                  )),
+          (Route<dynamic> route) => false,
+        );
+      } else {
+        setState(() {
+          _isSending = false;
+        });
+        if (!context.mounted) {
+          return;
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${data.error}'),
+            duration: const Duration(milliseconds: 1200),
+          ),
+        );
+      }
     }
   }
 
@@ -84,9 +117,34 @@ class _MitraRegisterPageState extends State<MitraRegisterPage> {
                   isObscureText: true,
                 ),
                 const SizedBox(height: 20),
-                MyButton(
-                  onTap: signUpUser,
-                  buttonText: 'Register',
+                InkWell(
+                  onTap: _isSending ? null : _signUpUser,
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    margin: const EdgeInsets.symmetric(horizontal: 25),
+                    decoration: BoxDecoration(
+                      color: const Color.fromRGBO(76, 76, 220, 1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Center(
+                      child: _isSending
+                          ? const SizedBox(
+                              height: 25,
+                              width: 25,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            )
+                          : const Text(
+                              'Register',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 20.0),
                 Row(
