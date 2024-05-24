@@ -3,7 +3,8 @@ import 'package:selaga_ver1/pages/components/my_button.dart';
 import 'package:selaga_ver1/pages/mitra/mitra_home_page.dart';
 
 class SuccesssDaftarVenuePage extends StatelessWidget {
-  const SuccesssDaftarVenuePage({super.key});
+  final String token;
+  const SuccesssDaftarVenuePage({super.key, required this.token});
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +50,8 @@ class SuccesssDaftarVenuePage extends StatelessWidget {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const MitraHomePageNavigation(
-                            token: "",
+                      builder: (context) => MitraHomePageNavigation(
+                            token: token,
                           )),
                   (Route<dynamic> route) => false,
                 );

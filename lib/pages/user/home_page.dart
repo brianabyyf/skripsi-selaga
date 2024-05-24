@@ -158,7 +158,9 @@ class _HomePageState extends State<HomePage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => FieldDetailPage(
-                                        fieldName: venue[index].name)),
+                                          token: widget.token,
+                                          id: venue[index].id,
+                                        )),
                               );
                             },
                           ),
@@ -198,8 +200,8 @@ class _HomePageState extends State<HomePage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    FieldDetailPage(fieldName: venue[0].name)));
+                                builder: (context) => FieldDetailPage(
+                                    token: widget.token, id: venue[0].id)));
                       },
                       child: Container(
                         padding: const EdgeInsets.all(8),

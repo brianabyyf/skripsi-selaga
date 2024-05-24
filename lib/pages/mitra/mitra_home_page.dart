@@ -87,153 +87,170 @@ class MitraHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Venue Anda'),
-        ),
-        body: SafeArea(
-          child: FutureBuilder(
-            future: Future.wait([
-              ApiRepository().getMyProfile(token),
-              ApiRepository().getAllLapangan(token)
-            ]),
-            builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-              if (snapshot.hasData) {
-                UserProfileModel myId = snapshot.data![0].result!;
-                List<LapanganModel> venue = snapshot.data![1].result!;
-                List<LapanganModel> myVenue =
-                    venue.where((e) => e.mitraId == myId.id).toList();
-                return myVenue.isNotEmpty
-                    ? ListView.builder(
-                        padding: const EdgeInsets.all(8),
-                        itemCount: myVenue.length,
-                        itemBuilder: (context, index) {
-                          var img = myVenue[index].image;
-                          var imgList = img?.split(',');
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                                left: 8, right: 8, top: 16),
-                            child: InkWell(
-                              onTap: () {},
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 2,
-                                      blurRadius: 7,
-                                      offset: const Offset(0, 3),
-                                    ),
-                                  ],
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        child: venue[0].image != null
-                                            ? Image.network(
-                                                'http://192.168.0.106/skripsi-selaga/storage/app/image/${imgList?.first}',
-                                                height: 142,
-                                                width: 142,
-                                                fit: BoxFit.cover,
-                                              )
-                                            : Container(
-                                                width: 142,
-                                                height: 142,
-                                                decoration: const BoxDecoration(
-                                                    color: Colors.grey),
-                                                child: const Icon(
-                                                    Icons.error_outline),
-                                              )),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          myVenue[index].name,
-                                          style: const TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          softWrap: true,
-                                          // maxLines: 1,
+      appBar: AppBar(
+        title: const Text('Venue Anda'),
+      ),
+      body: SafeArea(
+        child: FutureBuilder(
+          future: Future.wait([
+            ApiRepository().getMyProfile(token),
+            ApiRepository().getAllLapangan(token)
+          ]),
+          builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+            if (snapshot.hasData) {
+              UserProfileModel myId = snapshot.data![0].result!;
+              List<LapanganModel> venue = snapshot.data![1].result!;
+              List<LapanganModel> myVenue =
+                  venue.where((e) => e.mitraId == myId.id).toList();
+              return myVenue.isNotEmpty
+                  ? ListView.builder(
+                      padding: const EdgeInsets.all(8),
+                      itemCount: myVenue.length,
+                      itemBuilder: (context, index) {
+                        var img = myVenue[index].image;
+                        var imgList = img?.split(',');
+                        return Padding(
+                          padding:
+                              const EdgeInsets.only(left: 8, right: 8, top: 16),
+                          child: InkWell(
+                            onTap: () {},
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 2,
+                                    blurRadius: 7,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: venue[0].image != null
+                                          ? Image.network(
+                                              'http://192.168.0.106/skripsi-selaga/storage/app/image/${imgList?.first}',
+                                              height: 142,
+                                              width: 142,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : Container(
+                                              width: 142,
+                                              height: 142,
+                                              decoration: const BoxDecoration(
+                                                  color: Colors.grey),
+                                              child: const Icon(
+                                                  Icons.error_outline),
+                                            )),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        myVenue[index].name,
+                                        style: const TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                        const SizedBox(height: 5.0),
-                                        Text(
-                                          venue[0].address,
-                                          style: const TextStyle(
-                                            fontSize: 14.0,
-                                            color: Colors.grey,
-                                          ),
-                                          // maxLines: 1,
+                                        softWrap: true,
+                                        // maxLines: 1,
+                                      ),
+                                      const SizedBox(height: 5.0),
+                                      Text(
+                                        venue[0].address,
+                                        style: const TextStyle(
+                                          fontSize: 14.0,
+                                          color: Colors.grey,
                                         ),
-                                        const SizedBox(height: 5.0),
-                                        Text(
-                                          myVenue[index].price,
-                                          style: const TextStyle(
-                                            fontSize: 14.0,
-                                            color: Colors.grey,
-                                          ),
-                                          // maxLines: 1,
+                                        // maxLines: 1,
+                                      ),
+                                      const SizedBox(height: 5.0),
+                                      Text(
+                                        myVenue[index].price,
+                                        style: const TextStyle(
+                                          fontSize: 14.0,
+                                          color: Colors.grey,
                                         ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                        // maxLines: 1,
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
-                          );
-                        },
-                      )
-                    : NoVenue();
-              } else if (snapshot.hasError) {
-                return Column(
+                          ),
+                        );
+                      },
+                    )
+                  : NoVenue(
+                      token: token,
+                    );
+            } else if (snapshot.hasError) {
+              return Column(
+                children: [
+                  const Icon(
+                    Icons.error_outline,
+                    color: Colors.red,
+                    size: 60,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Text('Error: ${snapshot.error}'),
+                  ),
+                ],
+              );
+            } else {
+              return const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
-                      Icons.error_outline,
-                      color: Colors.red,
-                      size: 60,
+                    SizedBox(
+                      width: 60,
+                      height: 60,
+                      child: CircularProgressIndicator(),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 16),
-                      child: Text('Error: ${snapshot.error}'),
-                    ),
+                      padding: EdgeInsets.only(top: 16),
+                      child: Text('Awaiting result...'),
+                    )
                   ],
-                );
-              } else {
-                return const Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 60,
-                        height: 60,
-                        child: CircularProgressIndicator(),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 16),
-                        child: Text('Awaiting result...'),
-                      )
-                    ],
-                  ),
-                );
-              }
-            },
-          ),
-        ));
+                ),
+              );
+            }
+          },
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(255, 164, 164, 253),
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DaftarVenuePage(
+                      token: token,
+                    )),
+          );
+        },
+      ),
+    );
   }
 }
 
 class NoVenue extends StatelessWidget {
+  final String token;
   const NoVenue({
     super.key,
+    required this.token,
   });
 
   @override
@@ -252,7 +269,9 @@ class NoVenue extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const DaftarVenuePage()),
+                    builder: (context) => DaftarVenuePage(
+                          token: token,
+                        )),
               );
             },
             child: const Text(

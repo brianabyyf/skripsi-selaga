@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:selaga_ver1/repositories/models/api_response.dart';
 import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
@@ -60,12 +62,57 @@ class ApiRepository {
     }
   }
 
+  Future<ApiResponse<DetailLapanganModel>> getLapanganDetail(
+      String token, int id) async {
+    try {
+      final result = await api.get("/lapangan/$id",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }));
+      return ApiResponse(
+          result: DetailLapanganModel.fromJson(result.data['data']));
+    } on DioException catch (e) {
+      return ApiResponse(error: e.response?.data['message'].toString());
+    }
+  }
+
+  Future<ApiResponse<String>> daftarVenue(String token, List<File> img) async {
+    var formData = FormData.fromMap({
+      "venue": 'gor leuwi anyar',
+      "name": 'lapangan 2',
+      "address": 'leuwi anyar',
+      "price": '250000',
+      "decs": 'lorem ipsumm',
+      "timetableDays": 'senin,selasa',
+      "timetableHours": 'pickupTime',
+    }, ListFormat.multiCompatible);
+
+    for (var file in img) {
+      formData.files.addAll([
+        MapEntry(
+            "file[]",
+            await MultipartFile.fromFile(file.path,
+                filename: file.path.split('/').last)),
+      ]);
+    }
+    try {
+      final result = await api.post("/lapangan",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }),
+          data: formData);
+      return ApiResponse(result: result.data['message'].toString());
+    } on DioException catch (e) {
+      return ApiResponse(error: e.response?.data['message'].toString());
+    }
+  }
+
   Future<ApiResponse<String>> mitraLogin(LoginUserModel user) async {
     try {
       final result = await api.post("/loginMitra", data: user.toRawJson());
       return ApiResponse(result: result.data['token'].toString());
     } on DioException catch (e) {
-      return ApiResponse(error: e.response?.data['message'].toString());
+      return ApiResponse(error: e.error.toString());
     }
   }
 
