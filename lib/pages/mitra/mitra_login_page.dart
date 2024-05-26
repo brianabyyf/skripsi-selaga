@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/components/auth_field.dart';
 import 'package:selaga_ver1/pages/components/decoration.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/login_user_model.dart';
+import 'package:selaga_ver1/repositories/providers.dart';
 
 import 'mitra_home_page.dart';
 
@@ -31,12 +33,11 @@ class _MitraLoginPageState extends State<MitraLoginPage> {
         if (!context.mounted) {
           return;
         }
+        context.read<Token>().getToken(data.result!);
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) => MitraHomePageNavigation(
-                    token: data.result!,
-                  )),
+              builder: (context) => const MitraHomePageNavigation()),
           (Route<dynamic> route) => false,
         );
       } else {

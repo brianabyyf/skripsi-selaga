@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/components/auth_field.dart';
 import 'package:selaga_ver1/pages/components/decoration.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/login_user_model.dart';
+import 'package:selaga_ver1/repositories/providers.dart';
 import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -26,14 +28,15 @@ class _LoginPageState extends State<LoginPage> {
       var data = await ApiRepository().userLogin(LoginUserModel(
           email: _emailController.text, password: _passwordController.text));
       if (data.result != null) {
-        String token = data.result!;
         if (!context.mounted) {
           return;
         }
+
+        context.read<Token>().getToken(data.result!);
+
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(
-              builder: (context) => HomePageNavigation(token: token)),
+          MaterialPageRoute(builder: (context) => const HomePageNavigation()),
           (Route<dynamic> route) => false,
         );
       } else {
@@ -149,36 +152,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-
-                  // const SizedBox(height: 50),
-
-                  // // not a member? register now
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     Text(
-                  //       'Belum punya akun?',
-                  //       style: TextStyle(color: Colors.grey[700]),
-                  //     ),
-                  //     const SizedBox(width: 2),
-                  //     TextButton(
-                  //       onPressed: () {
-                  //         Navigator.push(
-                  //           context,
-                  //           MaterialPageRoute(
-                  //               builder: (context) => const RegisterPage()),
-                  //         );
-                  //       },
-                  //       child: const Text(
-                  //         'Daftar di sini',
-                  //         style: TextStyle(
-                  //           color: Color.fromRGBO(76, 76, 220, 1),
-                  //           fontWeight: FontWeight.bold,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // )
                 ],
               ),
             ),

@@ -1,13 +1,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/components/my_checkbox.dart';
 import 'package:selaga_ver1/pages/mitra/success_daftar_venue_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
+import 'package:selaga_ver1/repositories/providers.dart';
 
 class DaftarVenuePage extends StatefulWidget {
-  final String token;
-  const DaftarVenuePage({super.key, required this.token});
+  const DaftarVenuePage({super.key});
 
   @override
   State<DaftarVenuePage> createState() => _DaftarVenuePageState();
@@ -21,14 +22,19 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
   final ImagePicker imagePicker = ImagePicker();
   List<XFile>? _imageFileList = [];
   XFile? _image;
-
   List<File> _uploadImg = [];
-
+  String? myToken;
   var _isSending = false;
   var _boxChecked = false;
   var _boxChecked2 = false;
   var _boxChecked3 = false;
   var _boxChecked4 = false;
+
+  @override
+  void initState() {
+    myToken = context.watch<Token>().token;
+    super.initState();
+  }
 
   void _uploadVenue() async {
     if (_image == null) {
@@ -63,7 +69,7 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
         _uploadImg.add(File(image.path));
       }
 
-      var data = await ApiRepository().daftarVenue(widget.token, _uploadImg);
+      var data = await ApiRepository().daftarVenue(myToken!, _uploadImg);
       if (data.result != null) {
         if (!context.mounted) {
           return;
@@ -72,7 +78,7 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
           context,
           MaterialPageRoute(
               builder: (context) => SuccesssDaftarVenuePage(
-                    token: widget.token,
+                    token: myToken!,
                   )),
         );
       } else {

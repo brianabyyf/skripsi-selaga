@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/components/auth_field.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/register_user_model.dart';
+import 'package:selaga_ver1/repositories/providers.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -34,6 +37,8 @@ class _RegisterPageState extends State<RegisterPage> {
         if (!context.mounted) {
           return;
         }
+        context.read<Token>().getToken(data.result!);
+        context.go('/userHome');
         // Navigator.pushAndRemoveUntil(
         //   context,
         //   MaterialPageRoute(builder: (context) => const HomePageNavigation()),
@@ -53,12 +58,6 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         );
       }
-
-      // Navigator.pushAndRemoveUntil(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => const LoginPage()),
-      //   (Route<dynamic> route) => false,
-      // );
     }
   }
 
@@ -156,28 +155,29 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(height: 20.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Sudah punya akun?',
-                      style: TextStyle(color: Colors.grey[700]),
-                    ),
-                    const SizedBox(width: 2),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text(
-                        'Login disini',
-                        style: TextStyle(
-                          color: Color.fromRGBO(76, 76, 220, 1),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Text(
+                //       'Sudah punya akun?',
+                //       style: TextStyle(color: Colors.grey[700]),
+                //     ),
+                //     const SizedBox(width: 2),
+                //     TextButton(
+                //       onPressed: () {
+                //         context.go('/userLogin');
+                //         // Navigator.pop(context);
+                //       },
+                //       child: const Text(
+                //         'Login disini',
+                //         style: TextStyle(
+                //           color: Color.fromRGBO(76, 76, 220, 1),
+                //           fontWeight: FontWeight.bold,
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // )
               ],
             ),
           ),

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/mitra/daftar_venue_page.dart';
 import 'package:selaga_ver1/pages/mitra/mitra_profile_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
+import 'package:selaga_ver1/repositories/models/endpoints.dart';
 import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
 import 'package:selaga_ver1/repositories/models/user_profile_model.dart';
+import 'package:selaga_ver1/repositories/providers.dart';
 
 class MitraHomePageNavigation extends StatefulWidget {
-  final String token;
-  const MitraHomePageNavigation({super.key, required this.token});
+  const MitraHomePageNavigation({super.key});
 
   @override
   State<MitraHomePageNavigation> createState() =>
@@ -22,9 +24,7 @@ class _MitraHomePageNavigationState extends State<MitraHomePageNavigation> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: [
-        MitraHomePage(
-          token: widget.token,
-        ),
+        const MitraHomePage(),
         const ConfirmationPage(),
         const MemberPage(),
         const MitraProfilePage()
@@ -81,8 +81,7 @@ class _MitraHomePageNavigationState extends State<MitraHomePageNavigation> {
 }
 
 class MitraHomePage extends StatelessWidget {
-  final String token;
-  const MitraHomePage({super.key, required this.token});
+  const MitraHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -91,142 +90,143 @@ class MitraHomePage extends StatelessWidget {
         title: const Text('Venue Anda'),
       ),
       body: SafeArea(
-        child: FutureBuilder(
-          future: Future.wait([
-            ApiRepository().getMyProfile(token),
-            ApiRepository().getAllLapangan(token)
-          ]),
-          builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-            if (snapshot.hasData) {
-              UserProfileModel myId = snapshot.data![0].result!;
-              List<LapanganModel> venue = snapshot.data![1].result!;
-              List<LapanganModel> myVenue =
-                  venue.where((e) => e.mitraId == myId.id).toList();
-              return myVenue.isNotEmpty
-                  ? ListView.builder(
-                      padding: const EdgeInsets.all(8),
-                      itemCount: myVenue.length,
-                      itemBuilder: (context, index) {
-                        var img = myVenue[index].image;
-                        var imgList = img?.split(',');
-                        return Padding(
-                          padding:
-                              const EdgeInsets.only(left: 8, right: 8, top: 16),
-                          child: InkWell(
-                            onTap: () {},
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 7,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: venue[0].image != null
-                                          ? Image.network(
-                                              'http://192.168.0.106/skripsi-selaga/storage/app/image/${imgList?.first}',
-                                              height: 142,
-                                              width: 142,
-                                              fit: BoxFit.cover,
-                                            )
-                                          : Container(
-                                              width: 142,
-                                              height: 142,
-                                              decoration: const BoxDecoration(
-                                                  color: Colors.grey),
-                                              child: const Icon(
-                                                  Icons.error_outline),
-                                            )),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        myVenue[index].name,
-                                        style: const TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold,
+        child: Consumer<Token>(
+          builder: (context, myToken, child) => FutureBuilder(
+            future: Future.wait([
+              ApiRepository().getMyProfile(myToken.token),
+              ApiRepository().getAllLapangan(myToken.token)
+            ]),
+            builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+              if (snapshot.hasData) {
+                UserProfileModel myId = snapshot.data![0].result!;
+                List<LapanganModel> venue = snapshot.data![1].result!;
+                List<LapanganModel> myVenue =
+                    venue.where((e) => e.mitraId == myId.id).toList();
+                return myVenue.isNotEmpty
+                    ? ListView.builder(
+                        padding: const EdgeInsets.all(8),
+                        itemCount: myVenue.length,
+                        itemBuilder: (context, index) {
+                          var img = myVenue[index].image;
+                          var imgList = img?.split(',');
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                                left: 8, right: 8, top: 16),
+                            child: InkWell(
+                              onTap: () {},
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 2,
+                                      blurRadius: 7,
+                                      offset: const Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        child: venue[0].image != null
+                                            ? Image.network(
+                                                '${Endpoints().image}${imgList?.first}',
+                                                height: 142,
+                                                width: 142,
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Container(
+                                                width: 142,
+                                                height: 142,
+                                                decoration: const BoxDecoration(
+                                                    color: Colors.grey),
+                                                child: const Icon(
+                                                    Icons.error_outline),
+                                              )),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          myVenue[index].name,
+                                          style: const TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          softWrap: true,
+                                          // maxLines: 1,
                                         ),
-                                        softWrap: true,
-                                        // maxLines: 1,
-                                      ),
-                                      const SizedBox(height: 5.0),
-                                      Text(
-                                        venue[0].address,
-                                        style: const TextStyle(
-                                          fontSize: 14.0,
-                                          color: Colors.grey,
+                                        const SizedBox(height: 5.0),
+                                        Text(
+                                          venue[0].address,
+                                          style: const TextStyle(
+                                            fontSize: 14.0,
+                                            color: Colors.grey,
+                                          ),
+                                          // maxLines: 1,
                                         ),
-                                        // maxLines: 1,
-                                      ),
-                                      const SizedBox(height: 5.0),
-                                      Text(
-                                        myVenue[index].price,
-                                        style: const TextStyle(
-                                          fontSize: 14.0,
-                                          color: Colors.grey,
+                                        const SizedBox(height: 5.0),
+                                        Text(
+                                          myVenue[index].price,
+                                          style: const TextStyle(
+                                            fontSize: 14.0,
+                                            color: Colors.grey,
+                                          ),
+                                          // maxLines: 1,
                                         ),
-                                        // maxLines: 1,
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    )
-                  : NoVenue(
-                      token: token,
-                    );
-            } else if (snapshot.hasError) {
-              return Column(
-                children: [
-                  const Icon(
-                    Icons.error_outline,
-                    color: Colors.red,
-                    size: 60,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Text('Error: ${snapshot.error}'),
-                  ),
-                ],
-              );
-            } else {
-              return const Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                          );
+                        },
+                      )
+                    : const NoVenue();
+              } else if (snapshot.hasError) {
+                return Column(
                   children: [
-                    SizedBox(
-                      width: 60,
-                      height: 60,
-                      child: CircularProgressIndicator(),
+                    const Icon(
+                      Icons.error_outline,
+                      color: Colors.red,
+                      size: 60,
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 16),
-                      child: Text('Awaiting result...'),
-                    )
+                      padding: const EdgeInsets.only(top: 16),
+                      child: Text('Error: ${snapshot.error}'),
+                    ),
                   ],
-                ),
-              );
-            }
-          },
+                );
+              } else {
+                return const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: CircularProgressIndicator(),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 16),
+                        child: Text('Awaiting result...'),
+                      )
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -235,10 +235,7 @@ class MitraHomePage extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => DaftarVenuePage(
-                      token: token,
-                    )),
+            MaterialPageRoute(builder: (context) => const DaftarVenuePage()),
           );
         },
       ),
@@ -247,10 +244,8 @@ class MitraHomePage extends StatelessWidget {
 }
 
 class NoVenue extends StatelessWidget {
-  final String token;
   const NoVenue({
     super.key,
-    required this.token,
   });
 
   @override
@@ -269,9 +264,7 @@ class NoVenue extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => DaftarVenuePage(
-                          token: token,
-                        )),
+                    builder: (context) => const DaftarVenuePage()),
               );
             },
             child: const Text(
@@ -287,48 +280,6 @@ class NoVenue extends StatelessWidget {
     );
   }
 }
-
-// class MitraHomePage extends StatelessWidget {
-//   const MitraHomePage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: AppBar(
-//           title: const Text('Mitra Selaga'),
-//         ),
-//         body: SafeArea(
-//           child: Center(
-//             child: Column(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               children: [
-//                 Text(
-//                   'Anda belum memiliki Venue',
-//                   style: TextStyle(color: Colors.grey[700]),
-//                 ),
-//                 const SizedBox(width: 2),
-//                 TextButton(
-//                   onPressed: () {
-//                     Navigator.push(
-//                       context,
-//                       MaterialPageRoute(
-//                           builder: (context) => const DaftarVenuePage()),
-//                     );
-//                   },
-//                   child: const Text(
-//                     'Daftar disini',
-//                     style: TextStyle(
-//                       color: Color.fromRGBO(76, 76, 220, 1),
-//                       fontWeight: FontWeight.bold,
-//                     ),
-//                   ),
-//                 )
-//               ],
-//             ),
-//           ),
-//         ));
-//   }
-// }
 
 class ConfirmationPage extends StatelessWidget {
   const ConfirmationPage({super.key});

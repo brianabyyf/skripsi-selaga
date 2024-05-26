@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/user/booking_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
+import 'package:selaga_ver1/repositories/models/endpoints.dart';
 import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
+import 'package:selaga_ver1/repositories/providers.dart';
 
 class FieldDetailPage extends StatefulWidget {
-  final int id;
-  final String token;
-
   const FieldDetailPage({
     super.key,
-    required this.id,
-    required this.token,
   });
 
   @override
@@ -27,47 +24,49 @@ class _FieldDetailPageState extends State<FieldDetailPage> {
         title: const Text('Detail'),
       ),
       body: SafeArea(
-        child: FutureBuilder(
-          future: ApiRepository().getLapanganDetail(widget.token, widget.id),
-          builder: (context, snapshot) {
-            if (snapshot.hasData &&
-                snapshot.connectionState == ConnectionState.done) {
-              return DetailWidget(
-                venue: snapshot.data!.result!,
-              );
-            } else if (snapshot.hasError) {
-              return Column(
-                children: [
-                  const Icon(
-                    Icons.error_outline,
-                    color: Colors.red,
-                    size: 60,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Text('Error: ${snapshot.error}'),
-                  ),
-                ],
-              );
-            } else {
-              return const Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+        child: Consumer2<Token, UserId>(
+          builder: (context, myToken, myId, child) => FutureBuilder(
+            future: ApiRepository().getLapanganDetail(myToken.token, myId.id),
+            builder: (context, snapshot) {
+              if (snapshot.hasData &&
+                  snapshot.connectionState == ConnectionState.done) {
+                return DetailWidget(
+                  venue: snapshot.data!.result!,
+                );
+              } else if (snapshot.hasError) {
+                return Column(
                   children: [
-                    SizedBox(
-                      width: 60,
-                      height: 60,
-                      child: CircularProgressIndicator(),
+                    const Icon(
+                      Icons.error_outline,
+                      color: Colors.red,
+                      size: 60,
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 16),
-                      child: Text('Awaiting result...'),
-                    )
+                      padding: const EdgeInsets.only(top: 16),
+                      child: Text('Error: ${snapshot.error}'),
+                    ),
                   ],
-                ),
-              );
-            }
-          },
+                );
+              } else {
+                return const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: CircularProgressIndicator(),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 16),
+                        child: Text('Awaiting result...'),
+                      )
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
         ),
       ),
     );
@@ -101,7 +100,7 @@ class DetailWidget extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
-                'http://192.168.0.106/skripsi-selaga/storage/app/image/${imgList!.first}',
+                '${Endpoints().image}${imgList!.first}',
                 fit: BoxFit.cover,
               ),
             ),
@@ -201,7 +200,7 @@ class DetailWidget extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
-                          'http://192.168.0.106/skripsi-selaga/storage/app/image/${imgList[index]}',
+                          '${Endpoints().image}${imgList[index]}',
                           fit: BoxFit.cover),
                     ),
                   ),

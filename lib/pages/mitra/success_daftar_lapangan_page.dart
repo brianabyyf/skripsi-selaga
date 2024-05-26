@@ -49,9 +49,7 @@ class SuccesssDaftarLapanganPage extends StatelessWidget {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const MitraHomePageNavigation(
-                            token: "",
-                          )),
+                      builder: (context) => const MitraHomePageNavigation()),
                   (Route<dynamic> route) => false,
                 );
               },

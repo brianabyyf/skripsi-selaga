@@ -50,9 +50,7 @@ class SuccesssDaftarVenuePage extends StatelessWidget {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => MitraHomePageNavigation(
-                            token: token,
-                          )),
+                      builder: (context) => const MitraHomePageNavigation()),
                   (Route<dynamic> route) => false,
                 );
               },
