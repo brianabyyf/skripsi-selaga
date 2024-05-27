@@ -6,6 +6,7 @@ import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
 import 'package:selaga_ver1/repositories/models/login_user_model.dart';
 import 'package:selaga_ver1/repositories/models/register_user_model.dart';
 import 'package:selaga_ver1/repositories/models/user_profile_model.dart';
+import 'package:selaga_ver1/repositories/models/venue_model.dart';
 
 class ApiRepository {
   final Dio api;
@@ -17,7 +18,6 @@ class ApiRepository {
 
   Future<ApiResponse<UserProfileModel>> getMyProfile(String token) async {
     try {
-      print(token);
       final result = await api.get("/profileMitra",
           options: Options(headers: {
             'Authorization': 'Bearer $token',
@@ -44,6 +44,18 @@ class ApiRepository {
       return ApiResponse(result: result.data['token'].toString());
     } on DioException catch (e) {
       return ApiResponse(error: e.response?.data['message'].toString());
+    }
+  }
+
+  Future<ApiResponse<String>> userLogout(String token) async {
+    try {
+      final result = await api.get("/logout",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }));
+      return ApiResponse(result: result.data['message'].toString());
+    } on DioException catch (e) {
+      return ApiResponse(error: e.error.toString());
     }
   }
 
@@ -76,16 +88,19 @@ class ApiRepository {
     }
   }
 
-  Future<ApiResponse<String>> daftarVenue(String token, List<File> img) async {
+  Future<ApiResponse<String>> daftarVenue(
+      String token, List<File> img, List<String> fasilitas) async {
     var formData = FormData.fromMap({
-      "venue": 'gor leuwi anyar',
-      "name": 'lapangan 2',
-      "address": 'leuwi anyar',
-      "price": '250000',
-      "decs": 'lorem ipsumm',
-      "timetableDays": 'senin,selasa',
-      "timetableHours": 'pickupTime',
+      "nameVenue": 'gor leuwi anyar',
+      "lokasiVenue": 'leuwi anyar',
+      "descVenue": 'lorem ipsumm',
+      "price": '75000',
+      "rating": '5',
     }, ListFormat.multiCompatible);
+
+    for (var e in fasilitas) {
+      formData.fields.addAll([MapEntry('fasilitasVenue[]', e)]);
+    }
 
     for (var file in img) {
       formData.files.addAll([
@@ -96,7 +111,7 @@ class ApiRepository {
       ]);
     }
     try {
-      final result = await api.post("/lapangan",
+      final result = await api.post("/venue",
           options: Options(headers: {
             'Authorization': 'Bearer $token',
           }),
@@ -120,6 +135,45 @@ class ApiRepository {
     try {
       final result = await api.post("/registerMitra", data: user.toRawJson());
       return ApiResponse(result: result.data['token'].toString());
+    } on DioException catch (e) {
+      return ApiResponse(error: e.response?.data['message'].toString());
+    }
+  }
+
+  Future<ApiResponse<String>> mitraLogout(String token) async {
+    try {
+      final result = await api.get("/logoutMitra",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }));
+      return ApiResponse(result: result.data['message'].toString());
+    } on DioException catch (e) {
+      return ApiResponse(error: e.error.toString());
+    }
+  }
+
+  Future<ApiResponse<List<VenueModel>>> getAllVenue(String token) async {
+    try {
+      final result = await api.get("/venue",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }));
+      final List<dynamic> data = result.data['data'];
+      final response =
+          data.map<VenueModel>((e) => VenueModel.fromJson(e)).toList();
+      return ApiResponse(result: response);
+    } on DioException catch (e) {
+      return ApiResponse(error: e.response?.data['message'].toString());
+    }
+  }
+
+  Future<ApiResponse<VenueModel>> getVenueDetail(String token, int id) async {
+    try {
+      final result = await api.get("/venue/$id",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }));
+      return ApiResponse(result: VenueModel.fromJson(result.data['data']));
     } on DioException catch (e) {
       return ApiResponse(error: e.response?.data['message'].toString());
     }

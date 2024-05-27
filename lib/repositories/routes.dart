@@ -33,7 +33,7 @@ class MyRoutes {
       path: '/userHome',
       builder: (context, state) => const HomePageNavigation(),
     ),
-  ], initialLocation: '/landing', routerNeglect: true);
+  ], initialLocation: '/', routerNeglect: true);
 
   GoRouter get router => _router;
 }

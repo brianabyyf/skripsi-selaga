@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:selaga_ver1/pages/components/my_button.dart';
-import 'package:selaga_ver1/pages/mitra/mitra_home_page.dart';
+import 'package:selaga_ver1/pages/mitra/mitra_navigation_page.dart';
 
 class SuccesssDaftarLapanganPage extends StatelessWidget {
   const SuccesssDaftarLapanganPage({super.key});

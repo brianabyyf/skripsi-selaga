@@ -73,12 +73,12 @@ class LandingPage extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12))),
                             onPressed: () {
-                              context.go('/userLogin');
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (context) => const LoginPage()),
-                              // );
+                              // context.go('/userLogin');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginPage()),
+                              );
                             },
                             child: const Text('Masuk'),
                           ),
@@ -97,13 +97,13 @@ class LandingPage extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12))),
                             onPressed: () {
-                              context.go('/mitraLogin');
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (context) =>
-                              //           const MitraLoginPage()),
-                              // );
+                              // context.go('/mitraLogin');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const MitraLoginPage()),
+                              );
                             },
                             child: const Text('Masuk sebagai Mitra'),
                           ),
@@ -132,13 +132,13 @@ class LandingPage extends StatelessWidget {
                                             trailing:
                                                 const Icon(Icons.login_sharp),
                                             onTap: () {
-                                              context.go('/userRegister');
-                                              // Navigator.push(
-                                              //   context,
-                                              //   MaterialPageRoute(
-                                              //       builder: (context) =>
-                                              //           const RegisterPage()),
-                                              // );
+                                              // context.go('/userRegister');
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const RegisterPage()),
+                                              );
                                             },
                                             title: const Text(
                                               'Daftar',
@@ -156,12 +156,12 @@ class LandingPage extends StatelessWidget {
                                             trailing:
                                                 const Icon(Icons.login_sharp),
                                             onTap: () {
-                                              context.go('/mitraRegister');
-                                              // Navigator.push(
-                                              //     context,
-                                              //     MaterialPageRoute(
-                                              //         builder: (context) =>
-                                              //             const MitraRegisterPage()));
+                                              // context.go('/mitraRegister');
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const MitraRegisterPage()));
                                             },
                                             title: const Text(
                                               'Daftar sebagai mitra',

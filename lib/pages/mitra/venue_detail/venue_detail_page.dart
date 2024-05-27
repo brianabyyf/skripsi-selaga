@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:selaga_ver1/pages/user/booking_page.dart';
+import 'package:selaga_ver1/pages/mitra/venue_detail/component/fasilitas.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/endpoints.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
 
-class FieldDetailPage extends StatefulWidget {
-  const FieldDetailPage({
+class MitraDetailPage extends StatefulWidget {
+  final int venueId;
+  const MitraDetailPage({
     super.key,
+    required this.venueId,
   });
 
   @override
-  State<FieldDetailPage> createState() => _FieldDetailPageState();
+  State<MitraDetailPage> createState() => _MitraDetailPageState();
 }
 
-class _FieldDetailPageState extends State<FieldDetailPage> {
+class _MitraDetailPageState extends State<MitraDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,9 +26,10 @@ class _FieldDetailPageState extends State<FieldDetailPage> {
         title: const Text('Detail'),
       ),
       body: SafeArea(
-        child: Consumer2<Token, UserId>(
-          builder: (context, myToken, myId, child) => FutureBuilder(
-            future: ApiRepository().getVenueDetail(myToken.token, myId.id),
+        child: Consumer<Token>(
+          builder: (context, myToken, child) => FutureBuilder(
+            future:
+                ApiRepository().getVenueDetail(myToken.token, widget.venueId),
             builder: (context, snapshot) {
               if (snapshot.hasData &&
                   snapshot.connectionState == ConnectionState.done) {
@@ -134,34 +137,7 @@ class DetailWidget extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              Flexible(
-                child: SizedBox(
-                  height: 35,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: fasilitasList?.length,
-                    itemBuilder: (context, index) {
-                      return Row(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 223, 222, 222),
-                                borderRadius: BorderRadius.circular(8)),
-                            child: Center(
-                                child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(fasilitasList![index]),
-                            )),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-              )
+              FasilitasBuilder(fasilitasList: fasilitasList)
             ],
           ),
           Text(
@@ -193,7 +169,7 @@ class DetailWidget extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              Text(venue.lokasiVenue ?? ''),
+              Text(venue.lokasiVenue!),
             ],
           ),
           const SizedBox(
@@ -237,14 +213,14 @@ class DetailWidget extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12))),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BookingPage()),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => const BookingPage()),
+                    // );
                   },
                   child: const Text(
-                    'Pesan Sekarang',
+                    'Lapangan Anda',
                     style: TextStyle(color: Colors.white),
                   ))),
         ],

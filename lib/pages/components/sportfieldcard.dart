@@ -4,6 +4,7 @@ class SportsFieldCard extends StatelessWidget {
   final String fieldName;
   final String? fieldImage;
   final String fieldLocation;
+  final String fieldPrice;
   final VoidCallback onPressed;
 
   const SportsFieldCard({
@@ -12,6 +13,7 @@ class SportsFieldCard extends StatelessWidget {
     required this.fieldImage,
     required this.fieldLocation,
     required this.onPressed,
+    required this.fieldPrice,
   });
 
   @override
@@ -44,13 +46,13 @@ class SportsFieldCard extends StatelessWidget {
                   child: fieldImage != null
                       ? Image.network(
                           fieldImage!,
-                          width: MediaQuery.of(context).size.width,
-                          height: 100,
+                          // width: MediaQuery.of(context).size.width,
+                          // height: 100,
                           fit: BoxFit.cover,
                         )
                       : Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 100,
+                          // width: MediaQuery.of(context).size.width,
+                          // height: 100,
                           decoration: const BoxDecoration(color: Colors.grey),
                           child: const Icon(Icons.error_outline),
                         )),
@@ -73,9 +75,38 @@ class SportsFieldCard extends StatelessWidget {
                     fieldLocation,
                     style: const TextStyle(
                       fontSize: 14.0,
-                      color: Colors.grey,
+                      color: Color.fromARGB(255, 77, 77, 77),
                     ),
                     // maxLines: 1,
+                  ),
+                  const SizedBox(height: 5.0),
+                  Row(
+                    children: [
+                      const Text(
+                        'Rp. ',
+                        style: TextStyle(
+                          fontSize: 14.0,
+                          color: Color.fromRGBO(76, 76, 220, 1),
+                        ),
+                        // maxLines: 1,
+                      ),
+                      Text(
+                        fieldPrice,
+                        style: const TextStyle(
+                          fontSize: 14.0,
+                          color: Color.fromRGBO(76, 76, 220, 1),
+                        ),
+                        // maxLines: 1,
+                      ),
+                      const Text(
+                        ' /jam',
+                        style: TextStyle(
+                          fontSize: 14.0,
+                          color: Color.fromARGB(255, 77, 77, 77),
+                        ),
+                        // maxLines: 1,
+                      ),
+                    ],
                   ),
                 ],
               ),

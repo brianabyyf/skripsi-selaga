@@ -6,8 +6,8 @@ import 'package:selaga_ver1/pages/user/profile_page.dart';
 import 'package:selaga_ver1/pages/user/riwayat_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/endpoints.dart';
-import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
 import 'package:provider/provider.dart';
+import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
 
 class HomePageNavigation extends StatefulWidget {
@@ -91,14 +91,43 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
           child: Consumer<Token>(
         builder: (context, myToken, child) => FutureBuilder(
-          future: ApiRepository().getAllLapangan(myToken.token),
+          future: ApiRepository().getAllVenue(myToken.token),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              List<LapanganModel> venue = snapshot.data!.result!;
+              List<VenueModel> venue = snapshot.data?.result ?? [];
+
+              venue.sort((a, b) => -a.rating!.compareTo(b.rating!));
+
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const Padding(
+                      padding: EdgeInsets.only(
+                          top: 10, left: 16, right: 16, bottom: 8),
+                      child: Text('Lokasi'),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            color: Color.fromRGBO(76, 76, 220, 1),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'Bandung, Indonesia',
+                            style: TextStyle(
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     const SearchBarTheme(
                       data: SearchBarThemeData(
                           surfaceTintColor:
@@ -136,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     SizedBox(
-                      height: 400,
+                      height: 375,
                       child: ListView.builder(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         shrinkWrap: true,
@@ -145,18 +174,20 @@ class _HomePageState extends State<HomePage> {
                         itemBuilder: (context, index) {
                           var img = venue[index].image;
                           var imgList = img?.split(',');
+
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SportsFieldCard(
-                              fieldName: venue[index].name,
+                              fieldName: venue[index].nameVenue ?? '',
                               fieldImage: imgList != null
                                   ? '${Endpoints().image}${imgList.first}'
                                   : null,
-                              fieldLocation: venue[index].address,
+                              fieldLocation: venue[index].lokasiVenue ?? '',
+                              fieldPrice: venue[index].price ?? '',
                               onPressed: () {
                                 context
                                     .read<UserId>()
-                                    .getUserId(venue[index].id);
+                                    .getUserId(venue[index].id ?? 0);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -198,7 +229,6 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: InkWell(
                         onTap: () {
-                          context.read<UserId>().getUserId(venue[0].id);
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -226,7 +256,7 @@ class _HomePageState extends State<HomePage> {
                                   borderRadius: BorderRadius.circular(8.0),
                                   child: venue[0].image != null
                                       ? Image.network(
-                                          '${Endpoints().image}${venue[0].image}',
+                                          '${Endpoints().image}${venue[0].image!.split(',')[0]}',
                                           height: 142,
                                           width: 142,
                                           fit: BoxFit.cover,
@@ -240,38 +270,45 @@ class _HomePageState extends State<HomePage> {
                                               const Icon(Icons.error_outline),
                                         )),
                               const SizedBox(
-                                width: 5,
+                                width: 10,
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    venue[0].name,
-                                    style: const TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    // maxLines: 1,
+                              Flexible(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 16.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        venue[0].nameVenue ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        // maxLines: 1,
+                                      ),
+                                      const SizedBox(height: 5.0),
+                                      Text(
+                                        venue[0].lokasiVenue ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 14.0,
+                                          color: Colors.grey,
+                                        ),
+                                        // maxLines: 1,
+                                      ),
+                                      const SizedBox(height: 5.0),
+                                      Text(
+                                        venue[0].price ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 14.0,
+                                          color: Colors.grey,
+                                        ),
+                                        // maxLines: 1,
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(height: 5.0),
-                                  Text(
-                                    venue[0].address,
-                                    style: const TextStyle(
-                                      fontSize: 14.0,
-                                      color: Colors.grey,
-                                    ),
-                                    // maxLines: 1,
-                                  ),
-                                  const SizedBox(height: 5.0),
-                                  Text(
-                                    venue[0].price,
-                                    style: const TextStyle(
-                                      fontSize: 14.0,
-                                      color: Colors.grey,
-                                    ),
-                                    // maxLines: 1,
-                                  ),
-                                ],
+                                ),
                               ),
                             ],
                           ),
@@ -282,18 +319,21 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             } else if (snapshot.hasError) {
-              return Column(
-                children: [
-                  const Icon(
-                    Icons.error_outline,
-                    color: Colors.red,
-                    size: 60,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Text('Error: ${snapshot.error}'),
-                  ),
-                ],
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.error_outline,
+                      color: Colors.red,
+                      size: 60,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: Text('Error: ${snapshot.error}'),
+                    ),
+                  ],
+                ),
               );
             } else {
               return const Center(

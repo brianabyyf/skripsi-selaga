@@ -6,7 +6,7 @@ import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/login_user_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
 
-import 'mitra_home_page.dart';
+import 'mitra_navigation_page.dart';
 
 class MitraLoginPage extends StatefulWidget {
   const MitraLoginPage({super.key});

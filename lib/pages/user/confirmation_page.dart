@@ -8,7 +8,7 @@ class DetailConfirmationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Konfirmasi'),
+        title: const Text('Konfirmasi'),
         centerTitle: true,
       ),
       body: SafeArea(
