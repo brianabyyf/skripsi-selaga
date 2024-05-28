@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
+import 'package:selaga_ver1/repositories/models/venue_model.dart';
 
 class Token with ChangeNotifier {
   String _token = '';
@@ -24,11 +24,11 @@ class UserId with ChangeNotifier {
 }
 
 class MyVenue with ChangeNotifier {
-  final List<LapanganModel> _venue = [];
+  final List<VenueModel> _venue = [];
 
-  List<LapanganModel> get venue => _venue;
+  List<VenueModel> get venue => _venue;
 
-  void add(List<LapanganModel> venue, int id) {
+  void add(List<VenueModel> venue, int id) {
     venue = _venue.where((e) => e.mitraId == id).toList();
     notifyListeners();
   }
@@ -39,7 +39,7 @@ class SelectedDate with ChangeNotifier {
 
   int get selectedIndex => _selectedIndex;
 
-  void getUserId(int index) {
+  void getSelectedIndex(int index) {
     _selectedIndex = index;
     notifyListeners();
   }

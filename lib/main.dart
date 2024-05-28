@@ -10,6 +10,7 @@ void main() {
     providers: [
       ChangeNotifierProvider(create: (context) => Token()),
       ChangeNotifierProvider(create: (context) => UserId()),
+      ChangeNotifierProvider(create: (context) => SelectedDate())
     ],
     child: const MyApp(),
   ));

@@ -1,39 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:selaga_ver1/pages/mitra/venue_detail/component/detail.dart';
+import 'package:selaga_ver1/pages/mitra/lapangan_page/component/have_lapangan.dart';
+import 'package:selaga_ver1/pages/mitra/lapangan_page/component/no_lapangan.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
+import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
 
-class MitraDetailPage extends StatefulWidget {
+class MyLapanganPage extends StatelessWidget {
   final int venueId;
-  const MitraDetailPage({
-    super.key,
-    required this.venueId,
-  });
+  const MyLapanganPage({super.key, required this.venueId});
 
-  @override
-  State<MitraDetailPage> createState() => _MitraDetailPageState();
-}
-
-class _MitraDetailPageState extends State<MitraDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Lapangan Anda'),
         centerTitle: true,
-        title: const Text('Venue Detail'),
       ),
       body: SafeArea(
         child: Consumer<Token>(
           builder: (context, myToken, child) => FutureBuilder(
-            future:
-                ApiRepository().getVenueDetail(myToken.token, widget.venueId),
+            future: ApiRepository().getMyLapangan(myToken.token, venueId),
             builder: (context, snapshot) {
               if (snapshot.hasData &&
                   snapshot.connectionState == ConnectionState.done) {
-                return DetailWidget(
-                  venue: snapshot.data!.result!,
-                );
+                List<Lapangan> myLapangan = snapshot.data?.result ?? [];
+                return myLapangan.isNotEmpty
+                    ? HaveLapangan(myLapangan: myLapangan)
+                    : NoLapangan(
+                        myLapangan: const [],
+                        venueId: venueId,
+                      );
               } else if (snapshot.hasError) {
                 return Column(
                   children: [

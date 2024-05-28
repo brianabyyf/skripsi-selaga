@@ -1,152 +1,92 @@
 import 'dart:convert';
 
-class LapanganModel {
-  int id;
-  String? venue;
-  String name;
-  String? image;
-  String address;
-  String price;
-  String decs;
-  String? timetableDays;
-  String? timetableHours;
-  int mitraId;
+class JadwalLapanganModel {
+  int? id;
+  String? nameVenue;
+  String? nameLapangan;
+  DateTime? days;
+  String? availableHour;
+  String? unavailableHour;
+  int? lapanganId;
+  LapanganInfo? lapangan;
 
-  LapanganModel({
-    required this.id,
-    required this.venue,
-    required this.name,
-    required this.image,
-    required this.address,
-    required this.price,
-    required this.decs,
-    required this.timetableDays,
-    required this.timetableHours,
-    required this.mitraId,
+  JadwalLapanganModel({
+    this.id,
+    this.nameVenue,
+    this.nameLapangan,
+    this.days,
+    this.availableHour,
+    this.unavailableHour,
+    this.lapanganId,
+    this.lapangan,
   });
 
-  factory LapanganModel.fromRawJson(String str) =>
-      LapanganModel.fromJson(json.decode(str));
+  factory JadwalLapanganModel.fromRawJson(String str) =>
+      JadwalLapanganModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory LapanganModel.fromJson(Map<String, dynamic> json) => LapanganModel(
+  factory JadwalLapanganModel.fromJson(Map<String, dynamic> json) =>
+      JadwalLapanganModel(
         id: json["id"],
-        venue: json["venue"],
-        name: json["name"],
-        image: json["image"],
-        address: json["address"],
-        price: json["price"],
-        decs: json["decs"],
-        timetableDays: json["timetableDays"],
-        timetableHours: json["timetableHours"],
-        mitraId: json["mitraId"],
+        nameVenue: json["nameVenue"],
+        nameLapangan: json["nameLapangan"],
+        days: json["days"] == null ? null : DateTime.parse(json["days"]),
+        availableHour: json["availableHour"],
+        unavailableHour: json["unavailableHour"],
+        lapanganId: json["lapanganId"],
+        lapangan: json["lapangan"] == null
+            ? null
+            : LapanganInfo.fromJson(json["lapangan"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "venue": venue,
-        "name": name,
-        "image": image,
-        "address": address,
-        "price": price,
-        "decs": decs,
-        "timetableDays": timetableDays,
-        "timetableHours": timetableHours,
-        "mitraId": mitraId,
+        "nameVenue": nameVenue,
+        "nameLapangan": nameLapangan,
+        "days":
+            "${days!.year.toString().padLeft(4, '0')}-${days!.month.toString().padLeft(2, '0')}-${days!.day.toString().padLeft(2, '0')}",
+        "availableHour": availableHour,
+        "unavailableHour": unavailableHour,
+        "lapanganId": lapanganId,
+        "lapangan": lapangan?.toJson(),
       };
 }
 
-class DetailLapanganModel {
+class LapanganInfo {
   int? id;
-  String? venue;
-  String? name;
-  String? image;
-  String? address;
-  String? price;
-  String? decs;
-  String? timetableDays;
-  String? timetableHours;
-  int? mitraId;
-  Owner? owner;
+  String? nameLapangan;
+  DateTime? days;
+  String? hour;
+  int? venueId;
 
-  DetailLapanganModel({
+  LapanganInfo({
     this.id,
-    this.venue,
-    this.name,
-    this.image,
-    this.address,
-    this.price,
-    this.decs,
-    this.timetableDays,
-    this.timetableHours,
-    this.mitraId,
-    this.owner,
+    this.nameLapangan,
+    this.days,
+    this.hour,
+    this.venueId,
   });
 
-  factory DetailLapanganModel.fromRawJson(String str) =>
-      DetailLapanganModel.fromJson(json.decode(str));
+  factory LapanganInfo.fromRawJson(String str) =>
+      LapanganInfo.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory DetailLapanganModel.fromJson(Map<String, dynamic> json) =>
-      DetailLapanganModel(
+  factory LapanganInfo.fromJson(Map<String, dynamic> json) => LapanganInfo(
         id: json["id"],
-        venue: json["venue"],
-        name: json["name"],
-        image: json["image"],
-        address: json["address"],
-        price: json["price"],
-        decs: json["decs"],
-        timetableDays: json["timetableDays"],
-        timetableHours: json["timetableHours"],
-        mitraId: json["mitraId"],
-        owner: json["owner"] == null ? null : Owner.fromJson(json["owner"]),
+        nameLapangan: json["nameLapangan"],
+        days: json["days"] == null ? null : DateTime.parse(json["days"]),
+        hour: json["hour"],
+        venueId: json["venueId"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "venue": venue,
-        "name": name,
-        "image": image,
-        "address": address,
-        "price": price,
-        "decs": decs,
-        "timetableDays": timetableDays,
-        "timetableHours": timetableHours,
-        "mitraId": mitraId,
-        "owner": owner?.toJson(),
-      };
-}
-
-class Owner {
-  int? id;
-  String? name;
-  String? email;
-  String? phone;
-
-  Owner({
-    this.id,
-    this.name,
-    this.email,
-    this.phone,
-  });
-
-  factory Owner.fromRawJson(String str) => Owner.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory Owner.fromJson(Map<String, dynamic> json) => Owner(
-        id: json["id"],
-        name: json["name"],
-        email: json["email"],
-        phone: json["phone"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "email": email,
-        "phone": phone,
+        "nameLapangan": nameLapangan,
+        "days":
+            "${days!.year.toString().padLeft(4, '0')}-${days!.month.toString().padLeft(2, '0')}-${days!.day.toString().padLeft(2, '0')}",
+        "hour": hour,
+        "venueId": venueId,
       };
 }

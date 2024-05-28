@@ -59,35 +59,6 @@ class ApiRepository {
     }
   }
 
-  Future<ApiResponse<List<LapanganModel>>> getAllLapangan(String token) async {
-    try {
-      final result = await api.get("/lapangan",
-          options: Options(headers: {
-            'Authorization': 'Bearer $token',
-          }));
-      final List<dynamic> data = result.data['data'];
-      final response =
-          data.map<LapanganModel>((e) => LapanganModel.fromJson(e)).toList();
-      return ApiResponse(result: response);
-    } on DioException catch (e) {
-      return ApiResponse(error: e.response?.data['message'].toString());
-    }
-  }
-
-  Future<ApiResponse<DetailLapanganModel>> getLapanganDetail(
-      String token, int id) async {
-    try {
-      final result = await api.get("/lapangan/$id",
-          options: Options(headers: {
-            'Authorization': 'Bearer $token',
-          }));
-      return ApiResponse(
-          result: DetailLapanganModel.fromJson(result.data['data']));
-    } on DioException catch (e) {
-      return ApiResponse(error: e.response?.data['message'].toString());
-    }
-  }
-
   Future<ApiResponse<String>> daftarVenue(
       String token, List<File> img, List<String> fasilitas) async {
     var formData = FormData.fromMap({
@@ -127,7 +98,7 @@ class ApiRepository {
       final result = await api.post("/loginMitra", data: user.toRawJson());
       return ApiResponse(result: result.data['token'].toString());
     } on DioException catch (e) {
-      return ApiResponse(error: e.error.toString());
+      return ApiResponse(error: e.response?.data['message'].toString());
     }
   }
 
@@ -174,6 +145,61 @@ class ApiRepository {
             'Authorization': 'Bearer $token',
           }));
       return ApiResponse(result: VenueModel.fromJson(result.data['data']));
+    } on DioException catch (e) {
+      return ApiResponse(error: e.response?.data['message'].toString());
+    }
+  }
+
+  Future<ApiResponse<List<Lapangan>>> getMyLapangan(
+      String token, int id) async {
+    try {
+      final result = await api.get("/venue/$id",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }));
+      final List<dynamic> lapangan = result.data['data']['lapangans'];
+      final response = lapangan
+          .map<Lapangan>((lapangan) => Lapangan.fromJson(lapangan))
+          .toList();
+      return ApiResponse(result: response);
+    } on DioException catch (e) {
+      return ApiResponse(error: e.response?.data['message'].toString());
+    }
+  }
+
+  Future<ApiResponse<String>> daftarLapangan(
+      String token, String nama, int id) async {
+    var formData = FormData.fromMap({
+      "nameLapangan": nama,
+      "days": '1111-11-11',
+      "hour": '0',
+      "venueId": '$id',
+    }, ListFormat.multiCompatible);
+
+    try {
+      final result = await api.post("/lapangan",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }),
+          data: formData);
+      return ApiResponse(result: result.data['message'].toString());
+    } on DioException catch (e) {
+      return ApiResponse(error: e.response?.data['message'].toString());
+    }
+  }
+
+  Future<ApiResponse<List<JadwalLapanganModel>>> getJadwalLapangan(
+      String token) async {
+    try {
+      final result = await api.get("/timetable",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }));
+      final List<dynamic> data = result.data['data'];
+      final response = data
+          .map<JadwalLapanganModel>((e) => JadwalLapanganModel.fromJson(e))
+          .toList();
+      return ApiResponse(result: response);
     } on DioException catch (e) {
       return ApiResponse(error: e.response?.data['message'].toString());
     }
