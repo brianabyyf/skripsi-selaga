@@ -44,3 +44,37 @@ class SelectedDate with ChangeNotifier {
     notifyListeners();
   }
 }
+
+class LapanganId with ChangeNotifier {
+  int _id = 0;
+
+  int get id => _id;
+
+  void getLapanganId(int id) {
+    _id = id;
+    notifyListeners();
+  }
+}
+
+class HourAvailable with ChangeNotifier {
+  final List<String> _hour = [];
+
+  List<String> get hour => _hour;
+
+  void add(List<String> hour) {
+    List<int> tempHour = [];
+    for (var e in hour) {
+      tempHour.add(int.parse(e));
+    }
+    tempHour.sort();
+    for (var e in tempHour) {
+      _hour.add(e.toString());
+    }
+    notifyListeners();
+  }
+
+  void clear() {
+    _hour.clear();
+    notifyListeners();
+  }
+}

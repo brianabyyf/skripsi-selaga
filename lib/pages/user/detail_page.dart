@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:selaga_ver1/pages/user/booking_page.dart';
+// import 'package:selaga_ver1/pages/user/booking_page.dart';
+import 'package:selaga_ver1/pages/user/booking_page/booking_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/endpoints.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
@@ -240,7 +241,9 @@ class DetailWidget extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const BookingPage()),
+                          builder: (context) => BookingPage(
+                                venue: venue,
+                              )),
                     );
                   },
                   child: const Text(
