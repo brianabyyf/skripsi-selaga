@@ -8,7 +8,8 @@ import 'package:selaga_ver1/repositories/providers.dart';
 
 class MyLapanganPage extends StatelessWidget {
   final int venueId;
-  const MyLapanganPage({super.key, required this.venueId});
+  final VenueModel venue;
+  const MyLapanganPage({super.key, required this.venueId, required this.venue});
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +27,12 @@ class MyLapanganPage extends StatelessWidget {
                   snapshot.connectionState == ConnectionState.done) {
                 List<Lapangan> myLapangan = snapshot.data?.result ?? [];
                 return myLapangan.isNotEmpty
-                    ? HaveLapangan(myLapangan: myLapangan)
+                    ? HaveLapangan(
+                        myLapangan: myLapangan,
+                        venue: venue,
+                      )
                     : NoLapangan(
-                        myLapangan: const [],
-                        venueId: venueId,
-                      );
+                        myLapangan: const [], venueId: venueId, venue: venue);
               } else if (snapshot.hasError) {
                 return Column(
                   children: [

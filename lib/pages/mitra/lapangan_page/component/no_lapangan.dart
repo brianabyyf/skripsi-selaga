@@ -6,12 +6,14 @@ import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
 
 class NoLapangan extends StatelessWidget {
+  final VenueModel venue;
   final List<Lapangan> myLapangan;
   final int venueId;
   const NoLapangan({
     super.key,
     required this.myLapangan,
     required this.venueId,
+    required this.venue,
   });
 
   @override
@@ -38,6 +40,7 @@ class NoLapangan extends StatelessWidget {
                   MaterialPageRoute(
                       builder: (context) => MyLapanganPage(
                             venueId: venueId,
+                            venue: venue,
                           )),
                 );
               }

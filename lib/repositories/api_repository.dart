@@ -204,4 +204,33 @@ class ApiRepository {
       return ApiResponse(error: e.response?.data['message'].toString());
     }
   }
+
+  Future<ApiResponse<String>> postAturJadwal({
+    required String token,
+    required String nameVenue,
+    required String nameLapangan,
+    required DateTime date,
+    required String hour,
+    required int lapanganId,
+  }) async {
+    var formData = FormData.fromMap({
+      "nameVenue": nameVenue,
+      "nameLapangan": nameLapangan,
+      "days": date,
+      "availableHour": hour,
+      "unavailableHour": '0',
+      "lapanganId": lapanganId,
+    }, ListFormat.multiCompatible);
+
+    try {
+      final result = await api.post("/timetable",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }),
+          data: formData);
+      return ApiResponse(result: result.data['message'].toString());
+    } on DioException catch (e) {
+      return ApiResponse(error: e.response?.data['message'].toString());
+    }
+  }
 }

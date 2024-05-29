@@ -146,8 +146,10 @@ class DetailWidget extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              MyLapanganPage(venueId: venue.id ?? 0)),
+                          builder: (context) => MyLapanganPage(
+                                venueId: venue.id ?? 0,
+                                venue: venue,
+                              )),
                     );
                   },
                   child: const Text(

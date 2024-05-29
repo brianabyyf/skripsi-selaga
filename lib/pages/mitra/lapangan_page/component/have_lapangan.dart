@@ -8,7 +8,9 @@ import 'package:selaga_ver1/repositories/providers.dart';
 
 class HaveLapangan extends StatelessWidget {
   final List<Lapangan> myLapangan;
-  const HaveLapangan({super.key, required this.myLapangan});
+  final VenueModel venue;
+  const HaveLapangan(
+      {super.key, required this.myLapangan, required this.venue});
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +31,12 @@ class HaveLapangan extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => DetailLapanganPage(
-                                idLapangan: myLapangan[index].id ?? 0,
-                                namaLapangan:
-                                    myLapangan[index].nameLapangan ?? '',
+                                // idLapangan: myLapangan[index].id ?? 0,
+                                // namaLapangan:
+                                //     myLapangan[index].nameLapangan ?? '',
+                                lapangan: myLapangan[index],
+                                venue: venue,
+                                // myLapangan: JadwalLapanganModel.fromJson(myLapangan[index] as Map<String, dynamic>),
                               )),
                     );
                   },
@@ -109,6 +114,7 @@ class HaveLapangan extends StatelessWidget {
                   MaterialPageRoute(
                       builder: (context) => MyLapanganPage(
                             venueId: myLapangan.first.venueId!,
+                            venue: venue,
                           )),
                 );
               }

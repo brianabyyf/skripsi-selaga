@@ -4,19 +4,26 @@ import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/mitra/detail_lapangan/atur_jadwal.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
+import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
 
 class DetailLapanganPage extends StatelessWidget {
-  final int idLapangan;
-  final String namaLapangan;
+  // final int idLapangan;
+  // final String namaLapangan;
+  final Lapangan lapangan;
+  final VenueModel venue;
   const DetailLapanganPage(
-      {super.key, required this.idLapangan, required this.namaLapangan});
+      {super.key,
+      // required this.idLapangan,
+      // required this.namaLapangan,
+      required this.lapangan,
+      required this.venue});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Jadwal $namaLapangan'),
+        title: Text('Jadwal ${lapangan.nameLapangan}'),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -28,8 +35,12 @@ class DetailLapanganPage extends StatelessWidget {
                 snapshot.connectionState == ConnectionState.done) {
               List<JadwalLapanganModel> jadwal = snapshot.data?.result ?? [];
               List<JadwalLapanganModel> myJadwal =
-                  jadwal.where((e) => e.lapanganId == idLapangan).toList();
-              return MyJadwal(myJadwal: myJadwal);
+                  jadwal.where((e) => e.lapanganId == lapangan.id).toList();
+              return MyJadwal(
+                myJadwal: myJadwal,
+                lapangan: lapangan,
+                venue: venue,
+              );
             } else if (snapshot.hasError) {
               return Column(
                 children: [
@@ -73,9 +84,13 @@ class MyJadwal extends StatefulWidget {
   const MyJadwal({
     super.key,
     required this.myJadwal,
+    required this.lapangan,
+    required this.venue,
   });
 
   final List<JadwalLapanganModel> myJadwal;
+  final Lapangan lapangan;
+  final VenueModel venue;
 
   @override
   State<MyJadwal> createState() => _MyJadwalState();
@@ -89,7 +104,6 @@ class _MyJadwalState extends State<MyJadwal> {
   List<int> hourSorted = [];
   List<int> availableHourSorted = [];
   List<int> unAvailableHourSorted = [];
-  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -110,6 +124,7 @@ class _MyJadwalState extends State<MyJadwal> {
           DateTime(
               DateTime.now().year, DateTime.now().month, DateTime.now().day)) {
         unAvailableHour = e.unavailableHour!.split(',').toList();
+        unAvailableHour.remove('0');
       }
     }
     for (var e in unAvailableHour) {
@@ -168,11 +183,6 @@ class _MyJadwalState extends State<MyJadwal> {
                                             listen: false)
                                         .getSelectedIndex(index);
 
-                                    _selectedIndex = Provider.of<SelectedDate>(
-                                            context,
-                                            listen: false)
-                                        .selectedIndex;
-
                                     hour.clear();
                                     hourSorted.clear();
                                     availableHourSorted.clear();
@@ -204,6 +214,7 @@ class _MyJadwalState extends State<MyJadwal> {
                                             .split(',')
                                             .toList();
                                       }
+                                      unAvailableHour.remove('0');
                                     }
                                     for (var e in unAvailableHour) {
                                       hour.add(e);
@@ -368,8 +379,11 @@ class _MyJadwalState extends State<MyJadwal> {
           Expanded(
             child: widget.myJadwal.any((e) =>
                     e.days ==
-                    DateTime(DateTime.now().year, DateTime.now().month,
-                        DateTime.now().day + _selectedIndex))
+                    DateTime(
+                        DateTime.now().year,
+                        DateTime.now().month,
+                        DateTime.now().day +
+                            Provider.of<SelectedDate>(context).selectedIndex))
                 ? SizedBox(
                     height: 170,
                     child: GridView.builder(
@@ -387,30 +401,34 @@ class _MyJadwalState extends State<MyJadwal> {
                       itemBuilder: (context, index) {
                         bool tapped = index == _selectedGridIndex;
                         return InkWell(
-                          onTap: () {
-                            setState(() {
-                              _selectedGridIndex = index;
-                            });
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: tapped
-                                    ? Colors.blue
-                                    : unAvailableHourSorted
-                                            .contains(hourSorted[index])
-                                        ? Colors.red
-                                        : const Color.fromARGB(34, 158, 158,
-                                            158), // color of grid items
-                                borderRadius: BorderRadius.circular(8)),
-                            child: Center(
+                            onTap: () {
+                              setState(() {
+                                _selectedGridIndex = index;
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: tapped
+                                      ? const Color.fromRGBO(76, 76, 220, 1)
+                                      : unAvailableHourSorted
+                                              .contains(hourSorted[index])
+                                          ? Colors.red
+                                          : const Color.fromARGB(34, 158, 158,
+                                              158), // color of grid items
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Center(
                                 child: Text('${hourSorted[index]}.00',
                                     style: unAvailableHourSorted
                                             .contains(hourSorted[index])
                                         ? const TextStyle(
                                             fontSize: 18.0, color: Colors.white)
-                                        : const TextStyle(fontSize: 18.0))),
-                          ),
-                        );
+                                        : tapped
+                                            ? const TextStyle(
+                                                fontSize: 18.0,
+                                                color: Colors.white)
+                                            : const TextStyle(fontSize: 18.0)),
+                              ),
+                            ));
                       },
                     ),
                   )
@@ -420,11 +438,13 @@ class _MyJadwalState extends State<MyJadwal> {
                       const Center(child: Text('Jadwal Tidak Tersedia')),
                       TextButton(
                         onPressed: () {
-                          print('object');
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const AturJadwalPage()),
+                                builder: (context) => AturJadwalPage(
+                                      venue: widget.venue,
+                                      lapangan: widget.lapangan,
+                                    )),
                           );
                         },
                         child: const Text(
