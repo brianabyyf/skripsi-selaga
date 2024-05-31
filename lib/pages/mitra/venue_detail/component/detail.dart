@@ -147,7 +147,6 @@ class DetailWidget extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => MyLapanganPage(
-                                venueId: venue.id ?? 0,
                                 venue: venue,
                               )),
                     );

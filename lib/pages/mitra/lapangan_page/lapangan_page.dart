@@ -7,9 +7,8 @@ import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
 
 class MyLapanganPage extends StatelessWidget {
-  final int venueId;
   final VenueModel venue;
-  const MyLapanganPage({super.key, required this.venueId, required this.venue});
+  const MyLapanganPage({super.key, required this.venue});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,7 @@ class MyLapanganPage extends StatelessWidget {
       body: SafeArea(
         child: Consumer<Token>(
           builder: (context, myToken, child) => FutureBuilder(
-            future: ApiRepository().getMyLapangan(myToken.token, venueId),
+            future: ApiRepository().getMyLapangan(myToken.token, venue.id!),
             builder: (context, snapshot) {
               if (snapshot.hasData &&
                   snapshot.connectionState == ConnectionState.done) {
@@ -31,8 +30,7 @@ class MyLapanganPage extends StatelessWidget {
                         myLapangan: myLapangan,
                         venue: venue,
                       )
-                    : NoLapangan(
-                        myLapangan: const [], venueId: venueId, venue: venue);
+                    : NoLapangan(myLapangan: myLapangan, venue: venue);
               } else if (snapshot.hasError) {
                 return Column(
                   children: [
@@ -49,19 +47,10 @@ class MyLapanganPage extends StatelessWidget {
                 );
               } else {
                 return const Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 60,
-                        height: 60,
-                        child: CircularProgressIndicator(),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 16),
-                        child: Text('Awaiting result...'),
-                      )
-                    ],
+                  child: SizedBox(
+                    width: 60,
+                    height: 60,
+                    child: CircularProgressIndicator(),
                   ),
                 );
               }

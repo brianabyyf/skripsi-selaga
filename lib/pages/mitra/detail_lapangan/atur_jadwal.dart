@@ -17,6 +17,14 @@ class AturJadwalPage extends StatefulWidget {
 }
 
 class _AturJadwalPageState extends State<AturJadwalPage> {
+  late int selectedDateIndex;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    selectedDateIndex = Provider.of<SelectedDate>(context).selectedIndex;
+  }
+
   final List<int> _hour = [
     7,
     8,
@@ -192,9 +200,9 @@ class _AturJadwalPageState extends State<AturJadwalPage> {
                             _hourSelected.sort();
                             return InkWell(
                                 onTap: () {
-                                  // setState(() {
-                                  //   _tempHour.remove(_tempHour[index]);
-                                  // });
+                                  setState(() {
+                                    _hourSelected.remove(_hourSelected[index]);
+                                  });
                                 },
                                 child: Container(
                                     decoration: BoxDecoration(
@@ -225,7 +233,7 @@ class _AturJadwalPageState extends State<AturJadwalPage> {
                   }
                   final String myJadwalHour = myJadwalList.join(',');
 
-                  var data = await ApiRepository().postAturJadwal(
+                  var data = await ApiRepository().postTambahJadwal(
                       token: mytoken,
                       nameVenue: widget.venue.nameVenue ?? '',
                       nameLapangan: widget.lapangan.nameLapangan ?? '',
@@ -234,19 +242,13 @@ class _AturJadwalPageState extends State<AturJadwalPage> {
                       lapanganId: widget.lapangan.id ?? -1);
 
                   if (data.result != null) {
-                    Provider.of<SelectedDate>(context, listen: false)
-                        .getSelectedIndex(0);
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (context) => DetailLapanganPage(
                                 lapangan: widget.lapangan,
                                 venue: widget.venue,
-                                // idLapangan:
-                                //     widget.myJadwal.first.lapanganId ?? 0,
-                                // namaLapangan:
-                                //     widget.myJadwal.first.nameLapangan ?? '',
-                                // myLapangan: widget.myJadwal,
+                                selectedDateIndex: selectedDateIndex,
                               )),
                     );
                   } else {

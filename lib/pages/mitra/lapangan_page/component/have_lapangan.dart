@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/mitra/detail_lapangan/detail_lapangan_page.dart';
-import 'package:selaga_ver1/pages/mitra/lapangan_page/lapangan_page.dart';
-import 'package:selaga_ver1/repositories/api_repository.dart';
+import 'package:selaga_ver1/pages/mitra/lapangan_page/component/edit_lapangan.dart';
+import 'package:selaga_ver1/pages/mitra/lapangan_page/component/tambah_lapangan.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
 
@@ -25,8 +25,8 @@ class HaveLapangan extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 8, right: 8, top: 16),
                 child: InkWell(
                   onTap: () {
-                    Provider.of<SelectedDate>(context, listen: false)
-                        .getSelectedIndex(0);
+                    // Provider.of<SelectedDate>(context, listen: false)
+                    //     .getSelectedIndex(0);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -35,7 +35,7 @@ class HaveLapangan extends StatelessWidget {
                                 // namaLapangan:
                                 //     myLapangan[index].nameLapangan ?? '',
                                 lapangan: myLapangan[index],
-                                venue: venue,
+                                venue: venue, selectedDateIndex: 0,
                                 // myLapangan: JadwalLapanganModel.fromJson(myLapangan[index] as Map<String, dynamic>),
                               )),
                     );
@@ -73,12 +73,22 @@ class HaveLapangan extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                // IconButton(
-                                //     onPressed: () {},
-                                //     icon: const Icon(
-                                //       Icons.edit_calendar,
-                                //       color: Color.fromRGBO(76, 76, 220, 1),
-                                //     )),
+                                IconButton(
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditMyLapanganPage(
+                                                    venue: venue,
+                                                    myLapangan:
+                                                        myLapangan[index])),
+                                      );
+                                    },
+                                    icon: const Icon(
+                                      Icons.edit_calendar,
+                                      color: Color.fromRGBO(76, 76, 220, 1),
+                                    )),
                                 IconButton(
                                     onPressed: () {},
                                     icon: const Icon(
@@ -100,24 +110,13 @@ class HaveLapangan extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: InkWell(
-            onTap: () async {
-              final mytoken = Provider.of<Token>(context, listen: false).token;
-
-              var data = await ApiRepository().daftarLapangan(
-                  mytoken,
-                  'Lapangan ${myLapangan.length + 1}',
-                  myLapangan.first.venueId!);
-
-              if (data.result != null) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => MyLapanganPage(
-                            venueId: myLapangan.first.venueId!,
-                            venue: venue,
-                          )),
-                );
-              }
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => TambahLapanganPage(
+                        venue: venue, myLapangan: myLapangan)),
+              );
             },
             child: Container(
               padding: const EdgeInsets.all(20),

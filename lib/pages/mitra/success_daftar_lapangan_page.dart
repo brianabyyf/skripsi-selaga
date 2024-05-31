@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:selaga_ver1/pages/components/my_button.dart';
-import 'package:selaga_ver1/pages/mitra/mitra_navigation_page.dart';
+import 'package:selaga_ver1/pages/mitra/lapangan_page/lapangan_page.dart';
+import 'package:selaga_ver1/repositories/models/venue_model.dart';
 
 class SuccesssDaftarLapanganPage extends StatelessWidget {
-  const SuccesssDaftarLapanganPage({super.key});
+  final VenueModel venue;
+  const SuccesssDaftarLapanganPage({super.key, required this.venue});
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +48,10 @@ class SuccesssDaftarLapanganPage extends StatelessWidget {
               )),
           MyButton(
               onTap: () {
-                Navigator.pushAndRemoveUntil(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const MitraHomePageNavigation()),
-                  (Route<dynamic> route) => false,
+                      builder: (context) => MyLapanganPage(venue: venue)),
                 );
               },
               buttonText: 'Kembali ke Halaman Utama')

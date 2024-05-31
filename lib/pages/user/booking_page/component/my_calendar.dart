@@ -105,7 +105,12 @@ class _BookingCalendarState extends State<BookingCalendar> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              '${DateTime.now().day + 1}',
+                                              DateFormat('d').format(
+                                                DateTime(
+                                                    DateTime.now().year,
+                                                    DateTime.now().month,
+                                                    DateTime.now().day + 1),
+                                              ),
                                               style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 16,
@@ -130,7 +135,12 @@ class _BookingCalendarState extends State<BookingCalendar> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              '${DateTime.now().day + 2}',
+                                              DateFormat('d').format(
+                                                DateTime(
+                                                    DateTime.now().year,
+                                                    DateTime.now().month,
+                                                    DateTime.now().day + 2),
+                                              ),
                                               style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 16,

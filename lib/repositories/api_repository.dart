@@ -16,9 +16,23 @@ class ApiRepository {
     api.options.receiveDataWhenStatusError = true;
   }
 
-  Future<ApiResponse<UserProfileModel>> getMyProfile(String token) async {
+  Future<ApiResponse<UserProfileMitraModel>> getMyMitraProfile(
+      String token) async {
     try {
       final result = await api.get("/profileMitra",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }));
+      return ApiResponse(
+          result: UserProfileMitraModel.fromJson(result.data['data']));
+    } on DioException catch (e) {
+      return ApiResponse(error: e.response?.data['message'].toString());
+    }
+  }
+
+  Future<ApiResponse<UserProfileModel>> getMyProfile(String token) async {
+    try {
+      final result = await api.get("/profile",
           options: Options(headers: {
             'Authorization': 'Bearer $token',
           }));
@@ -168,16 +182,36 @@ class ApiRepository {
   }
 
   Future<ApiResponse<String>> daftarLapangan(
-      String token, String nama, int id) async {
+      String token, String nama, int id, String hour) async {
     var formData = FormData.fromMap({
       "nameLapangan": nama,
       "days": '1111-11-11',
-      "hour": '0',
+      "hour": hour,
       "venueId": '$id',
     }, ListFormat.multiCompatible);
 
     try {
       final result = await api.post("/lapangan",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }),
+          data: formData);
+      return ApiResponse(result: result.data['message'].toString());
+    } on DioException catch (e) {
+      return ApiResponse(error: e.response?.data['message'].toString());
+    }
+  }
+
+  Future<ApiResponse<String>> updateLapangan(
+      String token, String hour, Lapangan data) async {
+    var formData = FormData.fromMap({
+      "nameLapangan": data.nameLapangan,
+      "days": data.days,
+      "hour": hour,
+    }, ListFormat.multiCompatible);
+
+    try {
+      final result = await api.post("/lapangan/${data.id}?_method=PATCH",
           options: Options(headers: {
             'Authorization': 'Bearer $token',
           }),
@@ -205,7 +239,20 @@ class ApiRepository {
     }
   }
 
-  Future<ApiResponse<String>> postAturJadwal({
+  // Future<ApiResponse<LapanganInfo>> getLapanganDetail(
+  //     String token, int id) async {
+  //   try {
+  //     final result = await api.get("/lapangan/$id",
+  //         options: Options(headers: {
+  //           'Authorization': 'Bearer $token',
+  //         }));
+  //     return ApiResponse(result: LapanganInfo.fromJson(result.data['data']));
+  //   } on DioException catch (e) {
+  //     return ApiResponse(error: e.response?.data['message'].toString());
+  //   }
+  // }
+
+  Future<ApiResponse<String>> postTambahJadwal({
     required String token,
     required String nameVenue,
     required String nameLapangan,
@@ -228,7 +275,36 @@ class ApiRepository {
             'Authorization': 'Bearer $token',
           }),
           data: formData);
-      return ApiResponse(result: result.data['message'].toString());
+      return ApiResponse(
+          result: result.data['data']['lapangan']['hour'].toString());
+    } on DioException catch (e) {
+      return ApiResponse(error: e.response?.data['message'].toString());
+    }
+  }
+
+  Future<ApiResponse<String>> postEditJadwal({
+    required String token,
+    required JadwalLapanganModel data,
+    required String availableHour,
+    required String unavailableHour,
+  }) async {
+    var formData = FormData.fromMap({
+      "nameVenue": data.nameVenue,
+      "nameLapangan": data.nameLapangan,
+      "days": data.days,
+      "availableHour": availableHour,
+      "unavailableHour": unavailableHour,
+      "lapanganId": data.lapanganId,
+    }, ListFormat.multiCompatible);
+
+    try {
+      final result = await api.post("/timetable/${data.id}?_method=PATCH",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }),
+          data: formData);
+      return ApiResponse(
+          result: result.data['data']['lapangan']['hour'].toString());
     } on DioException catch (e) {
       return ApiResponse(error: e.response?.data['message'].toString());
     }
