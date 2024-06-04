@@ -7,8 +7,42 @@ import 'package:selaga_ver1/repositories/models/user_profile_model.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
 
-class MitraHomePage extends StatelessWidget {
+class MitraHomePage extends StatefulWidget {
   const MitraHomePage({super.key});
+
+  @override
+  State<MitraHomePage> createState() => _MitraHomePageState();
+}
+
+class _MitraHomePageState extends State<MitraHomePage> {
+  // bool _isDataLoaded = false;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   fetchData();
+  // }
+
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   if (!_isDataLoaded) {
+  //     fetchData();
+  //   }
+  // }
+
+  // Future<void> fetchData() async {
+  //   final myToken = Provider.of<Token>(context, listen: false).token;
+
+  //   Future.wait([
+  //     ApiRepository().getAllVenue(myToken),
+  //     ApiRepository().getAllVenue(myToken)
+  //   ]);
+
+  //   setState(() {
+  //     _isDataLoaded = true;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +58,19 @@ class MitraHomePage extends StatelessWidget {
               ApiRepository().getAllVenue(myToken.token)
             ]),
             builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-              if (snapshot.hasData) {
+              if (snapshot.hasData &&
+                  snapshot.connectionState == ConnectionState.done) {
                 UserProfileModel myId = snapshot.data![0].result!;
                 List<VenueModel> venue = snapshot.data![1].result!;
                 List<VenueModel> myVenue =
                     venue.where((e) => e.mitraId == myId.id).toList();
+                // if (!_isDataLoaded) {
+                //   return CircularProgressIndicator(); // Atau widget loading lainnya
+                // } else {
+                //   return myVenue.isNotEmpty
+                //       ? HaveVenue(myVenue: myVenue)
+                //       : const NoVenue();
+                // }
                 return myVenue.isNotEmpty
                     ? HaveVenue(myVenue: myVenue)
                     : const NoVenue();

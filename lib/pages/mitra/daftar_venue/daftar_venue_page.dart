@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/components/my_checkbox.dart';
@@ -95,11 +96,12 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
         if (!context.mounted) {
           return;
         }
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const SuccesssDaftarVenuePage()),
-        );
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(
+        //       builder: (context) => const SuccesssDaftarVenuePage()),
+        // );
+        context.goNamed('mitra_daftar_venue_success');
       } else {
         setState(() {
           _isSending = false;

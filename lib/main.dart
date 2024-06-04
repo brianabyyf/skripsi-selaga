@@ -25,11 +25,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      // routerConfig: MyRoutes().router,
+    return MaterialApp.router(
+      routerConfig: MyRoutes().router,
+      // routeInformationParser: MyRoutes().router.routeInformationParser,
+      // routerDelegate: MyRoutes().router.routerDelegate,
+      // routeInformationProvider: MyRoutes().router.routeInformationProvider,
       debugShowCheckedModeBanner: false,
       title: 'SELAGA',
-      home: LandingPage(),
+      // home: LandingPage(),
     );
   }
 }

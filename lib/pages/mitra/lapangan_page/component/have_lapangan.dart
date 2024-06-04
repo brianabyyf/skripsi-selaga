@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/mitra/detail_lapangan/detail_lapangan_page.dart';
 import 'package:selaga_ver1/pages/mitra/lapangan_page/component/edit_lapangan.dart';
 import 'package:selaga_ver1/pages/mitra/lapangan_page/component/tambah_lapangan.dart';
+import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
 
@@ -27,18 +29,25 @@ class HaveLapangan extends StatelessWidget {
                   onTap: () {
                     // Provider.of<SelectedDate>(context, listen: false)
                     //     .getSelectedIndex(0);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => DetailLapanganPage(
-                                // idLapangan: myLapangan[index].id ?? 0,
-                                // namaLapangan:
-                                //     myLapangan[index].nameLapangan ?? '',
-                                lapangan: myLapangan[index],
-                                venue: venue, selectedDateIndex: 0,
-                                // myLapangan: JadwalLapanganModel.fromJson(myLapangan[index] as Map<String, dynamic>),
-                              )),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => DetailLapanganPage(
+                    //             // idLapangan: myLapangan[index].id ?? 0,
+                    //             // namaLapangan:
+                    //             //     myLapangan[index].nameLapangan ?? '',
+                    //             lapangan: myLapangan[index],
+                    //             venue: venue, selectedDateIndex: 0,
+                    //             // myLapangan: JadwalLapanganModel.fromJson(myLapangan[index] as Map<String, dynamic>),
+                    //           )),
+                    // );
+                    ArgumentsMitra args = ArgumentsMitra(
+                        venueId: venue.id,
+                        venue: venue,
+                        lapangan: myLapangan[index],
+                        selectedDateIndex: 0);
+                    args.toJson();
+                    context.goNamed('mitra_lapangan_detail', extra: args);
                   },
                   child: Container(
                     height: 85,

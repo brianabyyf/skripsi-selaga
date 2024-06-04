@@ -73,12 +73,12 @@ class LandingPage extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12))),
                             onPressed: () {
-                              // context.go('/userLogin');
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginPage()),
-                              );
+                              context.goNamed('user_login');
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (context) => const LoginPage()),
+                              // );
                             },
                             child: const Text('Masuk'),
                           ),
@@ -97,13 +97,13 @@ class LandingPage extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12))),
                             onPressed: () {
-                              // context.go('/mitraLogin');
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const MitraLoginPage()),
-                              );
+                              context.goNamed('mitra_login');
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (context) =>
+                              //           const MitraLoginPage()),
+                              // );
                             },
                             child: const Text('Masuk sebagai Mitra'),
                           ),
