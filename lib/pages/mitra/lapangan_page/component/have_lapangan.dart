@@ -45,7 +45,9 @@ class HaveLapangan extends StatelessWidget {
                         venueId: venue.id,
                         venue: venue,
                         lapangan: myLapangan[index],
-                        selectedDateIndex: 0);
+                        selectedDateIndex: 0,
+                        listLapangan: myLapangan,
+                        listJadwal: []);
                     args.toJson();
                     context.goNamed('mitra_lapangan_detail', extra: args);
                   },
@@ -84,15 +86,25 @@ class HaveLapangan extends StatelessWidget {
                               children: [
                                 IconButton(
                                     onPressed: () {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                EditMyLapanganPage(
-                                                    venue: venue,
-                                                    myLapangan:
-                                                        myLapangan[index])),
-                                      );
+                                      // Navigator.pushReplacement(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //       builder: (context) =>
+                                      //           EditMyLapanganPage(
+                                      //               venue: venue,
+                                      //               myLapangan:
+                                      //                   myLapangan[index])),
+                                      // );
+                                      ArgumentsMitra args = ArgumentsMitra(
+                                          venueId: venue.id,
+                                          venue: venue,
+                                          lapangan: myLapangan[index],
+                                          selectedDateIndex: 0,
+                                          listLapangan: myLapangan,
+                                          listJadwal: []);
+                                      args.toJson();
+                                      context.goNamed('mitra_edit_lapangan',
+                                          extra: args);
                                     },
                                     icon: const Icon(
                                       Icons.edit_calendar,
@@ -120,12 +132,21 @@ class HaveLapangan extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: InkWell(
             onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => TambahLapanganPage(
-                        venue: venue, myLapangan: myLapangan)),
-              );
+              // Navigator.pushReplacement(
+              //   context,
+              //   MaterialPageRoute(
+              //       builder: (context) => TambahLapanganPage(
+              //           venue: venue, myLapangan: myLapangan)),
+              // );
+              ArgumentsMitra args = ArgumentsMitra(
+                  venueId: venue.id,
+                  venue: venue,
+                  lapangan: myLapangan.first,
+                  selectedDateIndex: 0,
+                  listLapangan: myLapangan,
+                  listJadwal: []);
+              args.toJson();
+              context.goNamed('mitra_tambah_lapangan', extra: args);
             },
             child: Container(
               padding: const EdgeInsets.all(20),

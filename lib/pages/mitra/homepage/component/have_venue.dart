@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/mitra/daftar_venue/daftar_venue_page.dart';
 import 'package:selaga_ver1/pages/mitra/venue_detail/venue_detail_page.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/endpoints.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
+import 'package:selaga_ver1/repositories/providers.dart';
 
 class HaveVenue extends StatelessWidget {
   const HaveVenue({
@@ -37,11 +39,16 @@ class HaveVenue extends StatelessWidget {
                     //             venueId: myVenue[index].id ?? 0,
                     //           )),
                     // );
+                    Provider.of<SelectedDate>(context, listen: false)
+                        .getSelectedIndex(0);
+
                     ArgumentsMitra args = ArgumentsMitra(
                         venueId: myVenue[index].id,
                         venue: myVenue[index],
                         lapangan: myVenue[index].lapangans,
-                        selectedDateIndex: 0);
+                        selectedDateIndex: 0,
+                        listLapangan: myVenue[index].lapangans,
+                        listJadwal: []);
                     args.toJson();
                     context.goNamed('mitra_detail_venue', extra: args);
                   },
@@ -125,34 +132,29 @@ class HaveVenue extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: InkWell(
-            onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //       builder: (context) => const DaftarVenuePage()),
-              // );
-              context.goNamed('mitra_daftar_venue');
-            },
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              // margin: const EdgeInsets.symmetric(horizontal: 25),
-              decoration: BoxDecoration(
-                color: const Color.fromRGBO(76, 76, 220, 1),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: const Center(
-                child: Text(
-                  'Tambah Venue',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 60,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromRGBO(76, 76, 220, 1),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12))),
+                  onPressed: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => const DaftarVenuePage()),
+                    // );
+                    context.goNamed('mitra_daftar_venue');
+                  },
+                  child: const Text(
+                    'Tambah Venue',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ))),
         ),
       ],
     );

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 // import 'package:selaga_ver1/pages/user/booking_page.dart';
 import 'package:selaga_ver1/pages/user/booking_page/booking_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
+import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/endpoints.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
@@ -50,19 +53,10 @@ class _FieldDetailPageState extends State<FieldDetailPage> {
                 );
               } else {
                 return const Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 60,
-                        height: 60,
-                        child: CircularProgressIndicator(),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 16),
-                        child: Text('Awaiting result...'),
-                      )
-                    ],
+                  child: SizedBox(
+                    width: 60,
+                    height: 60,
+                    child: CircularProgressIndicator(),
                   ),
                 );
               }
@@ -194,11 +188,23 @@ class DetailWidget extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              Text(venue.lokasiVenue ?? ''),
+              Text(venue.lokasiVenue ?? '',
+                  style: const TextStyle(
+                    fontSize: 15,
+                  )),
             ],
           ),
           const SizedBox(
-            height: 10,
+            height: 5,
+          ),
+          Flexible(
+            child: Text('${venue.descVenue}',
+                style: const TextStyle(
+                  fontSize: 15,
+                )),
+          ),
+          const SizedBox(
+            height: 5,
           ),
           const Text('Preview',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
@@ -231,25 +237,32 @@ class DetailWidget extends StatelessWidget {
           ),
           SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: 50,
+              height: 60,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromRGBO(76, 76, 220, 1),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12))),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => BookingPage(
-                                venue: venue,
-                              )),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => BookingPage(
+                    //             venue: venue,
+                    //           )),
+                    // );
+                    ArgumentsUser args = ArgumentsUser(
+                        venue: venue, lapangan: null, listJadwal: []);
+                    args.toJson();
+                    context.goNamed('user_venue_lapangan', extra: args);
                   },
                   child: const Text(
                     'Pesan Sekarang',
-                    style: TextStyle(color: Colors.white),
-                  ))),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  )))
         ],
       ),
     );

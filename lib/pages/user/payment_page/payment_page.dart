@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:selaga_ver1/pages/components/my_box_button.dart';
+import 'package:selaga_ver1/pages/user/payment_page/components/bca_section.dart';
+import 'package:selaga_ver1/pages/user/payment_page/components/jago_section.dart';
+import 'package:selaga_ver1/pages/user/payment_page/components/ovo_section.dart';
+import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
+import 'package:selaga_ver1/repositories/models/venue_model.dart';
 
 class PaymentPage extends StatefulWidget {
-  const PaymentPage({super.key});
+  const PaymentPage(
+      {super.key,
+      required this.myJadwal,
+      required this.lapangan,
+      required this.venue});
 
   @override
   State<PaymentPage> createState() => _PaymentPageState();
+  final List<JadwalLapanganModel> myJadwal;
+  final Lapangan lapangan;
+  final VenueModel venue;
 }
 
 class _PaymentPageState extends State<PaymentPage> {
@@ -61,48 +73,18 @@ class _PaymentPageState extends State<PaymentPage> {
               ),
             )),
         body: [
-          const BcaSection(),
-          const OvoSection(),
-          const JagoSection(),
+          BcaSection(
+              myJadwal: widget.myJadwal,
+              lapangan: widget.lapangan,
+              venue: widget.venue),
+          OvoSection(
+              myJadwal: widget.myJadwal,
+              lapangan: widget.lapangan,
+              venue: widget.venue),
+          JagoSection(
+              myJadwal: widget.myJadwal,
+              lapangan: widget.lapangan,
+              venue: widget.venue),
         ][_currentIndexPage]);
-  }
-}
-
-class BcaSection extends StatelessWidget {
-  const BcaSection({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
-        child: Center(child: Text('BCA')),
-      ),
-    );
-  }
-}
-
-class OvoSection extends StatelessWidget {
-  const OvoSection({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
-        child: Center(child: Text('OVO')),
-      ),
-    );
-  }
-}
-
-class JagoSection extends StatelessWidget {
-  const JagoSection({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
-        child: Center(child: Text('Jago')),
-      ),
-    );
   }
 }

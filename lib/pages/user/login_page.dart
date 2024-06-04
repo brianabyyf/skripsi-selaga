@@ -34,12 +34,12 @@ class _LoginPageState extends State<LoginPage> {
         }
 
         context.read<Token>().getToken(data.result!);
-        // context.go('/userHome');
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const HomePageNavigation()),
-          (Route<dynamic> route) => false,
-        );
+        context.go('/userHome');
+        // Navigator.pushAndRemoveUntil(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => const HomePageNavigation()),
+        //   (Route<dynamic> route) => false,
+        // );
       } else {
         _passwordController.clear();
         setState(() {

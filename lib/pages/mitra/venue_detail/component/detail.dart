@@ -138,7 +138,7 @@ class DetailWidget extends StatelessWidget {
           ),
           SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: 50,
+              height: 60,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromRGBO(76, 76, 220, 1),
@@ -156,7 +156,9 @@ class DetailWidget extends StatelessWidget {
                         venue: venue,
                         selectedDateIndex: 0,
                         venueId: venue.id,
-                        lapangan: venue.lapangans);
+                        lapangan: venue.lapangans,
+                        listJadwal: [],
+                        listLapangan: []);
                     args.toJson();
                     context.goNamed('mitra_lapangan_page', extra: args);
                   },

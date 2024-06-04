@@ -76,6 +76,7 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/landing_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
@@ -140,12 +141,13 @@ class ProfilePage extends StatelessWidget {
                         ),
                         ListTile(
                           onTap: () {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LandingPage()),
-                              (Route<dynamic> route) => false,
-                            );
+                            // Navigator.pushAndRemoveUntil(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => const LandingPage()),
+                            //   (Route<dynamic> route) => false,
+                            // );
+                            context.goNamed('landing_page');
                           },
                           title: const Text('Keluar'),
                           trailing: const Icon(Icons.logout),

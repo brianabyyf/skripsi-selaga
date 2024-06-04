@@ -24,11 +24,12 @@ class SelectMultipleImages extends StatelessWidget {
               child: Container(
                   height: 150,
                   width: 150,
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.grey)),
+                  decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(10)),
                   child: const Center(
                     child: Icon(
-                      Icons.add_photo_alternate_outlined,
+                      Icons.file_upload_outlined,
                       size: 30,
                     ),
                   )),

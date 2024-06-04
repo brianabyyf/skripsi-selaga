@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:selaga_ver1/pages/components/sportfieldcard.dart';
 import 'package:selaga_ver1/pages/user/detail_page.dart';
 import 'package:selaga_ver1/pages/user/profile_page.dart';
-import 'package:selaga_ver1/pages/user/riwayat_page.dart';
+import 'package:selaga_ver1/pages/user/riwayat_page/riwayat_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/endpoints.dart';
 import 'package:provider/provider.dart';
@@ -93,7 +94,8 @@ class _HomePageState extends State<HomePage> {
         builder: (context, myToken, child) => FutureBuilder(
           future: ApiRepository().getAllVenue(myToken.token),
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
+            if (snapshot.hasData &&
+                snapshot.connectionState == ConnectionState.done) {
               List<VenueModel> venue = snapshot.data?.result ?? [];
 
               venue.sort((a, b) => -a.rating!.compareTo(b.rating!));
@@ -188,12 +190,13 @@ class _HomePageState extends State<HomePage> {
                                 context
                                     .read<UserId>()
                                     .getUserId(venue[index].id ?? 0);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const FieldDetailPage()),
-                                );
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) =>
+                                //           const FieldDetailPage()),
+                                // );
+                                context.goNamed('user_detail_venue');
                               },
                             ),
                           );
@@ -229,11 +232,13 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: InkWell(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const FieldDetailPage()));
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) =>
+                          //             const FieldDetailPage()));
+                          context.read<UserId>().getUserId(venue[0].id ?? 0);
+                          context.goNamed('user_detail_venue');
                         },
                         child: Container(
                           padding: const EdgeInsets.all(8),
@@ -337,19 +342,10 @@ class _HomePageState extends State<HomePage> {
               );
             } else {
               return const Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 60,
-                      height: 60,
-                      child: CircularProgressIndicator(),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 16),
-                      child: Text('Awaiting result...'),
-                    )
-                  ],
+                child: SizedBox(
+                  width: 60,
+                  height: 60,
+                  child: CircularProgressIndicator(),
                 ),
               );
             }

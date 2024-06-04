@@ -56,6 +56,17 @@ class LapanganId with ChangeNotifier {
   }
 }
 
+class BookingId with ChangeNotifier {
+  int _id = 0;
+
+  int get id => _id;
+
+  void updateBookingId(int id) {
+    _id = id;
+    notifyListeners();
+  }
+}
+
 class HourAvailable with ChangeNotifier {
   final List<String> _hour = [];
 
@@ -75,6 +86,51 @@ class HourAvailable with ChangeNotifier {
 
   void clear() {
     _hour.clear();
+    notifyListeners();
+  }
+}
+
+class SelectedHour with ChangeNotifier {
+  final List<String> _selectedHour = [];
+
+  List<String> get selectedHour => _selectedHour;
+
+  void add(List<String> hour) {
+    List<int> tempHour = [];
+    for (var e in hour) {
+      tempHour.add(int.parse(e));
+    }
+    tempHour.sort();
+    for (var e in tempHour) {
+      _selectedHour.add(e.toString());
+    }
+    notifyListeners();
+  }
+
+  void clear() {
+    _selectedHour.clear();
+    notifyListeners();
+  }
+}
+
+class PaymentMethod with ChangeNotifier {
+  String _payment = 'no payment';
+
+  String get getPayment => _payment;
+
+  void update(String payment) {
+    _payment = payment;
+    notifyListeners();
+  }
+}
+
+class OrderName with ChangeNotifier {
+  String _name = 'no name';
+
+  String get getOrdername => _name;
+
+  void update(String name) {
+    _name = name;
     notifyListeners();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:selaga_ver1/pages/landing_page.dart';
 
 class MitraProfilePage extends StatelessWidget {
@@ -55,11 +56,12 @@ class MitraProfilePage extends StatelessWidget {
               title: const Text('Keluar'),
               trailing: const Icon(Icons.logout),
               onTap: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LandingPage()),
-                  (Route<dynamic> route) => false,
-                );
+                // Navigator.pushAndRemoveUntil(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => const LandingPage()),
+                //   (Route<dynamic> route) => false,
+                // );
+                context.goNamed('landing_page');
               },
             ),
             const Divider(

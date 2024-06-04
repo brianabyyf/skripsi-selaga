@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/mitra/lapangan_page/lapangan_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
+import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
 
@@ -78,11 +80,21 @@ class _EditMyLapanganPageState extends State<EditMyLapanganPage> {
       if (!context.mounted) {
         return;
       }
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => MyLapanganPage(venue: widget.venue)),
-      );
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(
+      //       builder: (context) => MyLapanganPage(venue: widget.venue)),
+      // );
+
+      ArgumentsMitra args = ArgumentsMitra(
+          venueId: widget.venue.id,
+          venue: widget.venue,
+          lapangan: widget.myLapangan,
+          selectedDateIndex: 0,
+          listLapangan: [widget.myLapangan],
+          listJadwal: []);
+      args.toJson();
+      context.goNamed('mitra_lapangan_page', extra: args);
     } else {
       setState(() {
         _isSending = false;

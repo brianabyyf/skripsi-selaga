@@ -26,7 +26,7 @@ class _MitraRegisterPageState extends State<MitraRegisterPage> {
       setState(() {
         _isSending = true;
       });
-      var data = await ApiRepository().mitraRegister(RegisterUserModel(
+      var data = await ApiRepository().mitraRegister(RegisterMitraModel(
           name: _nameController.text,
           email: _emailController.text,
           phone: _phoneController.text,

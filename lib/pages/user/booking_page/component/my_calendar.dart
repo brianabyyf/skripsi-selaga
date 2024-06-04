@@ -52,6 +52,9 @@ class _BookingCalendarState extends State<BookingCalendar> {
                               Provider.of<HourAvailable>(context, listen: false)
                                   .clear();
 
+                              Provider.of<SelectedHour>(context, listen: false)
+                                  .clear();
+
                               for (var e in widget.myJadwal) {
                                 if (e.days ==
                                     DateTime(

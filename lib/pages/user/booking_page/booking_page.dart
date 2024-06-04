@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/user/booking_page/component/venue_lapangan.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
+import 'package:selaga_ver1/repositories/models/user_profile_model.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
 
@@ -26,6 +27,7 @@ class BookingPage extends StatelessWidget {
                 future: Future.wait([
                   ApiRepository().getMyLapangan(myToken.token, venue.id!),
                   ApiRepository().getJadwalLapangan(myToken.token),
+                  ApiRepository().getMyProfile(myToken.token),
                 ]),
                 builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
                   if (snapshot.hasData &&
@@ -33,6 +35,15 @@ class BookingPage extends StatelessWidget {
                     List<Lapangan> myLapangan = snapshot.data?[0].result ?? [];
                     List<JadwalLapanganModel> jadwal =
                         snapshot.data?[1].result ?? [];
+                    UserProfileModel profile = snapshot.data?[2].result;
+                    // Provider.of<OrderName>(context, listen: false)
+                    //     .update(profile.name ?? 'no name');
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      // Add Your Code here.
+                      context
+                          .read<OrderName>()
+                          .update(profile.name ?? 'no name');
+                    });
                     // List<JadwalLapanganModel> myJadwal = jadwal
                     //     .where((e) => e.lapanganId == myLapangan.)
                     //     .toList();
@@ -96,19 +107,10 @@ class BookingPage extends StatelessWidget {
                     );
                   } else {
                     return const Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 60,
-                            height: 60,
-                            child: CircularProgressIndicator(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 16),
-                            child: Text('Awaiting result...'),
-                          )
-                        ],
+                      child: SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: CircularProgressIndicator(),
                       ),
                     );
                   }

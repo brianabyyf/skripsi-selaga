@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/user/booking_page/component/choose_jadwal.dart';
+import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
@@ -67,14 +69,23 @@ class VenueLapangan extends StatelessWidget {
                     Provider.of<SelectedDate>(context, listen: false)
                         .getSelectedIndex(0);
                     Provider.of<HourAvailable>(context, listen: false).clear();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChooseJadwalPage(
-                              myJadwal: myJadwal,
-                              lapangan: myLapangan[index],
-                              venue: venue)),
-                    );
+                    Provider.of<SelectedHour>(context, listen: false).clear();
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => ChooseJadwalPage(
+                    //           myJadwal: myJadwal,
+                    //           lapangan: myLapangan[index],
+                    //           venue: venue)),
+                    // );
+
+                    ArgumentsUser args = ArgumentsUser(
+                        venue: venue,
+                        lapangan: myLapangan[index],
+                        listJadwal: myJadwal);
+                    args.toJson();
+
+                    context.goNamed('user_lapangan_detail', extra: args);
                   },
                   child: Container(
                     // height: 125,

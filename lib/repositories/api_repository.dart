@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:selaga_ver1/repositories/models/api_response.dart';
+import 'package:selaga_ver1/repositories/models/booking_model.dart';
 import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
 import 'package:selaga_ver1/repositories/models/login_user_model.dart';
 import 'package:selaga_ver1/repositories/models/register_user_model.dart';
@@ -116,7 +117,7 @@ class ApiRepository {
     }
   }
 
-  Future<ApiResponse<String>> mitraRegister(RegisterUserModel user) async {
+  Future<ApiResponse<String>> mitraRegister(RegisterMitraModel user) async {
     try {
       final result = await api.post("/registerMitra", data: user.toRawJson());
       return ApiResponse(result: result.data['token'].toString());
@@ -305,6 +306,104 @@ class ApiRepository {
           data: formData);
       return ApiResponse(
           result: result.data['data']['lapangan']['hour'].toString());
+    } on DioException catch (e) {
+      return ApiResponse(error: e.response?.data['message'].toString());
+    }
+  }
+
+  Future<ApiResponse<List<BookingModel>>> getBooking(String token) async {
+    try {
+      final result = await api.get("/booking",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }));
+      final List<dynamic> data = result.data['data'];
+      final response =
+          data.map<BookingModel>((e) => BookingModel.fromJson(e)).toList();
+      return ApiResponse(result: response);
+    } on DioException catch (e) {
+      return ApiResponse(error: e.response?.data['error'].toString());
+    }
+  }
+
+  Future<ApiResponse<BookingModel>> getBookingDetail(
+      String token, int id) async {
+    try {
+      final result = await api.get("/booking/$id",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }));
+      return ApiResponse(result: BookingModel.fromJson(result.data['data']));
+    } on DioException catch (e) {
+      return ApiResponse(error: e.response?.data['error'].toString());
+    }
+  }
+
+  Future<ApiResponse<String>> postBooking(
+      {required String token,
+      required JadwalLapanganModel jadwal,
+      required File img,
+      required String name,
+      required String hour,
+      required String payment}) async {
+    var formData = FormData.fromMap({
+      "orderName": name,
+      "date": jadwal.days,
+      "hours": hour,
+      "payment": payment,
+      "bookingId": jadwal.id,
+      "confirmation": "pending"
+    }, ListFormat.multiCompatible);
+
+    formData.files.addAll([
+      MapEntry(
+          "file",
+          await MultipartFile.fromFile(img.path,
+              filename: img.path.split('/').last)),
+    ]);
+    try {
+      final result = await api.post("/booking",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }),
+          data: formData);
+      return ApiResponse(result: result.data['message'].toString());
+    } on DioException catch (e) {
+      return ApiResponse(error: e.response?.data['message'].toString());
+    }
+  }
+
+  Future<ApiResponse<String>> updateBooking({
+    required String token,
+    required int id,
+    // required JadwalLapanganModel jadwal,
+    // required File img,
+    // required String name,
+    // required String hour,
+    // required String payment
+  }) async {
+    var formData = FormData.fromMap({
+      // "orderName": name,
+      // "date": jadwal.days,
+      // "hours": hour,
+      // "payment": payment,
+      // "bookingId": jadwal.id,
+      "confirmation": "done"
+    }, ListFormat.multiCompatible);
+
+    // formData.files.addAll([
+    //   MapEntry(
+    //       "file",
+    //       await MultipartFile.fromFile(img.path,
+    //           filename: img.path.split('/').last)),
+    // ]);
+    try {
+      final result = await api.post("/booking/$id?_method=PATCH",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }),
+          data: formData);
+      return ApiResponse(result: result.data['message'].toString());
     } on DioException catch (e) {
       return ApiResponse(error: e.response?.data['message'].toString());
     }

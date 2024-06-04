@@ -23,20 +23,20 @@ class SuccesssDaftarVenuePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 300,
-                      height: 300,
+                      width: 200,
+                      height: 200,
                       decoration: BoxDecoration(
                         border: Border.all(width: 1),
                         shape: BoxShape.circle,
                       ),
                       child: const Icon(
                         Icons.check,
-                        size: 250,
+                        size: 120,
                         color: Color.fromRGBO(76, 76, 220, 1),
                       ),
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 30,
                     ),
                     const Text(
                       'Venue Berhasil ditambahkan!',

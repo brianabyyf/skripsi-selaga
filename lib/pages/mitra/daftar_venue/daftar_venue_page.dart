@@ -307,8 +307,9 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
                   child: Container(
                       height: 170,
                       width: 170,
-                      decoration:
-                          BoxDecoration(border: Border.all(color: Colors.grey)),
+                      decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(10)),
                       child: _image != null
                           ? Image.file(
                               File(_image!.path),
@@ -316,7 +317,7 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
                             )
                           : const Center(
                               child: Icon(
-                                Icons.add_photo_alternate_outlined,
+                                Icons.file_upload_outlined,
                                 size: 30,
                               ),
                             )),

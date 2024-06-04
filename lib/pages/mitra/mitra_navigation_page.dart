@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:selaga_ver1/pages/mitra/homepage/home_page.dart';
+import 'package:selaga_ver1/pages/mitra/confirmation_page/mitra_confirmation_page.dart';
 import 'package:selaga_ver1/pages/mitra/mitra_profile_page.dart';
 
 class MitraHomePageNavigation extends StatefulWidget {
@@ -50,7 +51,7 @@ class _MitraHomePageNavigationState extends State<MitraHomePageNavigation> {
               ),
               GButton(
                 icon: Icons.view_list_rounded,
-                text: 'Konfirmasi',
+                text: 'Pesanan',
               ),
               GButton(
                 icon: Icons.card_membership_sharp,
@@ -71,15 +72,6 @@ class _MitraHomePageNavigationState extends State<MitraHomePageNavigation> {
         )),
       ),
     );
-  }
-}
-
-class ConfirmationPage extends StatelessWidget {
-  const ConfirmationPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }
 

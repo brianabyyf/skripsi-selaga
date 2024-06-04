@@ -15,6 +15,16 @@ void main() {
         create: (context) => LapanganId(),
       ),
       ChangeNotifierProvider(create: (context) => HourAvailable()),
+      ChangeNotifierProvider(create: (context) => SelectedHour()),
+      ChangeNotifierProvider(
+        create: (context) => PaymentMethod(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => OrderName(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => BookingId(),
+      )
     ],
     child: const MyApp(),
   ));

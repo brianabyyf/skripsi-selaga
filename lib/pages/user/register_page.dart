@@ -32,19 +32,20 @@ class _RegisterPageState extends State<RegisterPage> {
           name: _nameController.text,
           email: _emailController.text,
           phone: _phoneController.text,
-          password: _passwordController.text));
+          password: _passwordController.text,
+          status: 'member'));
 
       if (data.result != null) {
         if (!context.mounted) {
           return;
         }
         context.read<Token>().getToken(data.result!);
-        // context.go('/userHome');
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const HomePageNavigation()),
-          (Route<dynamic> route) => false,
-        );
+        context.goNamed('user_home');
+        // Navigator.pushAndRemoveUntil(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => const HomePageNavigation()),
+        //   (Route<dynamic> route) => false,
+        // );
       } else {
         setState(() {
           _isSending = false;

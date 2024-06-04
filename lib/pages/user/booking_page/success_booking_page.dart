@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:selaga_ver1/pages/components/my_button.dart';
-import 'package:selaga_ver1/pages/mitra/lapangan_page/lapangan_page.dart';
-import 'package:selaga_ver1/repositories/models/arguments.dart';
-import 'package:selaga_ver1/repositories/models/venue_model.dart';
 
-class SuccesssDaftarLapanganPage extends StatelessWidget {
-  final VenueModel venue;
-  const SuccesssDaftarLapanganPage({super.key, required this.venue});
+class SuccesssBookingLapanganPage extends StatelessWidget {
+  const SuccesssBookingLapanganPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,44 +38,34 @@ class SuccesssDaftarLapanganPage extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
                     const Text(
-                      'Lapangan Berhasil ditambahkan!',
+                      'Pembayaran Selesai!',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
-                    )
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Flexible(
+                      child: SizedBox(
+                        width: 200,
+                        child: Text(
+                          'Mohon tunggu konfirmasi dari penyewa lapangan ya..',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 )),
             MyButton(
                 onTap: () {
-                  // Navigator.pushReplacement(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => MyLapanganPage(venue: venue)),
-                  // );
-                  ArgumentsMitra args = ArgumentsMitra(
-                      venueId: venue.id,
-                      venue: venue,
-                      lapangan: Lapangan(
-                          venueId: venue.id,
-                          nameLapangan: 'no name',
-                          createdAt: DateTime.now(),
-                          days: DateTime.now(),
-                          hour: '0',
-                          id: 0,
-                          updatedAt: DateTime.now(),
-                          deletedAt: null),
-                      selectedDateIndex: 0,
-                      listLapangan: [],
-                      listJadwal: []);
-                  args.toJson();
-                  context.goNamed('mitra_lapangan_page', extra: args);
+                  context.goNamed('user_home');
                 },
-                buttonText: 'Selanjutnya')
+                buttonText: 'Kembali ke halaman utama')
           ],
         ),
       ))),

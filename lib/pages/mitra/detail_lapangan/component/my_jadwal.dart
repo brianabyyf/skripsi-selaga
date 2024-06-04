@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/mitra/detail_lapangan/component/edit_jadwal.dart';
 import 'package:selaga_ver1/pages/mitra/detail_lapangan/detail_lapangan_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
+import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
@@ -297,21 +299,21 @@ class _MyJadwalState extends State<MyJadwal> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Jam',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   Row(
                     children: [
                       Text(
-                        'harga',
-                        style: TextStyle(
+                        '${widget.venue.price}',
+                        style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      Text(' /Jam'),
+                      const Text(' /Jam'),
                     ],
                   )
                 ],
@@ -431,15 +433,42 @@ class _MyJadwalState extends State<MyJadwal> {
                               .selectedIndex))
               ? InkWell(
                   onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EditJadwalPage(
-                                lapangan: widget.lapangan,
-                                venue: widget.venue,
-                                myJadwal: widget.myJadwal,
-                              )),
-                    );
+                    // Navigator.pushReplacement(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => EditJadwalPage(
+                    //             lapangan: widget.lapangan,
+                    //             venue: widget.venue,
+                    //             myJadwal: widget.myJadwal,
+                    //           )),
+                    // );
+                    List<JadwalLapanganModel> selectedJadwal = [];
+
+                    if (widget.myJadwal.any((e) =>
+                        e.days ==
+                        DateTime(
+                            DateTime.now().year,
+                            DateTime.now().month,
+                            DateTime.now().day +
+                                Provider.of<SelectedDate>(context,
+                                        listen: false)
+                                    .selectedIndex))) {
+                      selectedJadwal = widget.myJadwal;
+                    }
+
+                    ArgumentsMitra args = ArgumentsMitra(
+                        venueId: widget.venue.id,
+                        venue: widget.venue,
+                        lapangan: widget.lapangan,
+                        selectedDateIndex:
+                            Provider.of<SelectedDate>(context, listen: false)
+                                .selectedIndex,
+                        listLapangan: [widget.lapangan],
+                        listJadwal: selectedJadwal);
+                    args.toJson();
+
+                    // print(args);
+                    context.goNamed('mitra_edit_jadwal_lapangan', extra: args);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(20),
@@ -483,6 +512,8 @@ class _MyJadwalState extends State<MyJadwal> {
         DateTime.now().day +
             Provider.of<SelectedDate>(context, listen: false).selectedIndex);
 
+    print(date);
+
     var data = await ApiRepository().postTambahJadwal(
         token: mytoken,
         nameVenue: widget.venue.nameVenue ?? '',
@@ -492,16 +523,27 @@ class _MyJadwalState extends State<MyJadwal> {
         lapanganId: widget.lapangan.id ?? -1);
 
     if (data.result != null) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => DetailLapanganPage(
-                  lapangan: widget.lapangan,
-                  venue: widget.venue,
-                  selectedDateIndex:
-                      context.watch<SelectedDate>().selectedIndex,
-                )),
-      );
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(
+      //       builder: (context) => DetailLapanganPage(
+      //             lapangan: widget.lapangan,
+      //             venue: widget.venue,
+      //             selectedDateIndex:
+      //                 context.watch<SelectedDate>().selectedIndex,
+      //           )),
+      // );
+      ArgumentsMitra args = ArgumentsMitra(
+          venueId: widget.venue.id,
+          venue: widget.venue,
+          lapangan: widget.lapangan,
+          selectedDateIndex:
+              Provider.of<SelectedDate>(context, listen: false).selectedIndex,
+          listLapangan: [widget.lapangan],
+          listJadwal: []);
+      args.toJson();
+      context.goNamed('mitra_lapangan_detail', extra: args);
+
       String myHour = data.result ?? '';
       setState(() {
         hour = myHour.split(',').toList();
