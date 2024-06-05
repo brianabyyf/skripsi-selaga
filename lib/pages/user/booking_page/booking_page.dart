@@ -36,34 +36,11 @@ class BookingPage extends StatelessWidget {
                     List<JadwalLapanganModel> jadwal =
                         snapshot.data?[1].result ?? [];
                     UserProfileModel profile = snapshot.data?[2].result;
-                    // Provider.of<OrderName>(context, listen: false)
-                    //     .update(profile.name ?? 'no name');
                     WidgetsBinding.instance.addPostFrameCallback((_) {
-                      // Add Your Code here.
                       context
                           .read<OrderName>()
                           .update(profile.name ?? 'no name');
                     });
-                    // List<JadwalLapanganModel> myJadwal = jadwal
-                    //     .where((e) => e.lapanganId == myLapangan.)
-                    //     .toList();
-                    // return Padding(
-                    //   padding: const EdgeInsets.all(16.0),
-                    //   child: Column(
-                    //     children: [
-                    //       const BookingCalendar(),
-                    //       MyLapanganDropDown(myLapangan: myLapangan),
-                    //       // const SizedBox(
-                    //       //   height: 10,
-                    //       // ),
-                    //       // Expanded(
-                    //       //   flex: 2,
-                    //       //   child: TimeViewLapangan(
-                    //       //       myLapangan: myLapangan, jadwal: jadwal),
-                    //       // )
-                    //     ],
-                    //   ),
-                    // );
                     if (myLapangan.isEmpty) {
                       return const Center(
                         child: Column(

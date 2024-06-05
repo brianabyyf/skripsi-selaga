@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:selaga_ver1/pages/components/my_button.dart';
-import 'package:selaga_ver1/pages/mitra/mitra_navigation_page.dart';
 
 class SuccesssDaftarVenuePage extends StatelessWidget {
   const SuccesssDaftarVenuePage({super.key});
@@ -47,12 +46,6 @@ class SuccesssDaftarVenuePage extends StatelessWidget {
               )),
           MyButton(
               onTap: () {
-                // Navigator.pushReplacement(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) => const MitraHomePageNavigation()),
-                //   // (Route<dynamic> route) => false,
-                // );
                 context.goNamed('mitra_home');
               },
               buttonText: 'Kembali ke Halaman Utama')

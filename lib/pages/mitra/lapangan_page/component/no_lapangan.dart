@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:selaga_ver1/pages/mitra/lapangan_page/component/tambah_lapangan.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
 
@@ -26,15 +25,6 @@ class NoLapangan extends StatelessWidget {
           const SizedBox(width: 2),
           TextButton(
             onPressed: () {
-              // Navigator.pushReplacement(
-              //   context,
-              //   MaterialPageRoute(
-              //       builder: (context) => TambahLapanganPage(
-              //             venue: venue,
-              //             myLapangan: myLapangan,
-              //           )),
-              // );
-
               ArgumentsMitra args = ArgumentsMitra(
                   venueId: venue.id,
                   venue: venue,

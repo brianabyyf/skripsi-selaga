@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:selaga_ver1/pages/mitra/daftar_venue/daftar_venue_page.dart';
+import 'package:go_router/go_router.dart';
 
 class NoVenue extends StatelessWidget {
   const NoVenue({
@@ -19,11 +19,7 @@ class NoVenue extends StatelessWidget {
           const SizedBox(width: 2),
           TextButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const DaftarVenuePage()),
-              );
+              context.goNamed('mitra_daftar_venue');
             },
             child: const Text(
               'Daftar disini',

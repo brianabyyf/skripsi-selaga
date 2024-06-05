@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/components/auth_field.dart';
-import 'package:selaga_ver1/pages/user/home_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/register_user_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
@@ -36,21 +35,16 @@ class _RegisterPageState extends State<RegisterPage> {
           status: 'member'));
 
       if (data.result != null) {
-        if (!context.mounted) {
+        if (!mounted) {
           return;
         }
         context.read<Token>().getToken(data.result!);
         context.goNamed('user_home');
-        // Navigator.pushAndRemoveUntil(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => const HomePageNavigation()),
-        //   (Route<dynamic> route) => false,
-        // );
       } else {
         setState(() {
           _isSending = false;
         });
-        if (!context.mounted) {
+        if (!mounted) {
           return;
         }
         ScaffoldMessenger.of(context).showSnackBar(

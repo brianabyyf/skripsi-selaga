@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:selaga_ver1/pages/mitra/detail_lapangan/component/edit_jadwal.dart';
-import 'package:selaga_ver1/pages/mitra/detail_lapangan/detail_lapangan_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
@@ -29,7 +27,6 @@ class MyJadwal extends StatefulWidget {
 }
 
 class _MyJadwalState extends State<MyJadwal> {
-  int _selectedGridIndex = -1;
   List<String> hour = [];
   List<String> availableHour = [];
   List<String> unAvailableHour = [];
@@ -500,23 +497,15 @@ class _MyJadwalState extends State<MyJadwal> {
   }
 
   void _uploadMyJadwal() async {
-    // Navigator.pushReplacement(
-    //   context,
-    //   MaterialPageRoute(
-    //       builder: (context) => AturJadwalPage(
-    //             venue: widget.venue,
-    //             lapangan: widget.lapangan,
-    //           )),
-    // );
-
+    if (!context.mounted) {
+      return;
+    }
     final mytoken = Provider.of<Token>(context, listen: false).token;
     final date = DateTime(
         DateTime.now().year,
         DateTime.now().month,
         DateTime.now().day +
             Provider.of<SelectedDate>(context, listen: false).selectedIndex);
-
-    print(date);
 
     var data = await ApiRepository().postTambahJadwal(
         token: mytoken,
@@ -527,16 +516,9 @@ class _MyJadwalState extends State<MyJadwal> {
         lapanganId: widget.lapangan.id ?? -1);
 
     if (data.result != null) {
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(
-      //       builder: (context) => DetailLapanganPage(
-      //             lapangan: widget.lapangan,
-      //             venue: widget.venue,
-      //             selectedDateIndex:
-      //                 context.watch<SelectedDate>().selectedIndex,
-      //           )),
-      // );
+      if (!mounted) {
+        return;
+      }
       ArgumentsMitra args = ArgumentsMitra(
           venueId: widget.venue.id,
           venue: widget.venue,
@@ -553,7 +535,24 @@ class _MyJadwalState extends State<MyJadwal> {
         hour = myHour.split(',').toList();
       });
     } else {
-      print(data.error);
+      if (!mounted) {
+        return;
+      }
+      SnackBar snackBar = SnackBar(
+        content: Text('${data.error}',
+            style: const TextStyle(fontSize: 16)),
+        // backgroundColor: Colors.indigo,
+        duration: const Duration(milliseconds: 1300),
+        dismissDirection: DismissDirection.up,
+        behavior: SnackBarBehavior.floating,
+        margin: EdgeInsets.only(
+            bottom:
+            MediaQuery.of(context).size.height - 150,
+            left: 10,
+            right: 10),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       return;
     }
   }

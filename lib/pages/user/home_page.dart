@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:selaga_ver1/pages/components/sportfieldcard.dart';
-import 'package:selaga_ver1/pages/user/detail_page.dart';
 import 'package:selaga_ver1/pages/user/profile_page.dart';
 import 'package:selaga_ver1/pages/user/riwayat_page/riwayat_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
@@ -189,12 +188,6 @@ class _HomePageState extends State<HomePage> {
                                 context
                                     .read<UserId>()
                                     .getUserId(venue[index].id ?? 0);
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (context) =>
-                                //           const FieldDetailPage()),
-                                // );
                                 context.goNamed('user_detail_venue');
                               },
                             ),
@@ -231,11 +224,6 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: InkWell(
                         onTap: () {
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) =>
-                          //             const FieldDetailPage()));
                           context.read<UserId>().getUserId(venue[0].id ?? 0);
                           context.goNamed('user_detail_venue');
                         },

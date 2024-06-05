@@ -1,84 +1,6 @@
-// import 'package:flutter/material.dart';
-// import 'package:selaga_ver1/pages/landing_page.dart';
-
-// class ProfilePage extends StatelessWidget {
-//   const ProfilePage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         centerTitle: true,
-//         title: const Text('Profile'),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(15.0),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [
-//             const Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Center(
-//                   child: CircleAvatar(
-//                     // backgroundColor: Colors.grey,
-//                     radius: 50,
-//                   ),
-//                 ),
-//                 SizedBox(height: 30.0),
-//                 Padding(
-//                   padding: EdgeInsets.only(left: 20, bottom: 10),
-//                   child: Text("Nama Pengguna"),
-//                 ),
-//                 Divider(
-//                   indent: 15,
-//                   endIndent: 15,
-//                 ),
-//                 SizedBox(height: 15.0),
-//                 Padding(
-//                   padding: EdgeInsets.only(left: 20, bottom: 10),
-//                   child: Text("Nomor Handphone Pengguna"),
-//                 ),
-//                 Divider(
-//                   indent: 15,
-//                   endIndent: 15,
-//                 ),
-//                 SizedBox(height: 15.0),
-//                 Padding(
-//                   padding: EdgeInsets.only(left: 20, bottom: 10),
-//                   child: Text("Email Pengguna"),
-//                 ),
-//                 Divider(
-//                   indent: 15,
-//                   endIndent: 15,
-//                 ),
-//                 SizedBox(height: 15.0),
-//               ],
-//             ),
-//             TextButton(
-//                 onPressed: () {
-//                   Navigator.pushAndRemoveUntil(
-//                     context,
-//                     MaterialPageRoute(
-//                         builder: (context) => const LandingPage()),
-//                     (Route<dynamic> route) => false,
-//                   );
-//                 },
-//                 child: const Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [Text("Keluar"), Icon(Icons.logout)],
-//                 )),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:selaga_ver1/pages/landing_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/user_profile_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
@@ -140,14 +62,33 @@ class ProfilePage extends StatelessWidget {
                           endIndent: 15,
                         ),
                         ListTile(
-                          onTap: () {
-                            // Navigator.pushAndRemoveUntil(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) => const LandingPage()),
-                            //   (Route<dynamic> route) => false,
-                            // );
-                            context.goNamed('landing_page');
+                          onTap: () async {
+                            var data = await ApiRepository().userLogout(myToken.token);
+
+                            if (data.result != null) {
+                              if (!context.mounted) {
+                                return;
+                              }
+                              context.goNamed('landing_page');
+                            } else {
+                              if (!context.mounted) {
+                                return;
+                              }
+                              SnackBar snackBar = SnackBar(
+                                content: Text('${data.error}',
+                                    style: const TextStyle(fontSize: 16)),
+                                // backgroundColor: Colors.indigo,
+                                duration: const Duration(milliseconds: 1300),
+                                dismissDirection: DismissDirection.up,
+                                behavior: SnackBarBehavior.floating,
+                                margin: EdgeInsets.only(
+                                    bottom:
+                                    MediaQuery.of(context).size.height - 150,
+                                    left: 10,
+                                    right: 10),
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            }
                           },
                           title: const Text('Keluar'),
                           trailing: const Icon(Icons.logout),
@@ -159,19 +100,6 @@ class ProfilePage extends StatelessWidget {
                         const SizedBox(height: 15.0),
                       ],
                     ),
-                    // TextButton(
-                    //     onPressed: () {
-                    //       Navigator.pushAndRemoveUntil(
-                    //         context,
-                    //         MaterialPageRoute(
-                    //             builder: (context) => const LandingPage()),
-                    //         (Route<dynamic> route) => false,
-                    //       );
-                    //     },
-                    //     child: const Row(
-                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //       children: [Text("Keluar"), Icon(Icons.logout)],
-                    //     )),
                   ],
                 ),
               );
@@ -191,19 +119,10 @@ class ProfilePage extends StatelessWidget {
               );
             } else {
               return const Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 60,
-                      height: 60,
-                      child: CircularProgressIndicator(),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 16),
-                      child: Text('Awaiting result...'),
-                    )
-                  ],
+                child: SizedBox(
+                  width: 60,
+                  height: 60,
+                  child: CircularProgressIndicator(),
                 ),
               );
             }

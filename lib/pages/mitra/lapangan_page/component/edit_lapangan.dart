@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:selaga_ver1/pages/mitra/lapangan_page/lapangan_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
@@ -77,14 +76,9 @@ class _EditMyLapanganPageState extends State<EditMyLapanganPage> {
         .updateLapangan(mytoken, myHour, widget.myLapangan);
 
     if (data.result != null) {
-      if (!context.mounted) {
+      if (!mounted) {
         return;
       }
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(
-      //       builder: (context) => MyLapanganPage(venue: widget.venue)),
-      // );
 
       ArgumentsMitra args = ArgumentsMitra(
           venueId: widget.venue.id,
@@ -99,7 +93,7 @@ class _EditMyLapanganPageState extends State<EditMyLapanganPage> {
       setState(() {
         _isSending = false;
       });
-      if (!context.mounted) {
+      if (!mounted) {
         return;
       }
       ScaffoldMessenger.of(context).showSnackBar(

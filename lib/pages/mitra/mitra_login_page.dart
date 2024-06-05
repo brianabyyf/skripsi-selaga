@@ -7,8 +7,6 @@ import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/login_user_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
 
-import 'mitra_navigation_page.dart';
-
 class MitraLoginPage extends StatefulWidget {
   const MitraLoginPage({super.key});
 
@@ -31,23 +29,17 @@ class _MitraLoginPageState extends State<MitraLoginPage> {
           email: _emailController.text, password: _passwordController.text));
 
       if (data.result != null) {
-        if (!context.mounted) {
+        if (!mounted) {
           return;
         }
         context.read<Token>().getToken(data.result!);
-        // Navigator.pushAndRemoveUntil(
-        //   context,
-        //   MaterialPageRoute(
-        //       builder: (context) => const MitraHomePageNavigation()),
-        //   (Route<dynamic> route) => false,
-        // );
 
         context.goNamed('mitra_home');
       } else {
         setState(() {
           _isSending = false;
         });
-        if (!context.mounted) {
+        if (!mounted) {
           return;
         }
         ScaffoldMessenger.of(context).showSnackBar(

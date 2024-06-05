@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-// import 'package:selaga_ver1/pages/user/booking_page.dart';
-import 'package:selaga_ver1/pages/user/booking_page/booking_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/endpoints.dart';
@@ -107,7 +104,7 @@ class DetailWidget extends StatelessWidget {
             children: [
               Container(
                 height: 35,
-                width: 60,
+                width: 65,
                 decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 223, 222, 222),
                     borderRadius: BorderRadius.circular(8)),
@@ -122,7 +119,7 @@ class DetailWidget extends StatelessWidget {
                     const SizedBox(
                       width: 5,
                     ),
-                    Text('${venue.rating}')
+                    Text(double.parse(venue.rating!).toStringAsFixed(2))
                   ],
                 ),
               ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:selaga_ver1/pages/components/my_button.dart';
-import 'package:selaga_ver1/pages/mitra/lapangan_page/lapangan_page.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
 
@@ -53,11 +52,6 @@ class SuccesssDaftarLapanganPage extends StatelessWidget {
               )),
           MyButton(
               onTap: () {
-                // Navigator.pushReplacement(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) => MyLapanganPage(venue: venue)),
-                // );
                 ArgumentsMitra args = ArgumentsMitra(
                     venueId: venue.id,
                     venue: venue,

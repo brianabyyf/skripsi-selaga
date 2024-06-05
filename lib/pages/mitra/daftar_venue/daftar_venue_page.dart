@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/components/my_checkbox.dart';
 import 'package:selaga_ver1/pages/mitra/daftar_venue/component/multiple_image.dart';
 import 'package:selaga_ver1/pages/mitra/daftar_venue/component/my_upload_button.dart';
-import 'package:selaga_ver1/pages/mitra/success_daftar_venue_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
@@ -73,12 +72,6 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
       );
     }
 
-    // print(fasilitas);
-    if (_fasilitas.isNotEmpty) {
-      String cek = _fasilitas.reduce((value, element) => '$value,$element');
-      print('to String: $cek');
-    }
-
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isSending = true;
@@ -101,20 +94,15 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
 
       var data = await ApiRepository().daftarVenue(mytoken, venue);
       if (data.result != null) {
-        if (!context.mounted) {
+        if (!mounted) {
           return;
         }
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(
-        //       builder: (context) => const SuccesssDaftarVenuePage()),
-        // );
         context.goNamed('mitra_daftar_venue_success');
       } else {
         setState(() {
           _isSending = false;
         });
-        if (!context.mounted) {
+        if (!mounted) {
           return;
         }
         ScaffoldMessenger.of(context).showSnackBar(

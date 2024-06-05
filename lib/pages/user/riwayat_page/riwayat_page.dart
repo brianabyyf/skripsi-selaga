@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/booking_model.dart';
 import 'package:selaga_ver1/repositories/models/user_profile_model.dart';
-import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
 
 class RiwayatPage extends StatefulWidget {
@@ -64,7 +63,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                               return;
                             } else {
                               Provider.of<BookingId>(context, listen: false)
-                                  .updateBookingId(myBooking[index].id ?? 0);
+                                  .updateBookingId(myBooking[index].id);
                               context.goNamed('user_detail_pemesanan');
                             }
                           },

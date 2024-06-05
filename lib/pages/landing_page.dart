@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:selaga_ver1/pages/mitra/mitra_login_page.dart';
-import 'package:selaga_ver1/pages/mitra/mitra_register_page.dart';
-import 'package:selaga_ver1/pages/user/login_page.dart';
-import 'package:selaga_ver1/pages/user/register_page.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});

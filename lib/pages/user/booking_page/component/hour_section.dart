@@ -20,9 +20,8 @@ class HourSection extends StatefulWidget {
 }
 
 class _HourSectionState extends State<HourSection> {
-  // int _selectedGridIndex = -1;
   List<String> _hour = [];
-  List<String> _availableHour = [];
+  // List<String> _availableHour = [];
   List<String> _unAvailableHour = [];
   List<String> _selectedHour = [];
 
@@ -31,7 +30,7 @@ class _HourSectionState extends State<HourSection> {
     super.didChangeDependencies();
 
     // Menggunakan Provider di dalam didChangeDependencies
-    _availableHour = Provider.of<HourAvailable>(context).hour;
+    // _availableHour = Provider.of<HourAvailable>(context).hour;
     // _hour = Provider.of<HourAvailable>(context).hour;
     _unAvailableHour = Provider.of<HourUnAvailable>(context).hour;
     if (_hour.contains('0')) {
@@ -51,15 +50,6 @@ class _HourSectionState extends State<HourSection> {
               DateTime.now().year, DateTime.now().month, DateTime.now().day)) {
         List<String> availableHour = e.availableHour!.split(',').toList();
         List<String> unAvailableHour = e.unavailableHour!.split(',').toList();
-
-        // WidgetsBinding.instance.addPostFrameCallback(
-        //   (timeStamp) {
-        //     Provider.of<HourAvailable>(context, listen: false)
-        //         .add(availableHour);
-        //     Provider.of<HourUnAvailable>(context, listen: false)
-        //         .add(unAvailableHour);
-        //   },
-        // );
 
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) =>
             Provider.of<HourAvailable>(context, listen: false)
@@ -111,7 +101,6 @@ class _HourSectionState extends State<HourSection> {
                         : InkWell(
                             onTap: () {
                               setState(() {
-                                // _selectedGridIndex = index;
 
                                 Provider.of<SelectedHour>(context,
                                         listen: false)
@@ -119,13 +108,9 @@ class _HourSectionState extends State<HourSection> {
 
                                 if (_selectedHour.contains(_hour[index])) {
                                   _selectedHour.remove(_hour[index]);
-                                  // Provider.of<MyCheck>(context, listen: false)
-                                  //     .update(false);
                                 } else {
                                   _selectedHour.clear();
                                   _selectedHour.add(_hour[index]);
-                                  // Provider.of<MyCheck>(context, listen: false)
-                                  //     .update(true);
                                 }
                                 Provider.of<SelectedHour>(context,
                                         listen: false)

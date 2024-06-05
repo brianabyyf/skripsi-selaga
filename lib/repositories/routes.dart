@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:selaga_ver1/pages/landing_page.dart';
 import 'package:selaga_ver1/pages/mitra/confirmation_page/confirmation_detail_page.dart';
@@ -287,7 +286,7 @@ class MyRoutes {
                 ]),
           ]),
     ],
-    initialLocation: '/userHome',
+    initialLocation: '/',
     routerNeglect: true,
     debugLogDiagnostics: true,
   );

@@ -1,14 +1,8 @@
-import 'dart:ffi';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/booking_model.dart';
-import 'package:selaga_ver1/repositories/models/endpoints.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
 
@@ -264,6 +258,9 @@ class _RatingWidgetState extends State<RatingWidget> {
 
                         if (data.result != null) {
                           setState(() {});
+                          if (!context.mounted) {
+                            return;
+                          }
                           SnackBar snackBar = SnackBar(
                             content: const Text(
                                 'Terima kasih atas penilaian anda',
@@ -280,6 +277,9 @@ class _RatingWidgetState extends State<RatingWidget> {
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         } else {
+                          if (!context.mounted) {
+                            return;
+                          }
                           SnackBar snackBar = SnackBar(
                             content: Text('${data.error}',
                                 style: const TextStyle(fontSize: 16)),

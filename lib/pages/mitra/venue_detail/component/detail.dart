@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:selaga_ver1/pages/mitra/lapangan_page/lapangan_page.dart';
 import 'package:selaga_ver1/pages/mitra/venue_detail/component/fasilitas.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/endpoints.dart';
@@ -145,13 +144,6 @@ class DetailWidget extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12))),
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => MyLapanganPage(
-                    //             venue: venue,
-                    //           )),
-                    // );
                     ArgumentsMitra args = ArgumentsMitra(
                         venue: venue,
                         selectedDateIndex: 0,

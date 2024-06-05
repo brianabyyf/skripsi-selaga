@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -69,19 +68,6 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: InkWell(
                           onTap: () {
-                            // ArgumentsUser args = ArgumentsUser(
-                            //     venue: venue,
-                            //     lapangan: myLapangan[index],
-                            //     listJadwal: myJadwal);
-                            // args.toJson();
-
-                            // context.goNamed('user_lapangan_detail',
-                            //     extra: args);
-                            // if (myBooking[index].confirmation == 'pending') {
-                            //   return;
-                            // } else {
-                            // context.goNamed('user_detail_pemesanan');
-                            // }
                             Provider.of<BookingId>(context, listen: false)
                                 .updateBookingId(myBooking[index].id);
                             context.goNamed('mitra_detail_konfirmasi');
@@ -130,15 +116,6 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                                               .format(myBooking[index].date)),
                                           subtitle: Text(
                                               '${myBooking[index].hours}.00 - ${1 + int.parse(myBooking[index].hours)}.00')),
-                                      // myBooking[index].confirmation == 'pending'
-                                      //     ? const Text(
-                                      //         'Segera konfirmasi pesanan ini!',
-                                      //         softWrap: true,
-                                      //         overflow: TextOverflow.ellipsis,
-                                      //         style:
-                                      //             TextStyle(color: Colors.red),
-                                      //       )
-                                      //     : Container()
                                     ],
                                   ),
                                 ),

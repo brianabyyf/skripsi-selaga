@@ -6,7 +6,6 @@ import 'package:selaga_ver1/pages/components/decoration.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/login_user_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
-import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -29,23 +28,18 @@ class _LoginPageState extends State<LoginPage> {
       var data = await ApiRepository().userLogin(LoginUserModel(
           email: _emailController.text, password: _passwordController.text));
       if (data.result != null) {
-        if (!context.mounted) {
+        if (!mounted) {
           return;
         }
 
         context.read<Token>().getToken(data.result!);
         context.go('/userHome');
-        // Navigator.pushAndRemoveUntil(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => const HomePageNavigation()),
-        //   (Route<dynamic> route) => false,
-        // );
       } else {
         _passwordController.clear();
         setState(() {
           _isSending = false;
         });
-        if (!context.mounted) {
+        if (!mounted) {
           return;
         }
         ScaffoldMessenger.of(context).showSnackBar(

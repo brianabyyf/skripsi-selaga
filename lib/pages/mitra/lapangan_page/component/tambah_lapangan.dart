@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:selaga_ver1/pages/mitra/success_daftar_lapangan_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
@@ -72,16 +70,7 @@ class _TambahLapanganPageState extends State<TambahLapanganPage> {
         'Lapangan ${widget.myLapangan.length + 1}', widget.venue.id!, myHour);
 
     if (data.result != null) {
-      if (!context.mounted) {
-        return;
-      }
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(
-      //       builder: (context) => SuccesssDaftarLapanganPage(
-      //             venue: widget.venue,
-      //           )),
-      // );
+
       ArgumentsMitra args = ArgumentsMitra(
           venueId: widget.venue.id,
           venue: widget.venue,
@@ -98,13 +87,15 @@ class _TambahLapanganPageState extends State<TambahLapanganPage> {
           listLapangan: widget.myLapangan,
           listJadwal: []);
       args.toJson();
-
+      if (!mounted) {
+        return;
+      }
       context.goNamed('mitra_daftar_lapangan_success', extra: args);
     } else {
       setState(() {
         _isSending = false;
       });
-      if (!context.mounted) {
+      if (!mounted) {
         return;
       }
       ScaffoldMessenger.of(context).showSnackBar(

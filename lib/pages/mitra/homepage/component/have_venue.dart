@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:selaga_ver1/pages/mitra/daftar_venue/daftar_venue_page.dart';
-import 'package:selaga_ver1/pages/mitra/venue_detail/venue_detail_page.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/endpoints.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
@@ -32,13 +30,6 @@ class HaveVenue extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 8, right: 8, top: 16),
                 child: InkWell(
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => MitraDetailPage(
-                    //             venueId: myVenue[index].id ?? 0,
-                    //           )),
-                    // );
                     Provider.of<SelectedDate>(context, listen: false)
                         .getSelectedIndex(0);
 
@@ -141,11 +132,6 @@ class HaveVenue extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12))),
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => const DaftarVenuePage()),
-                    // );
                     context.goNamed('mitra_daftar_venue');
                   },
                   child: const Text(

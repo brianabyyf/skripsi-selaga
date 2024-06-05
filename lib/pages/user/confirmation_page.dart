@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:selaga_ver1/pages/user/payment_page/payment_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
@@ -136,10 +135,21 @@ class _DetailConfirmationPageState extends State<DetailConfirmationPage> {
                             args.toJson();
 
                             if (data.result != null) {
+                              if (!context.mounted) {
+                                return;
+                              }
                               context.goNamed('user_lapangan_payment',
                                   extra: args);
                             } else {
-                              return;
+                              if (!context.mounted) {
+                                return;
+                              }
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('${data.error}'),
+                                  duration: const Duration(milliseconds: 1100),
+                                ),
+                              );
                             }
                           },
                     child: _isSending

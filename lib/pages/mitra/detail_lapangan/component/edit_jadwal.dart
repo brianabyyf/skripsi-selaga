@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:selaga_ver1/pages/mitra/detail_lapangan/detail_lapangan_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
@@ -208,28 +207,10 @@ class _EditJadwalPageState extends State<EditJadwalPage> {
                       lapanganId: dataJadwal.lapanganId ?? 0);
 
                   if (data.result != null) {
-                    // Navigator.pushReplacement(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => DetailLapanganPage(
-                    //             lapangan: widget.lapangan,
-                    //             venue: widget.venue,
-                    //             selectedDateIndex:
-                    //                 context.watch<SelectedDate>().selectedIndex,
-                    //           )),
-                    // );
 
-                    // ArgumentsMitra args = ArgumentsMitra(
-                    //     venueId: widget.venue.id,
-                    //     venue: widget.venue,
-                    //     lapangan: widget.lapangan,
-                    //     selectedDateIndex:
-                    //         Provider.of<SelectedDate>(context, listen: false)
-                    //             .selectedIndex,
-                    //     listLapangan: [widget.lapangan],
-                    //     listJadwal: widget.myJadwal);
-                    // args.toJson();
-                    // context.goNamed('mitra_detail_venue', extra: args);
+                    if (!context.mounted) {
+                      return;
+                    }
 
                     ArgumentsMitra args = ArgumentsMitra(
                         venueId: widget.venue.id,
@@ -241,6 +222,7 @@ class _EditJadwalPageState extends State<EditJadwalPage> {
                         listLapangan: [widget.lapangan],
                         listJadwal: [dataJadwal]);
                     args.toJson();
+
                     context.goNamed('mitra_lapangan_detail', extra: args);
                   }
                 },

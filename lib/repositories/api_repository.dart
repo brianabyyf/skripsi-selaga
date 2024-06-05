@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:selaga_ver1/repositories/models/api_response.dart';
 import 'package:selaga_ver1/repositories/models/booking_model.dart';
-import 'package:selaga_ver1/repositories/models/endpoints.dart';
 import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
 import 'package:selaga_ver1/repositories/models/login_user_model.dart';
 import 'package:selaga_ver1/repositories/models/register_user_model.dart';
@@ -283,18 +282,18 @@ class ApiRepository {
     }
   }
 
-  // Future<ApiResponse<LapanganInfo>> getLapanganDetail(
-  //     String token, int id) async {
-  //   try {
-  //     final result = await api.get("/lapangan/$id",
-  //         options: Options(headers: {
-  //           'Authorization': 'Bearer $token',
-  //         }));
-  //     return ApiResponse(result: LapanganInfo.fromJson(result.data['data']));
-  //   } on DioException catch (e) {
-  //     return ApiResponse(error: e.response?.data['message'].toString());
-  //   }
-  // }
+  Future<ApiResponse<LapanganInfo>> getLapanganDetail(
+      String token, int id) async {
+    try {
+      final result = await api.get("/lapangan/$id",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }));
+      return ApiResponse(result: LapanganInfo.fromJson(result.data['data']));
+    } on DioException catch (e) {
+      return ApiResponse(error: e.response?.data['message'].toString());
+    }
+  }
 
   Future<ApiResponse<String>> postTambahJadwal({
     required String token,

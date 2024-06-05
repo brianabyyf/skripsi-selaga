@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -97,7 +96,7 @@ class _ConfirmPaymentState extends State<ConfirmPayment> {
                   const Text(
                     '*Foto harus kurang dari 2MB',
                     style:
-                        TextStyle(color: const Color.fromRGBO(76, 76, 220, 1)),
+                        TextStyle(color: Color.fromRGBO(76, 76, 220, 1)),
                   ),
                 ],
               ),
