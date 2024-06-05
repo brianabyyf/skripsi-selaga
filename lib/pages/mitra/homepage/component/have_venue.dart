@@ -103,7 +103,7 @@ class HaveVenue extends StatelessWidget {
                               ),
                               const SizedBox(height: 5.0),
                               Text(
-                                myVenue[0].lokasiVenue!,
+                                myVenue[index].lokasiVenue!,
                                 style: const TextStyle(
                                   fontSize: 14.0,
                                   color: Colors.grey,

@@ -27,8 +27,8 @@ class HaveLapangan extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 8, right: 8, top: 16),
                 child: InkWell(
                   onTap: () {
-                    // Provider.of<SelectedDate>(context, listen: false)
-                    //     .getSelectedIndex(0);
+                    Provider.of<SelectedDate>(context, listen: false)
+                        .getSelectedIndex(0);
                     // Navigator.push(
                     //   context,
                     //   MaterialPageRoute(

@@ -97,7 +97,6 @@ class _HomePageState extends State<HomePage> {
             if (snapshot.hasData &&
                 snapshot.connectionState == ConnectionState.done) {
               List<VenueModel> venue = snapshot.data?.result ?? [];
-
               venue.sort((a, b) => -a.rating!.compareTo(b.rating!));
 
               return SingleChildScrollView(

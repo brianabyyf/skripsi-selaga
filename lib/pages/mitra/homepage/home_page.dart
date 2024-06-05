@@ -15,40 +15,18 @@ class MitraHomePage extends StatefulWidget {
 }
 
 class _MitraHomePageState extends State<MitraHomePage> {
-  // bool _isDataLoaded = false;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   fetchData();
-  // }
-
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   if (!_isDataLoaded) {
-  //     fetchData();
-  //   }
-  // }
-
-  // Future<void> fetchData() async {
-  //   final myToken = Provider.of<Token>(context, listen: false).token;
-
-  //   Future.wait([
-  //     ApiRepository().getAllVenue(myToken),
-  //     ApiRepository().getAllVenue(myToken)
-  //   ]);
-
-  //   setState(() {
-  //     _isDataLoaded = true;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Venue Anda'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {});
+              },
+              icon: const Icon(Icons.refresh))
+        ],
       ),
       body: SafeArea(
         child: Consumer<Token>(
@@ -64,13 +42,6 @@ class _MitraHomePageState extends State<MitraHomePage> {
                 List<VenueModel> venue = snapshot.data![1].result!;
                 List<VenueModel> myVenue =
                     venue.where((e) => e.mitraId == myId.id).toList();
-                // if (!_isDataLoaded) {
-                //   return CircularProgressIndicator(); // Atau widget loading lainnya
-                // } else {
-                //   return myVenue.isNotEmpty
-                //       ? HaveVenue(myVenue: myVenue)
-                //       : const NoVenue();
-                // }
                 return myVenue.isNotEmpty
                     ? HaveVenue(myVenue: myVenue)
                     : const NoVenue();

@@ -52,6 +52,10 @@ class _BookingCalendarState extends State<BookingCalendar> {
                               Provider.of<HourAvailable>(context, listen: false)
                                   .clear();
 
+                              Provider.of<HourUnAvailable>(context,
+                                      listen: false)
+                                  .clear();
+
                               Provider.of<SelectedHour>(context, listen: false)
                                   .clear();
 
@@ -66,6 +70,12 @@ class _BookingCalendarState extends State<BookingCalendar> {
                                   Provider.of<HourAvailable>(context,
                                           listen: false)
                                       .add(availableHour);
+
+                                  List<String> unAvailableHour =
+                                      e.unavailableHour!.split(',').toList();
+                                  Provider.of<HourUnAvailable>(context,
+                                          listen: false)
+                                      .add(unAvailableHour);
                                 }
                               }
                             });

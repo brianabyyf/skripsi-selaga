@@ -74,6 +74,28 @@ class _ChooseJadwalPageState extends State<ChooseJadwalPage> {
                       ],
                     ),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 15,
+                          width: 15,
+                          color: Colors.red,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const Text('Jadwal tidak tersedia')
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   HourSection(
                       myJadwal: widget.myJadwal,
                       lapangan: widget.lapangan,

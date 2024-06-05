@@ -75,13 +75,13 @@ class _TambahLapanganPageState extends State<TambahLapanganPage> {
       if (!context.mounted) {
         return;
       }
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => SuccesssDaftarLapanganPage(
-                  venue: widget.venue,
-                )),
-      );
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(
+      //       builder: (context) => SuccesssDaftarLapanganPage(
+      //             venue: widget.venue,
+      //           )),
+      // );
       ArgumentsMitra args = ArgumentsMitra(
           venueId: widget.venue.id,
           venue: widget.venue,

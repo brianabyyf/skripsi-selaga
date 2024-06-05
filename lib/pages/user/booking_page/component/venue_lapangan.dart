@@ -69,6 +69,8 @@ class VenueLapangan extends StatelessWidget {
                     Provider.of<SelectedDate>(context, listen: false)
                         .getSelectedIndex(0);
                     Provider.of<HourAvailable>(context, listen: false).clear();
+                    Provider.of<HourUnAvailable>(context, listen: false)
+                        .clear();
                     Provider.of<SelectedHour>(context, listen: false).clear();
                     // Navigator.push(
                     //   context,

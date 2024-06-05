@@ -18,8 +18,6 @@ class MitraDetailConfirmation extends StatefulWidget {
 }
 
 class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
-  var _isSending = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,55 +45,87 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                             title: const Text('Nama Pemesan'),
                             titleTextStyle: const TextStyle(
                                 color: Colors.black, fontSize: 14),
-                            subtitle: Text(booking.order?.name ?? ''),
+                            subtitle: Text(booking.order.name),
                             subtitleTextStyle: const TextStyle(
-                              color: Color.fromRGBO(76, 76, 220, 1),
-                              fontSize: 20.0,
+                              // color: Color.fromRGBO(76, 76, 220, 1),
+                              color: Colors.black,
+                              fontSize: 18.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+                          const Divider(
+                            indent: 8,
+                            endIndent: 8,
+                          ),
+                          ListTile(
+                            title: const Text('Tanggal yang dipesan'),
+                            titleTextStyle: const TextStyle(
+                                color: Colors.black, fontSize: 14),
+                            subtitle: Text(DateFormat('EEEE, dd MMMM yyyy')
+                                .format(booking.date)),
+                            subtitleTextStyle: const TextStyle(
+                              // color: Color.fromRGBO(76, 76, 220, 1),
+                              color: Colors.black,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Divider(
+                            indent: 8,
+                            endIndent: 8,
+                          ),
+                          ListTile(
+                            title: const Text('Jadwal yang dipesan'),
+                            titleTextStyle: const TextStyle(
+                                color: Colors.black, fontSize: 14),
+                            subtitle: Text(
+                                '${booking.hours}.00 - ${1 + int.parse(booking.hours)}.00'),
+                            subtitleTextStyle: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Divider(
+                            indent: 8,
+                            endIndent: 8,
+                          ),
                           ListTile(
                             title: const Text('Venue'),
-                            // titleTextStyle: const TextStyle(
-                            //     color: Colors.black, fontSize: 14),
-                            subtitle: Text(booking.lapangan?.nameVenue ?? ''),
-                            // subtitleTextStyle: const TextStyle(
-                            //   color: Colors.black,
-                            //   fontSize: 25.0,
-                            //   fontWeight: FontWeight.bold,
-                            // ),
+                            titleTextStyle: const TextStyle(
+                                color: Colors.black, fontSize: 14),
+                            subtitle: Text(booking.timetable.nameVenue),
+                            subtitleTextStyle: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Divider(
+                            indent: 8,
+                            endIndent: 8,
                           ),
                           ListTile(
-                            title: const Text('Lapangan'),
-                            // titleTextStyle: const TextStyle(
-                            //     color: Colors.black, fontSize: 14),
-                            subtitle:
-                                Text(booking.lapangan?.nameLapangan ?? ''),
-                            // subtitleTextStyle: const TextStyle(
-                            //   color: Colors.black,
-                            //   fontSize: 25.0,
-                            //   fontWeight: FontWeight.bold,
-                            // ),
+                            title: const Text('Lapangan yang dipesan'),
+                            titleTextStyle: const TextStyle(
+                                color: Colors.black, fontSize: 14),
+                            subtitle: Text(booking.timetable.nameLapangan),
+                            subtitleTextStyle: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          ListTile(
-                              leading: const Icon(Icons.calendar_month,
-                                  color: Color.fromRGBO(76, 76, 220, 1)),
-                              title: Text(DateFormat('dd MMMM yyyy').format(
-                                  DateTime(
-                                      DateTime.now().year,
-                                      DateTime.now().month,
-                                      DateTime.now().day +
-                                          Provider.of<SelectedDate>(context,
-                                                  listen: false)
-                                              .selectedIndex))),
-                              subtitle: Text(
-                                  '${booking.hours!}.00 - ${1 + int.parse(booking.hours!)}.00')),
+                          const Divider(
+                            indent: 8,
+                            endIndent: 8,
+                          ),
                           const Padding(
                             padding: EdgeInsets.only(left: 16.0),
                             child: Text('Bukti Pembayaran'),
                           ),
                           const SizedBox(
-                            height: 5,
+                            height: 10,
                           ),
                           Expanded(
                             child: Padding(
@@ -161,7 +191,7 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                             ),
                           ),
                           const SizedBox(
-                            height: 15,
+                            height: 10,
                           ),
                         ],
                       ),
@@ -175,23 +205,123 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                                     // width: MediaQuery.of(context).size.width,
                                     height: 60,
                                     child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.red,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(12))),
-                                        onPressed: () {},
-                                        child: const Text(
-                                          'Cancel',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        ))),
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.grey,
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(12),
+                                            bottomLeft: Radius.circular(12),
+                                          ))),
+                                      onPressed: () async {
+                                        List<String> tempAvailableHour = booking
+                                            .timetable.availableHour
+                                            .split(',')
+                                            .toList();
+                                        List<String> tempUnAvailableHour =
+                                            booking.timetable.unavailableHour
+                                                .split(',')
+                                                .toList();
+
+                                        tempAvailableHour.add(booking.hours);
+
+                                        tempUnAvailableHour
+                                            .remove(booking.hours);
+
+                                        if (tempUnAvailableHour.isEmpty) {
+                                          tempUnAvailableHour.add('0');
+                                        }
+
+                                        final availableHour =
+                                            tempAvailableHour.join(',');
+                                        final unAvailableHour =
+                                            tempUnAvailableHour.join(',');
+
+                                        var data = await ApiRepository()
+                                            .updateBooking(
+                                                token: myToken.token,
+                                                id: myBooking.id,
+                                                confirmation: 'cancel')
+                                            .whenComplete(() => ApiRepository()
+                                                .postEditJadwal(
+                                                    token: myToken.token,
+                                                    id: booking.timetable.id,
+                                                    nameVenue: booking
+                                                        .timetable.nameVenue,
+                                                    nameLapangan: booking
+                                                        .timetable.nameLapangan,
+                                                    date:
+                                                        booking.timetable.days,
+                                                    availableHour:
+                                                        availableHour,
+                                                    unavailableHour:
+                                                        unAvailableHour,
+                                                    lapanganId: booking
+                                                        .timetable.lapanganId));
+
+                                        if (!context.mounted) {
+                                          return;
+                                        }
+
+                                        if (data.result != null) {
+                                          setState(() {});
+                                          SnackBar snackBar = SnackBar(
+                                            content: const Text(
+                                                'Pesanan ditolak',
+                                                style: TextStyle(fontSize: 16)),
+                                            // backgroundColor: Colors.indigo,
+                                            duration: const Duration(
+                                                milliseconds: 1300),
+                                            dismissDirection:
+                                                DismissDirection.up,
+                                            behavior: SnackBarBehavior.floating,
+                                            margin: EdgeInsets.only(
+                                                bottom: MediaQuery.of(context)
+                                                        .size
+                                                        .height -
+                                                    150,
+                                                left: 10,
+                                                right: 10),
+                                          );
+
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(snackBar);
+                                        } else {
+                                          SnackBar snackBar = SnackBar(
+                                            content: Text('${data.error}',
+                                                style: const TextStyle(
+                                                    fontSize: 16)),
+                                            // backgroundColor: Colors.indigo,
+                                            duration: const Duration(
+                                                milliseconds: 1300),
+                                            dismissDirection:
+                                                DismissDirection.up,
+                                            behavior: SnackBarBehavior.floating,
+                                            margin: EdgeInsets.only(
+                                                bottom: MediaQuery.of(context)
+                                                        .size
+                                                        .height -
+                                                    150,
+                                                left: 10,
+                                                right: 10),
+                                          );
+
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(snackBar);
+                                        }
+                                      },
+                                      child: const Text(
+                                        'Tolak',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    )),
                               ),
-                              const SizedBox(
-                                width: 10,
-                              ),
+                              // const SizedBox(
+                              //   width: 10,
+                              // ),
                               Expanded(
                                 child: SizedBox(
                                     // width: MediaQuery.of(context).size.width,
@@ -201,24 +331,73 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                                             backgroundColor:
                                                 const Color.fromRGBO(
                                                     76, 76, 220, 1),
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(12))),
+                                            shape: const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(12),
+                                              bottomRight: Radius.circular(12),
+                                            ))),
                                         onPressed: () async {
                                           var data = await ApiRepository()
                                               .updateBooking(
                                                   token: myToken.token,
-                                                  id: myBooking.id);
+                                                  id: myBooking.id,
+                                                  confirmation: 'done');
+                                          if (!context.mounted) {
+                                            return;
+                                          }
                                           if (data.result != null) {
                                             // context.goNamed(
                                             //     'mitra_detail_konfirmasi');
                                             setState(() {});
+                                            SnackBar snackBar = SnackBar(
+                                              content: const Text(
+                                                  'Pesanan diterima',
+                                                  style:
+                                                      TextStyle(fontSize: 16)),
+                                              // backgroundColor: Colors.indigo,
+                                              duration: const Duration(
+                                                  milliseconds: 1300),
+                                              dismissDirection:
+                                                  DismissDirection.up,
+                                              behavior:
+                                                  SnackBarBehavior.floating,
+                                              margin: EdgeInsets.only(
+                                                  bottom: MediaQuery.of(context)
+                                                          .size
+                                                          .height -
+                                                      150,
+                                                  left: 10,
+                                                  right: 10),
+                                            );
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(snackBar);
                                           } else {
-                                            print(data.error);
+                                            SnackBar snackBar = SnackBar(
+                                              content: Text('${data.error}',
+                                                  style: const TextStyle(
+                                                      fontSize: 16)),
+                                              // backgroundColor: Colors.indigo,
+                                              duration: const Duration(
+                                                  milliseconds: 1300),
+                                              dismissDirection:
+                                                  DismissDirection.up,
+                                              behavior:
+                                                  SnackBarBehavior.floating,
+                                              margin: EdgeInsets.only(
+                                                  bottom: MediaQuery.of(context)
+                                                          .size
+                                                          .height -
+                                                      150,
+                                                  left: 10,
+                                                  right: 10),
+                                            );
+
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(snackBar);
                                           }
                                         },
                                         child: const Text(
-                                          'Confirm',
+                                          'Terima',
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 16,

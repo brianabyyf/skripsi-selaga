@@ -55,19 +55,19 @@ class MyRoutes {
               name: 'mitra_register',
               builder: (context, state) => const MitraRegisterPage(),
             ),
-            GoRoute(
-              path: 'mitraDaftarVenueSuccess',
-              name: 'mitra_daftar_venue_success',
-              builder: (context, state) => const SuccesssDaftarVenuePage(),
-            ),
-            GoRoute(
-              path: 'mitraDaftarLapanganSuccess',
-              name: 'mitra_daftar_lapangan_success',
-              builder: (context, state) {
-                ArgumentsMitra args = state.extra as ArgumentsMitra;
-                return SuccesssDaftarLapanganPage(venue: args.venue!);
-              },
-            ),
+            // GoRoute(
+            //   path: 'mitraDaftarVenueSuccess',
+            //   name: 'mitra_daftar_venue_success',
+            //   builder: (context, state) => const SuccesssDaftarVenuePage(),
+            // ),
+            // GoRoute(
+            //   path: 'mitraDaftarLapanganSuccess',
+            //   name: 'mitra_daftar_lapangan_success',
+            //   builder: (context, state) {
+            //     ArgumentsMitra args = state.extra as ArgumentsMitra;
+            //     return SuccesssDaftarLapanganPage(venue: args.venue!);
+            //   },
+            // ),
             GoRoute(
               path: 'userBookingLapanganSuccess',
               name: 'user_booking_lapangan_success',
@@ -203,6 +203,11 @@ class MyRoutes {
               builder: (context, state) => const DaftarVenuePage(),
             ),
             GoRoute(
+              path: 'mitraDaftarVenueSuccess',
+              name: 'mitra_daftar_venue_success',
+              builder: (context, state) => const SuccesssDaftarVenuePage(),
+            ),
+            GoRoute(
                 path: 'mitraDetailVenue',
                 name: 'mitra_detail_venue',
                 builder: (context, state) {
@@ -220,6 +225,15 @@ class MyRoutes {
                         );
                       },
                       routes: [
+                        GoRoute(
+                          path: 'mitraDaftarLapanganSuccess',
+                          name: 'mitra_daftar_lapangan_success',
+                          builder: (context, state) {
+                            ArgumentsMitra args = state.extra as ArgumentsMitra;
+                            return SuccesssDaftarLapanganPage(
+                                venue: args.venue!);
+                          },
+                        ),
                         GoRoute(
                           path: 'tambahLapangan',
                           name: 'mitra_tambah_lapangan',
@@ -273,7 +287,7 @@ class MyRoutes {
                 ]),
           ]),
     ],
-    initialLocation: '/mitraHome',
+    initialLocation: '/userHome',
     routerNeglect: true,
     debugLogDiagnostics: true,
   );

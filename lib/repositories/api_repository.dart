@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:selaga_ver1/repositories/models/api_response.dart';
 import 'package:selaga_ver1/repositories/models/booking_model.dart';
+import 'package:selaga_ver1/repositories/models/endpoints.dart';
 import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
 import 'package:selaga_ver1/repositories/models/login_user_model.dart';
 import 'package:selaga_ver1/repositories/models/register_user_model.dart';
@@ -75,20 +76,20 @@ class ApiRepository {
   }
 
   Future<ApiResponse<String>> daftarVenue(
-      String token, List<File> img, List<String> fasilitas) async {
+      String token, RegisterVenue venue) async {
     var formData = FormData.fromMap({
-      "nameVenue": 'gor leuwi anyar',
-      "lokasiVenue": 'leuwi anyar',
-      "descVenue": 'lorem ipsumm',
-      "price": '75000',
-      "rating": '5',
+      "nameVenue": venue.nameVenue,
+      "lokasiVenue": venue.lokasiVenue,
+      "descVenue": venue.descVenue,
+      "price": venue.price,
+      "rating": venue.rating,
     }, ListFormat.multiCompatible);
 
-    for (var e in fasilitas) {
+    for (var e in venue.fasilitas) {
       formData.fields.addAll([MapEntry('fasilitasVenue[]', e)]);
     }
 
-    for (var file in img) {
+    for (var file in venue.img) {
       formData.files.addAll([
         MapEntry(
             "file[]",
@@ -98,6 +99,24 @@ class ApiRepository {
     }
     try {
       final result = await api.post("/venue",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }),
+          data: formData);
+      return ApiResponse(result: result.data['message'].toString());
+    } on DioException catch (e) {
+      return ApiResponse(error: e.response?.data['message'].toString());
+    }
+  }
+
+  Future<ApiResponse<String>> updateVenueRating(
+      String token, VenueModel venue, String rating) async {
+    var formData = FormData.fromMap({
+      "rating": rating,
+    }, ListFormat.multiCompatible);
+
+    try {
+      final result = await api.post("/venuerating/${venue.id}?_method=PATCH",
           options: Options(headers: {
             'Authorization': 'Bearer $token',
           }),
@@ -165,6 +184,18 @@ class ApiRepository {
     }
   }
 
+  Future<ApiResponse<String>> deleteVenue(String token, int id) async {
+    try {
+      final result = await api.delete("/venue/$id",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }));
+      return ApiResponse(result: result.data['message']);
+    } on DioException catch (e) {
+      return ApiResponse(error: e.response?.data['message'].toString());
+    }
+  }
+
   Future<ApiResponse<List<Lapangan>>> getMyLapangan(
       String token, int id) async {
     try {
@@ -177,6 +208,18 @@ class ApiRepository {
           .map<Lapangan>((lapangan) => Lapangan.fromJson(lapangan))
           .toList();
       return ApiResponse(result: response);
+    } on DioException catch (e) {
+      return ApiResponse(error: e.response?.data['message'].toString());
+    }
+  }
+
+  Future<ApiResponse<String>> deleteLapangan(String token, int id) async {
+    try {
+      final result = await api.delete("/lapangan/$id",
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }));
+      return ApiResponse(result: result.data['message']);
     } on DioException catch (e) {
       return ApiResponse(error: e.response?.data['message'].toString());
     }
@@ -285,21 +328,25 @@ class ApiRepository {
 
   Future<ApiResponse<String>> postEditJadwal({
     required String token,
-    required JadwalLapanganModel data,
+    required int id,
+    required int lapanganId,
+    required String nameVenue,
+    required String nameLapangan,
+    required DateTime date,
     required String availableHour,
     required String unavailableHour,
   }) async {
     var formData = FormData.fromMap({
-      "nameVenue": data.nameVenue,
-      "nameLapangan": data.nameLapangan,
-      "days": data.days,
+      "nameVenue": nameVenue,
+      "nameLapangan": nameLapangan,
+      "days": date,
       "availableHour": availableHour,
       "unavailableHour": unavailableHour,
-      "lapanganId": data.lapanganId,
+      "lapanganId": lapanganId,
     }, ListFormat.multiCompatible);
 
     try {
-      final result = await api.post("/timetable/${data.id}?_method=PATCH",
+      final result = await api.post("/timetable/$id?_method=PATCH",
           options: Options(headers: {
             'Authorization': 'Bearer $token',
           }),
@@ -376,6 +423,7 @@ class ApiRepository {
   Future<ApiResponse<String>> updateBooking({
     required String token,
     required int id,
+    required String confirmation,
     // required JadwalLapanganModel jadwal,
     // required File img,
     // required String name,
@@ -388,7 +436,7 @@ class ApiRepository {
       // "hours": hour,
       // "payment": payment,
       // "bookingId": jadwal.id,
-      "confirmation": "done"
+      "confirmation": confirmation
     }, ListFormat.multiCompatible);
 
     // formData.files.addAll([

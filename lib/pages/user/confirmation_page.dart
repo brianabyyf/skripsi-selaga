@@ -75,7 +75,7 @@ class _DetailConfirmationPageState extends State<DetailConfirmationPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text('Total:'),
-                    Text('Rp. ${widget.venue.price}' ?? '0')
+                    Text('Rp. ${widget.venue.price}')
                   ],
                 ),
               )
@@ -119,23 +119,28 @@ class _DetailConfirmationPageState extends State<DetailConfirmationPage> {
 
                             final availableHour = tempHour.join(',');
 
-                            print(availableHour);
-                            print(selectedHour);
-                            print(_isSending);
-
                             var data = await ApiRepository().postEditJadwal(
                                 token: token,
-                                data: dataJadwal,
+                                nameLapangan: dataJadwal.nameLapangan ?? '',
+                                nameVenue: dataJadwal.nameVenue ?? '',
+                                date: dataJadwal.days ?? DateTime.now(),
+                                id: dataJadwal.id ?? 0,
                                 availableHour: availableHour,
-                                unavailableHour: selectedHour);
+                                unavailableHour: selectedHour,
+                                lapanganId: dataJadwal.lapanganId ?? 0);
 
                             ArgumentsUser args = ArgumentsUser(
                                 venue: widget.venue,
                                 lapangan: widget.lapangan,
                                 listJadwal: widget.myJadwal);
                             args.toJson();
-                            context.goNamed('user_lapangan_payment',
-                                extra: args);
+
+                            if (data.result != null) {
+                              context.goNamed('user_lapangan_payment',
+                                  extra: args);
+                            } else {
+                              return;
+                            }
                           },
                     child: _isSending
                         ? const SizedBox(

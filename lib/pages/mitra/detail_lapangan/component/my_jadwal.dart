@@ -373,18 +373,20 @@ class _MyJadwalState extends State<MyJadwal> {
                           const EdgeInsets.all(8.0), // padding around the grid
                       itemCount: hourSorted.length, // total number of items
                       itemBuilder: (context, index) {
-                        bool tapped = index == _selectedGridIndex;
+                        // bool tapped = index == _selectedGridIndex;
                         return InkWell(
                             onTap: () {
-                              setState(() {
-                                _selectedGridIndex = index;
-                              });
+                              // setState(() {
+                              //   _selectedGridIndex = index;
+                              // });
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: tapped
-                                      ? const Color.fromRGBO(76, 76, 220, 1)
-                                      : unAvailableHourSorted
+                                  color:
+                                      // tapped
+                                      //     ? const Color.fromRGBO(76, 76, 220, 1)
+                                      //     :
+                                      unAvailableHourSorted
                                               .contains(hourSorted[index])
                                           ? Colors.red
                                           : const Color.fromARGB(34, 158, 158,
@@ -396,11 +398,13 @@ class _MyJadwalState extends State<MyJadwal> {
                                             .contains(hourSorted[index])
                                         ? const TextStyle(
                                             fontSize: 18.0, color: Colors.white)
-                                        : tapped
-                                            ? const TextStyle(
-                                                fontSize: 18.0,
-                                                color: Colors.white)
-                                            : const TextStyle(fontSize: 18.0)),
+                                        :
+                                        // tapped
+                                        //     ? const TextStyle(
+                                        //         fontSize: 18.0,
+                                        //         color: Colors.white)
+                                        // :
+                                        const TextStyle(fontSize: 18.0)),
                               ),
                             ));
                       },

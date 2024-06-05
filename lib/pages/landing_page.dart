@@ -132,13 +132,13 @@ class LandingPage extends StatelessWidget {
                                             trailing:
                                                 const Icon(Icons.login_sharp),
                                             onTap: () {
-                                              // context.go('/userRegister');
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const RegisterPage()),
-                                              );
+                                              context.goNamed('user_register');
+                                              // Navigator.push(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //       builder: (context) =>
+                                              //           const RegisterPage()),
+                                              // );
                                             },
                                             title: const Text(
                                               'Daftar',
@@ -156,12 +156,12 @@ class LandingPage extends StatelessWidget {
                                             trailing:
                                                 const Icon(Icons.login_sharp),
                                             onTap: () {
-                                              // context.go('/mitraRegister');
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const MitraRegisterPage()));
+                                              context.goNamed('mitra_register');
+                                              // Navigator.push(
+                                              //     context,
+                                              //     MaterialPageRoute(
+                                              //         builder: (context) =>
+                                              //             const MitraRegisterPage()));
                                             },
                                             title: const Text(
                                               'Daftar sebagai mitra',

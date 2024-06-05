@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/components/auth_field.dart';
 import 'package:selaga_ver1/pages/mitra/mitra_navigation_page.dart';
@@ -36,12 +37,14 @@ class _MitraRegisterPageState extends State<MitraRegisterPage> {
           return;
         }
         context.read<Token>().getToken(data.result!);
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const MitraHomePageNavigation()),
-          (Route<dynamic> route) => false,
-        );
+
+        // Navigator.pushAndRemoveUntil(
+        //   context,
+        //   MaterialPageRoute(
+        //       builder: (context) => const MitraHomePageNavigation()),
+        //   (Route<dynamic> route) => false,
+        // );
+        context.goNamed('mitra_home');
       } else {
         setState(() {
           _isSending = false;

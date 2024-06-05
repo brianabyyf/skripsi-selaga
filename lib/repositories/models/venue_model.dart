@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 class VenueModel {
   int? id;
@@ -6,7 +7,7 @@ class VenueModel {
   String? lokasiVenue;
   String? descVenue;
   String? fasilitasVenue;
-  double? rating;
+  String? rating;
   String? price;
   String? image;
   int? mitraId;
@@ -38,7 +39,7 @@ class VenueModel {
         lokasiVenue: json["lokasiVenue"],
         descVenue: json["descVenue"],
         fasilitasVenue: json["fasilitasVenue"],
-        rating: double.parse(json["rating"]),
+        rating: json["rating"],
         price: json["price"],
         image: json["image"],
         mitraId: json["mitraId"],
@@ -150,4 +151,22 @@ class Owner {
         "email": email,
         "phone": phone,
       };
+}
+
+class RegisterVenue {
+  String nameVenue;
+  String lokasiVenue;
+  String descVenue;
+  String price;
+  String rating = "5";
+  List<String> fasilitas;
+  List<File> img;
+
+  RegisterVenue(
+      {required this.nameVenue,
+      required this.lokasiVenue,
+      required this.descVenue,
+      required this.price,
+      required this.fasilitas,
+      required this.img});
 }

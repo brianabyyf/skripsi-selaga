@@ -80,6 +80,12 @@ class MemberPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Member'),
+        centerTitle: true,
+      ),
+      body: const SafeArea(child: Center(child: Text('Segera hadir'))),
+    );
   }
 }

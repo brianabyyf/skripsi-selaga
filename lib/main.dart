@@ -15,6 +15,7 @@ void main() {
         create: (context) => LapanganId(),
       ),
       ChangeNotifierProvider(create: (context) => HourAvailable()),
+      ChangeNotifierProvider(create: (context) => HourUnAvailable()),
       ChangeNotifierProvider(create: (context) => SelectedHour()),
       ChangeNotifierProvider(
         create: (context) => PaymentMethod(),

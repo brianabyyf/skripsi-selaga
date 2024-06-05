@@ -8,6 +8,7 @@ import 'package:selaga_ver1/pages/mitra/daftar_venue/component/multiple_image.da
 import 'package:selaga_ver1/pages/mitra/daftar_venue/component/my_upload_button.dart';
 import 'package:selaga_ver1/pages/mitra/success_daftar_venue_page.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
+import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
 
 class DaftarVenuePage extends StatefulWidget {
@@ -90,8 +91,15 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
 
       final mytoken = Provider.of<Token>(context, listen: false).token;
 
-      var data =
-          await ApiRepository().daftarVenue(mytoken, _uploadImg, _fasilitas);
+      final RegisterVenue venue = RegisterVenue(
+          nameVenue: _nameController.text.trim(),
+          lokasiVenue: _alamatController.text.trim(),
+          descVenue: _descController.text.trim(),
+          price: _priceController.text.trim(),
+          fasilitas: _fasilitas,
+          img: _uploadImg);
+
+      var data = await ApiRepository().daftarVenue(mytoken, venue);
       if (data.result != null) {
         if (!context.mounted) {
           return;

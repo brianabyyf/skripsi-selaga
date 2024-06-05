@@ -90,6 +90,29 @@ class HourAvailable with ChangeNotifier {
   }
 }
 
+class HourUnAvailable with ChangeNotifier {
+  final List<String> _hour = [];
+
+  List<String> get hour => _hour;
+
+  void add(List<String> hour) {
+    List<int> tempHour = [];
+    for (var e in hour) {
+      tempHour.add(int.parse(e));
+    }
+    tempHour.sort();
+    for (var e in tempHour) {
+      _hour.add(e.toString());
+    }
+    notifyListeners();
+  }
+
+  void clear() {
+    _hour.clear();
+    notifyListeners();
+  }
+}
+
 class SelectedHour with ChangeNotifier {
   final List<String> _selectedHour = [];
 

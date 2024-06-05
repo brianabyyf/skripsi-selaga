@@ -22,6 +22,8 @@ class HourSection extends StatefulWidget {
 class _HourSectionState extends State<HourSection> {
   // int _selectedGridIndex = -1;
   List<String> _hour = [];
+  List<String> _availableHour = [];
+  List<String> _unAvailableHour = [];
   List<String> _selectedHour = [];
 
   @override
@@ -29,52 +31,48 @@ class _HourSectionState extends State<HourSection> {
     super.didChangeDependencies();
 
     // Menggunakan Provider di dalam didChangeDependencies
-    _hour = Provider.of<HourAvailable>(context).hour;
+    _availableHour = Provider.of<HourAvailable>(context).hour;
+    // _hour = Provider.of<HourAvailable>(context).hour;
+    _unAvailableHour = Provider.of<HourUnAvailable>(context).hour;
+    if (_hour.contains('0')) {
+      _hour.remove('0');
+    }
+    if (_unAvailableHour.contains('0')) {
+      _unAvailableHour.remove('0');
+    }
   }
 
   @override
   void initState() {
+    _hour = widget.lapangan.hour!.split(',').toList();
     for (var e in widget.myJadwal) {
       if (e.days ==
           DateTime(
               DateTime.now().year, DateTime.now().month, DateTime.now().day)) {
         List<String> availableHour = e.availableHour!.split(',').toList();
+        List<String> unAvailableHour = e.unavailableHour!.split(',').toList();
+
+        // WidgetsBinding.instance.addPostFrameCallback(
+        //   (timeStamp) {
+        //     Provider.of<HourAvailable>(context, listen: false)
+        //         .add(availableHour);
+        //     Provider.of<HourUnAvailable>(context, listen: false)
+        //         .add(unAvailableHour);
+        //   },
+        // );
+
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) =>
             Provider.of<HourAvailable>(context, listen: false)
                 .add(availableHour));
+
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) =>
+            Provider.of<HourUnAvailable>(context, listen: false)
+                .add(unAvailableHour));
       }
     }
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) =>
-    //     Provider.of<SelectedHour>(context, listen: false).clear());
 
     super.initState();
   }
-
-  // @override
-  // void initState() {
-  //   for (var e in widget.myJadwal) {
-  //     if (e.days ==
-  //         DateTime(
-  //             DateTime.now().year,
-  //             DateTime.now().month,
-  //             DateTime.now().day +
-  //                 Provider.of<SelectedDate>(context, listen: true)
-  //                     .selectedIndex)) {
-  //       availableHour = e.availableHour!.split(',').toList();
-  //     }
-  //   }
-  //   for (var e in availableHour) {
-  //     hour.add(e);
-  //     availableHourSorted.add(int.parse(e));
-  //   }
-
-  //   for (var e in hour) {
-  //     hourSorted.add(int.parse(e));
-  //   }
-  //   hourSorted.sort();
-
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -100,44 +98,55 @@ class _HourSectionState extends State<HourSection> {
                   padding: const EdgeInsets.all(8.0), // padding around the grid
                   itemCount: _hour.length, // total number of items
                   itemBuilder: (context, index) {
-                    // bool tapped = index == _selectedGridIndex;
-                    return InkWell(
-                        onTap: () {
-                          setState(() {
-                            // _selectedGridIndex = index;
+                    return _unAvailableHour.contains(_hour[index])
+                        ? Container(
+                            decoration: BoxDecoration(
+                                color: Colors.red, // color of grid items
+                                borderRadius: BorderRadius.circular(8)),
+                            child: Center(
+                                child: Text('${_hour[index]}.00',
+                                    style: const TextStyle(
+                                        fontSize: 18.0, color: Colors.white))),
+                          )
+                        : InkWell(
+                            onTap: () {
+                              setState(() {
+                                // _selectedGridIndex = index;
 
-                            Provider.of<SelectedHour>(context, listen: false)
-                                .clear();
+                                Provider.of<SelectedHour>(context,
+                                        listen: false)
+                                    .clear();
 
-                            if (_selectedHour.contains(_hour[index])) {
-                              _selectedHour.remove(_hour[index]);
-                              // Provider.of<MyCheck>(context, listen: false)
-                              //     .update(false);
-                            } else {
-                              _selectedHour.clear();
-                              _selectedHour.add(_hour[index]);
-                              // Provider.of<MyCheck>(context, listen: false)
-                              //     .update(true);
-                            }
-                            Provider.of<SelectedHour>(context, listen: false)
-                                .add(_selectedHour);
-                          });
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: _selectedHour.contains(_hour[index])
-                                  ? const Color.fromRGBO(76, 76, 220, 1)
-                                  : const Color.fromARGB(
-                                      34, 158, 158, 158), // color of grid items
-                              borderRadius: BorderRadius.circular(8)),
-                          child: Center(
-                            child: Text('${_hour[index]}.00',
-                                style: _selectedHour.contains(_hour[index])
-                                    ? const TextStyle(
-                                        fontSize: 18.0, color: Colors.white)
-                                    : const TextStyle(fontSize: 18.0)),
-                          ),
-                        ));
+                                if (_selectedHour.contains(_hour[index])) {
+                                  _selectedHour.remove(_hour[index]);
+                                  // Provider.of<MyCheck>(context, listen: false)
+                                  //     .update(false);
+                                } else {
+                                  _selectedHour.clear();
+                                  _selectedHour.add(_hour[index]);
+                                  // Provider.of<MyCheck>(context, listen: false)
+                                  //     .update(true);
+                                }
+                                Provider.of<SelectedHour>(context,
+                                        listen: false)
+                                    .add(_selectedHour);
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: _selectedHour.contains(_hour[index])
+                                      ? const Color.fromRGBO(76, 76, 220, 1)
+                                      : const Color.fromARGB(34, 158, 158,
+                                          158), // color of grid items
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Center(
+                                child: Text('${_hour[index]}.00',
+                                    style: _selectedHour.contains(_hour[index])
+                                        ? const TextStyle(
+                                            fontSize: 18.0, color: Colors.white)
+                                        : const TextStyle(fontSize: 18.0)),
+                              ),
+                            ));
                   },
                 ),
               )

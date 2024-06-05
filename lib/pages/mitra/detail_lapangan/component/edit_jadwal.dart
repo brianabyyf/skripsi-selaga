@@ -199,9 +199,13 @@ class _EditJadwalPageState extends State<EditJadwalPage> {
 
                   var data = await ApiRepository().postEditJadwal(
                       token: myToken.token,
-                      data: dataJadwal,
+                      nameLapangan: dataJadwal.nameLapangan ?? '',
+                      nameVenue: dataJadwal.nameVenue ?? '',
+                      date: dataJadwal.days ?? DateTime.now(),
+                      id: dataJadwal.id ?? 0,
                       availableHour: availableHour,
-                      unavailableHour: unavailableHour);
+                      unavailableHour: unavailableHour,
+                      lapanganId: dataJadwal.lapanganId ?? 0);
 
                   if (data.result != null) {
                     // Navigator.pushReplacement(

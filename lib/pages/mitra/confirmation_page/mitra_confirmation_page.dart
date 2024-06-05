@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -9,15 +10,27 @@ import 'package:selaga_ver1/repositories/models/user_profile_model.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
 
-class ConfirmationPage extends StatelessWidget {
+class ConfirmationPage extends StatefulWidget {
   const ConfirmationPage({super.key});
 
+  @override
+  State<ConfirmationPage> createState() => _ConfirmationPageState();
+}
+
+class _ConfirmationPageState extends State<ConfirmationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Konfirmasi Pesanan'),
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {});
+              },
+              icon: const Icon(Icons.refresh))
+        ],
       ),
       body: SafeArea(
           child: Consumer<Token>(
@@ -43,7 +56,7 @@ class ConfirmationPage extends StatelessWidget {
 
               List<BookingModel> booking = snapshot.data?[3].result ?? [];
               List<BookingModel> myBooking = booking
-                  .where((e) => myJadwal.any((j) => j.id == e.lapangan!.id))
+                  .where((e) => myJadwal.any((j) => j.id == e.timetable.id))
                   .toList();
 
               if (myBooking.isNotEmpty) {
@@ -70,12 +83,12 @@ class ConfirmationPage extends StatelessWidget {
                             // context.goNamed('user_detail_pemesanan');
                             // }
                             Provider.of<BookingId>(context, listen: false)
-                                .updateBookingId(myBooking[index].id ?? 0);
+                                .updateBookingId(myBooking[index].id);
                             context.goNamed('mitra_detail_konfirmasi');
                           },
                           child: Container(
                             // height: 125,
-                            height: 150,
+                            height: 130,
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
@@ -89,40 +102,67 @@ class ConfirmationPage extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: Column(
-                              // crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            child: Row(
                               children: [
-                                Text(
-                                  myBooking[index].order?.name ?? '',
-                                  style: const TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 16.0),
+                                        child: Text(
+                                          myBooking[index].order.name,
+                                          style: const TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          softWrap: true,
+                                          // maxLines: 1,
+                                        ),
+                                      ),
+                                      ListTile(
+                                          leading:
+                                              const Icon(Icons.calendar_month),
+                                          title: Text(DateFormat('dd MMMM yyyy')
+                                              .format(myBooking[index].date)),
+                                          subtitle: Text(
+                                              '${myBooking[index].hours}.00 - ${1 + int.parse(myBooking[index].hours)}.00')),
+                                      // myBooking[index].confirmation == 'pending'
+                                      //     ? const Text(
+                                      //         'Segera konfirmasi pesanan ini!',
+                                      //         softWrap: true,
+                                      //         overflow: TextOverflow.ellipsis,
+                                      //         style:
+                                      //             TextStyle(color: Colors.red),
+                                      //       )
+                                      //     : Container()
+                                    ],
                                   ),
-                                  softWrap: true,
-                                  // maxLines: 1,
                                 ),
-                                ListTile(
-                                    leading: const Icon(Icons.calendar_month),
-                                    title: Text(DateFormat('dd MMMM yyyy')
-                                        .format(DateTime(
-                                            DateTime.now().year,
-                                            DateTime.now().month,
-                                            DateTime.now().day +
-                                                Provider.of<SelectedDate>(
-                                                        context,
-                                                        listen: false)
-                                                    .selectedIndex))),
-                                    subtitle: Text(
-                                        '${myBooking[index].hours}.00 - ${1 + int.parse(myBooking[index].hours!)}.00')),
                                 myBooking[index].confirmation == 'pending'
-                                    ? const Text(
-                                        'Segera konfirmasi pesanan ini!',
-                                        softWrap: true,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(color: Colors.red),
-                                      )
-                                    : Container()
+                                    ? const Icon(
+                                        Icons.arrow_forward_ios_rounded)
+                                    : myBooking[index].confirmation == 'cancel'
+                                        ? const Text(
+                                            'Ditolak',
+                                            softWrap: true,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                color: Colors.red,
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                        : const Text(
+                                            'Diterima',
+                                            softWrap: true,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    76, 76, 220, 1),
+                                                fontWeight: FontWeight.bold),
+                                          )
                               ],
                             ),
                           ),
