@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/landing_page.dart';
 import 'package:selaga_ver1/pages/mitra/confirmation_page/confirmation_detail_page.dart';
 import 'package:selaga_ver1/pages/mitra/daftar_venue/daftar_venue_page.dart';
@@ -16,15 +17,17 @@ import 'package:selaga_ver1/pages/mitra/venue_detail/venue_detail_page.dart';
 import 'package:selaga_ver1/pages/user/booking_page/booking_page.dart';
 import 'package:selaga_ver1/pages/user/booking_page/component/choose_jadwal.dart';
 import 'package:selaga_ver1/pages/user/booking_page/success_booking_page.dart';
-import 'package:selaga_ver1/pages/user/confirmation_page.dart';
-import 'package:selaga_ver1/pages/user/detail_page.dart';
-import 'package:selaga_ver1/pages/user/home_page.dart';
+import 'package:selaga_ver1/pages/user/payment_page/confirmation_page.dart';
+import 'package:selaga_ver1/pages/user/home_page/detail_page.dart';
+import 'package:selaga_ver1/pages/user/home_page_navigations.dart';
 import 'package:selaga_ver1/pages/user/login_page.dart';
 import 'package:selaga_ver1/pages/user/payment_page/confirm_payment_page.dart';
 import 'package:selaga_ver1/pages/user/payment_page/payment_page.dart';
 import 'package:selaga_ver1/pages/user/register_page.dart';
 import 'package:selaga_ver1/pages/user/riwayat_page/detail_riwayat_page.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
+import 'package:selaga_ver1/repositories/providers.dart';
+import 'package:selaga_ver1/shared_preference/shared_preference_repository.dart';
 
 class MyRoutes {
   final _router = GoRouter(
@@ -33,6 +36,23 @@ class MyRoutes {
           path: '/',
           name: 'landing_page',
           builder: (context, state) => const LandingPage(),
+          // redirect: (context, state) async {
+          //   final SharedPreferenceRepository sharedPreferences =
+          //       SharedPreferenceRepositoryImpl();
+
+          //   final data = await sharedPreferences.getValue("token");
+          //   final user = await sharedPreferences.getValue("user");
+
+          //   if (data == null) {
+          //     return '/';
+          //   } else if (user == "penyewa") {
+          //     return "/userHome";
+          //   } else if (user == "mitra") {
+          //     return "/mitraHome";
+          //   } else {
+          //     return null;
+          //   }
+          // },
           routes: [
             GoRoute(
               path: 'userLogin',
@@ -286,9 +306,33 @@ class MyRoutes {
                 ]),
           ]),
     ],
-    initialLocation: '/',
+    initialLocation: '/userHome',
     routerNeglect: true,
     debugLogDiagnostics: true,
+    // redirect: (context, state) async {
+    //   final SharedPreferenceRepository sharedPreferences =
+    //       SharedPreferenceRepositoryImpl();
+
+    //   final data = await sharedPreferences.getValue("token");
+    //   final user = await sharedPreferences.getValue("user");
+    //   // if (data != null && user == "penyewa") {
+    //   //   return "/userHome";
+    //   // }
+    //   // if (data != null && user == "mitra") {
+    //   //   return "/mitraHome";
+    //   // }
+    //   // return null;
+
+    //   if (data == null) {
+    //     return '/';
+    //     // } else if (user == "penyewa") {
+    //     //   return "/userHome";
+    //     // } else if (user == "mitra") {
+    //     //   return "/mitraHome";
+    //   } else {
+    //     return null;
+    //   }
+    // },
   );
 
   GoRouter get router => _router;

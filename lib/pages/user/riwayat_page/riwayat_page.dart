@@ -70,7 +70,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                           child: Container(
                             // height: 125,
                             height: 150,
-                            padding: const EdgeInsets.all(16),
+                            padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
                               color: Colors.white,
@@ -85,15 +85,19 @@ class _RiwayatPageState extends State<RiwayatPage> {
                             ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  myBooking[index].timetable.nameVenue,
-                                  style: const TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 16.0),
+                                  child: Text(
+                                    myBooking[index].timetable.nameVenue,
+                                    style: const TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    softWrap: true,
+                                    // maxLines: 1,
                                   ),
-                                  softWrap: true,
-                                  // maxLines: 1,
                                 ),
                                 ListTile(
                                     leading: const Icon(Icons.calendar_month),

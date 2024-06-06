@@ -63,7 +63,8 @@ class ProfilePage extends StatelessWidget {
                         ),
                         ListTile(
                           onTap: () async {
-                            var data = await ApiRepository().userLogout(myToken.token);
+                            var data =
+                                await ApiRepository().userLogout(myToken.token);
 
                             if (data.result != null) {
                               if (!context.mounted) {
@@ -74,20 +75,12 @@ class ProfilePage extends StatelessWidget {
                               if (!context.mounted) {
                                 return;
                               }
-                              SnackBar snackBar = SnackBar(
-                                content: Text('${data.error}',
-                                    style: const TextStyle(fontSize: 16)),
-                                // backgroundColor: Colors.indigo,
-                                duration: const Duration(milliseconds: 1300),
-                                dismissDirection: DismissDirection.up,
-                                behavior: SnackBarBehavior.floating,
-                                margin: EdgeInsets.only(
-                                    bottom:
-                                    MediaQuery.of(context).size.height - 150,
-                                    left: 10,
-                                    right: 10),
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('${data.error}'),
+                                  duration: const Duration(milliseconds: 1100),
+                                ),
                               );
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
                             }
                           },
                           title: const Text('Keluar'),

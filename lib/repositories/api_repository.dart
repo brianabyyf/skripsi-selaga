@@ -8,6 +8,7 @@ import 'package:selaga_ver1/repositories/models/login_user_model.dart';
 import 'package:selaga_ver1/repositories/models/register_user_model.dart';
 import 'package:selaga_ver1/repositories/models/user_profile_model.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
+import 'package:selaga_ver1/shared_preference/shared_preference_repository.dart';
 
 class ApiRepository {
   final Dio api;
@@ -45,8 +46,14 @@ class ApiRepository {
   }
 
   Future<ApiResponse<String>> userLogin(LoginUserModel user) async {
+    final SharedPreferenceRepository sharedPreferenceRepository;
+    sharedPreferenceRepository = SharedPreferenceRepositoryImpl();
+
     try {
       final result = await api.post("/login", data: user.toRawJson());
+      sharedPreferenceRepository.setValue(
+          "token", result.data['token'].toString());
+      sharedPreferenceRepository.setValue("user", "penyewa");
       return ApiResponse(result: result.data['token'].toString());
     } on DioException catch (e) {
       return ApiResponse(error: e.response?.data['message'].toString());
@@ -63,11 +70,15 @@ class ApiRepository {
   }
 
   Future<ApiResponse<String>> userLogout(String token) async {
+    final SharedPreferenceRepository sharedPreferenceRepository;
+    sharedPreferenceRepository = SharedPreferenceRepositoryImpl();
     try {
       final result = await api.get("/logout",
           options: Options(headers: {
             'Authorization': 'Bearer $token',
           }));
+      sharedPreferenceRepository.clearValue("token");
+      sharedPreferenceRepository.clearValue("user");
       return ApiResponse(result: result.data['message'].toString());
     } on DioException catch (e) {
       return ApiResponse(error: e.error.toString());
@@ -127,8 +138,13 @@ class ApiRepository {
   }
 
   Future<ApiResponse<String>> mitraLogin(LoginUserModel user) async {
+    final SharedPreferenceRepository sharedPreferenceRepository;
+    sharedPreferenceRepository = SharedPreferenceRepositoryImpl();
     try {
       final result = await api.post("/loginMitra", data: user.toRawJson());
+      sharedPreferenceRepository.setValue(
+          "token", result.data['token'].toString());
+      sharedPreferenceRepository.setValue("user", "mitra");
       return ApiResponse(result: result.data['token'].toString());
     } on DioException catch (e) {
       return ApiResponse(error: e.response?.data['message'].toString());
@@ -145,11 +161,15 @@ class ApiRepository {
   }
 
   Future<ApiResponse<String>> mitraLogout(String token) async {
+    final SharedPreferenceRepository sharedPreferenceRepository;
+    sharedPreferenceRepository = SharedPreferenceRepositoryImpl();
     try {
       final result = await api.get("/logoutMitra",
           options: Options(headers: {
             'Authorization': 'Bearer $token',
           }));
+      sharedPreferenceRepository.clearValue("token");
+      sharedPreferenceRepository.clearValue("user");
       return ApiResponse(result: result.data['message'].toString());
     } on DioException catch (e) {
       return ApiResponse(error: e.error.toString());

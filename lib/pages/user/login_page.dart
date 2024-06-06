@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
       });
       var data = await ApiRepository().userLogin(LoginUserModel(
           email: _emailController.text, password: _passwordController.text));
-      if (data.result != null) {
+      if (data.result != null && data.error == null) {
         if (!mounted) {
           return;
         }

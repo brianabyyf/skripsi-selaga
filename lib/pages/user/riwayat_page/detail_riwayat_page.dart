@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/booking_model.dart';
+import 'package:selaga_ver1/repositories/models/endpoints.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
 
@@ -24,6 +26,9 @@ class DetailRiwayatPage extends StatelessWidget {
             if (snapshot.hasData &&
                 snapshot.connectionState == ConnectionState.done) {
               BookingModel booking = snapshot.data!.result!;
+              var img =
+                  booking.timetable.lapanganBooking.venueBooking.image ?? '';
+              var imgList = img.split(',');
               return Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(children: [
@@ -82,11 +87,38 @@ class DetailRiwayatPage extends StatelessWidget {
                                               .selectedIndex))),
                               subtitle: Text(
                                   '${booking.hours}.00 - ${1 + int.parse(booking.hours)}.00')),
-                          const SizedBox(
-                            height: 10,
-                          ),
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              // color: Colors.grey,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: imgList.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: SizedBox(
+                                      width: 190,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: Image.network(
+                                          '${Endpoints().image}${imgList[index]}',
+                                          // width: MediaQuery.of(context).size.width,
+                                          // height: 100,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          )
                         ],
                       ),
+                    ),
+                    const SizedBox(
+                      height: 10,
                     ),
                     RatingWidget(
                       booking: booking,

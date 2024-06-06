@@ -241,13 +241,6 @@ class DetailWidget extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12))),
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => BookingPage(
-                    //             venue: venue,
-                    //           )),
-                    // );
                     ArgumentsUser args = ArgumentsUser(
                         venue: venue, lapangan: null, listJadwal: []);
                     args.toJson();

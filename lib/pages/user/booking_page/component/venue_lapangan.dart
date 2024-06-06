@@ -71,14 +71,6 @@ class VenueLapangan extends StatelessWidget {
                     Provider.of<HourUnAvailable>(context, listen: false)
                         .clear();
                     Provider.of<SelectedHour>(context, listen: false).clear();
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => ChooseJadwalPage(
-                    //           myJadwal: myJadwal,
-                    //           lapangan: myLapangan[index],
-                    //           venue: venue)),
-                    // );
 
                     ArgumentsUser args = ArgumentsUser(
                         venue: venue,
@@ -143,16 +135,6 @@ class VenueLapangan extends StatelessWidget {
                                 'Tidak ada jadwal yang tersedia',
                                 style: TextStyle(color: Colors.red),
                               ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //     Text('Tersedia ${hourList.length} pilihan jadwal'),
-                        //     // Text(
-                        //     //     '${DateFormat('dd/MM/yyyy').format(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + Provider.of<SelectedDate>(context, listen: false).selectedIndex))}'),
-                        //   ],
-                        // ),
-                        // Text('Tersedia ${hourList2.length}'),
-                        // Text('Tersedia ${hourList3.length}'),
                       ],
                     ),
                   ),
