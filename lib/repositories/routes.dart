@@ -17,6 +17,8 @@ import 'package:selaga_ver1/pages/mitra/venue_detail/venue_detail_page.dart';
 import 'package:selaga_ver1/pages/user/booking_page/booking_page.dart';
 import 'package:selaga_ver1/pages/user/booking_page/component/choose_jadwal.dart';
 import 'package:selaga_ver1/pages/user/booking_page/success_booking_page.dart';
+import 'package:selaga_ver1/pages/user/home_page/rating_page/detail_populer_page.dart';
+import 'package:selaga_ver1/pages/user/home_page/rating_page/detail_rating_page.dart';
 import 'package:selaga_ver1/pages/user/payment_page/confirmation_page.dart';
 import 'package:selaga_ver1/pages/user/home_page/detail_page.dart';
 import 'package:selaga_ver1/pages/user/home_page_navigations.dart';
@@ -102,6 +104,16 @@ class MyRoutes {
             path: 'userDetailPemesanan',
             name: 'user_detail_pemesanan',
             builder: (context, state) => const DetailRiwayatPage(),
+          ),
+          GoRoute(
+            path: 'userListVenueByRating',
+            name: 'user_venue_byrating',
+            builder: (context, state) => const ListRatingVanuePage(),
+          ),
+          GoRoute(
+            path: 'userListVenueByPopuler',
+            name: 'user_venue_bypopuler',
+            builder: (context, state) => const ListPopulerVanuePage(),
           ),
           GoRoute(
               path: 'userDetailVenue',
@@ -306,7 +318,7 @@ class MyRoutes {
                 ]),
           ]),
     ],
-    initialLocation: '/userHome',
+    initialLocation: '/userHome/userListVenueByPopuler',
     routerNeglect: true,
     debugLogDiagnostics: true,
     // redirect: (context, state) async {

@@ -5,6 +5,7 @@ class SportsFieldCard extends StatelessWidget {
   final String? fieldImage;
   final String fieldLocation;
   final String fieldPrice;
+  final String fieldRating;
   final VoidCallback onPressed;
 
   const SportsFieldCard({
@@ -14,6 +15,7 @@ class SportsFieldCard extends StatelessWidget {
     required this.fieldLocation,
     required this.onPressed,
     required this.fieldPrice,
+    required this.fieldRating,
   });
 
   @override
@@ -21,7 +23,7 @@ class SportsFieldCard extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       child: Container(
-        width: 300,
+        width: 270,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: Colors.white,
@@ -81,31 +83,49 @@ class SportsFieldCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 5.0),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Rp. ',
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          color: Color.fromRGBO(76, 76, 220, 1),
-                        ),
-                        // maxLines: 1,
+                      Row(
+                        children: [
+                          const Text(
+                            'Rp. ',
+                            style: TextStyle(
+                                fontSize: 14.0,
+                                color: Color.fromRGBO(76, 76, 220, 1),
+                                fontWeight: FontWeight.bold),
+                            // maxLines: 1,
+                          ),
+                          Text(
+                            fieldPrice,
+                            style: const TextStyle(
+                                fontSize: 14.0,
+                                color: Color.fromRGBO(76, 76, 220, 1),
+                                fontWeight: FontWeight.bold),
+                            // maxLines: 1,
+                          ),
+                          const Text(
+                            ' /jam',
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: Color.fromARGB(255, 77, 77, 77),
+                            ),
+                            // maxLines: 1,
+                          ),
+                        ],
                       ),
-                      Text(
-                        fieldPrice,
-                        style: const TextStyle(
-                          fontSize: 14.0,
-                          color: Color.fromRGBO(76, 76, 220, 1),
-                        ),
-                        // maxLines: 1,
-                      ),
-                      const Text(
-                        ' /jam',
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          color: Color.fromARGB(255, 77, 77, 77),
-                        ),
-                        // maxLines: 1,
-                      ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.star,
+                            color: Color.fromARGB(255, 255, 230, 3),
+                            size: 20,
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(double.parse(fieldRating).toStringAsFixed(2))
+                        ],
+                      )
                     ],
                   ),
                 ],
