@@ -65,7 +65,15 @@ class ApiRepository {
       final result = await api.post("/register", data: user.toRawJson());
       return ApiResponse(result: result.data['token'].toString());
     } on DioException catch (e) {
-      return ApiResponse(error: e.response?.data['message'].toString());
+      // final data = e.response?.data;
+      // if (data['errors']['email'] != null && data['errors']['phone'] == null) {
+      //   return ApiResponse(error: e.response?.data['errors']['email']);
+      // } else if (data['errors']['phone'] != null &&
+      //     data['errors']['email'] == null) {
+      //   return ApiResponse(error: e.response?.data['errors']['email']);
+      // } else {
+      return ApiResponse(error: e.message?.toString());
+      // }
     }
   }
 

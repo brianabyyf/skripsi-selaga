@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:selaga_ver1/pages/components/format.dart';
 import 'package:selaga_ver1/pages/user/booking_page/component/hour_section.dart';
 import 'package:selaga_ver1/pages/user/booking_page/component/my_calendar.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
@@ -57,9 +58,9 @@ class _ChooseJadwalPageState extends State<ChooseJadwalPage> {
                         ),
                         Row(
                           children: [
-                            const Text('Rp. '),
                             Text(
-                              '${widget.venue.price}',
+                              CurrencyFormat.convertToIdr(
+                                  double.parse(widget.venue.price!)),
                               style: const TextStyle(
                                   color: Color.fromRGBO(76, 76, 220, 1),
                                   fontSize: 16,

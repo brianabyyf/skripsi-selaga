@@ -46,7 +46,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
 
               if (myBooking.isEmpty) {
                 return const Center(
-                  child: Text('Anda belum memiliki riwayat booking'),
+                  child: Text('Anda belum memiliki riwayat pemesanan'),
                 );
               } else {
                 return Padding(
@@ -100,26 +100,34 @@ class _RiwayatPageState extends State<RiwayatPage> {
                                   ),
                                 ),
                                 ListTile(
-                                    leading: const Icon(Icons.calendar_month),
+                                    leading: const Icon(
+                                      Icons.calendar_month,
+                                      color: Color.fromRGBO(76, 76, 220, 1),
+                                    ),
                                     title: Text(DateFormat('dd MMMM yyyy')
-                                        .format(booking[index].date)),
+                                        .format(myBooking[index].date)),
                                     subtitle: Text(
                                         '${myBooking[index].hours}.00 - ${1 + int.parse(myBooking[index].hours)}.00')),
                                 myBooking[index].confirmation == 'pending'
-                                    ? const Text(
-                                        'Harap menunggu konfirmasi dari pihak penyewa',
-                                        softWrap: true,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            color:
-                                                Color.fromRGBO(76, 76, 220, 1)),
+                                    ? const Center(
+                                        child: Text(
+                                          'Harap menunggu konfirmasi dari pihak penyewa',
+                                          softWrap: true,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              color: Color.fromRGBO(
+                                                  76, 76, 220, 1)),
+                                        ),
                                       )
                                     : myBooking[index].confirmation == 'cancel'
-                                        ? const Text(
-                                            'Pesanan anda ditolak',
-                                            softWrap: true,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(color: Colors.red),
+                                        ? const Center(
+                                            child: Text(
+                                              'Pesanan anda ditolak',
+                                              softWrap: true,
+                                              overflow: TextOverflow.ellipsis,
+                                              style:
+                                                  TextStyle(color: Colors.red),
+                                            ),
                                           )
                                         : Container()
                               ],

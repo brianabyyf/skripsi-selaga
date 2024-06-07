@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:selaga_ver1/pages/components/format.dart';
 import 'package:selaga_ver1/repositories/models/booking_model.dart';
 import 'package:selaga_ver1/repositories/models/endpoints.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
@@ -104,15 +105,9 @@ class VenueByPopuler extends StatelessWidget {
                         const SizedBox(height: 5.0),
                         Row(
                           children: [
-                            const Text(
-                              'Rp. ',
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Color.fromRGBO(76, 76, 220, 1),
-                                  fontWeight: FontWeight.bold),
-                            ),
                             Text(
-                              venue[0].price ?? '',
+                              CurrencyFormat.convertToIdr(
+                                  double.parse(venue[0].price!)),
                               style: const TextStyle(
                                   fontSize: 14.0,
                                   color: Color.fromRGBO(76, 76, 220, 1),

@@ -58,6 +58,7 @@ class _MyJadwalBookedPageState extends State<MyJadwalBookedPage> {
                   .where((e) =>
                       e.date.isAtSameMomentAs(date) && e.confirmation == 'done')
                   .toList();
+
               return Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
@@ -77,7 +78,7 @@ class _MyJadwalBookedPageState extends State<MyJadwalBookedPage> {
                                         .selectedIndex))
                         ? Expanded(
                             child: ListView.builder(
-                            itemCount: myBooking.length,
+                            itemCount: myJadwalBooking.length,
                             itemBuilder: (context, index) {
                               var img = myBooking[index]
                                       .timetable
@@ -92,7 +93,8 @@ class _MyJadwalBookedPageState extends State<MyJadwalBookedPage> {
                                   onTap: () {
                                     Provider.of<BookingId>(context,
                                             listen: false)
-                                        .updateBookingId(myBooking[index].id);
+                                        .updateBookingId(
+                                            myJadwalBooking[index].id);
                                     context.goNamed('user_detail_pemesanan');
                                   },
                                   child: Container(
@@ -137,7 +139,7 @@ class _MyJadwalBookedPageState extends State<MyJadwalBookedPage> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                myBooking[index]
+                                                myJadwalBooking[index]
                                                     .timetable
                                                     .nameVenue,
                                                 style: const TextStyle(
@@ -155,7 +157,7 @@ class _MyJadwalBookedPageState extends State<MyJadwalBookedPage> {
                                                     const SizedBox(
                                                       width: 5,
                                                     ),
-                                                    Text(myBooking[index]
+                                                    Text(myJadwalBooking[index]
                                                             .timetable
                                                             .lapanganBooking
                                                             .venueBooking
@@ -180,10 +182,12 @@ class _MyJadwalBookedPageState extends State<MyJadwalBookedPage> {
                                                     children: [
                                                       Text(DateFormat(
                                                               'dd MMMM yyyy')
-                                                          .format(booking[index]
-                                                              .date)),
+                                                          .format(
+                                                              myJadwalBooking[
+                                                                      index]
+                                                                  .date)),
                                                       Text(
-                                                          '${myBooking[index].hours}.00 - ${1 + int.parse(myBooking[index].hours)}.00'),
+                                                          '${myJadwalBooking[index].hours}.00 - ${1 + int.parse(myJadwalBooking[index].hours)}.00'),
                                                     ],
                                                   ),
                                                 ],

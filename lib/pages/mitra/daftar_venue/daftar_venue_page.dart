@@ -205,6 +205,7 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
                   decoration: const InputDecoration(
                     labelText: 'Harga',
                   ),
+                  keyboardType: TextInputType.number,
                   controller: _priceController,
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -319,7 +320,7 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
                             )),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 15,
                 ),
                 const Text('Foto lainnya', style: TextStyle(fontSize: 16)),
                 const SizedBox(

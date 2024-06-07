@@ -94,10 +94,10 @@ class _LoginPageState extends State<LoginPage> {
                         RegExp regex = RegExp(
                             r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
                         if (value!.isEmpty) {
-                          return 'Email can\'t be empty';
+                          return 'Mohon isi kolom email';
                         } else {
                           if (!regex.hasMatch(value)) {
-                            return 'Enter valid email address';
+                            return 'Isi alamat email yang valid';
                           } else {
                             return null;
                           }
@@ -111,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                   // password textfield
                   AuthField(
                     controller: _passwordController,
-                    hintText: 'Password',
+                    hintText: 'Kata sandi',
                     isObscureText: true,
                   ),
 
@@ -137,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               )
                             : const Text(
-                                'Login',
+                                'Masuk',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,

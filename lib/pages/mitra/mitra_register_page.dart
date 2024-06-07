@@ -18,6 +18,7 @@ class _MitraRegisterPageState extends State<MitraRegisterPage> {
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
+  final _confirmController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   var _isSending = false;
 
@@ -45,10 +46,16 @@ class _MitraRegisterPageState extends State<MitraRegisterPage> {
         if (!mounted) {
           return;
         }
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     content: Text('${data.error}'),
+        //     duration: const Duration(milliseconds: 1200),
+        //   ),
+        // );
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${data.error}'),
-            duration: const Duration(milliseconds: 1200),
+          const SnackBar(
+            content: Text('Email atau Nomor HP sudah digunakan'),
+            duration: Duration(milliseconds: 1200),
           ),
         );
       }
@@ -94,7 +101,7 @@ class _MitraRegisterPageState extends State<MitraRegisterPage> {
 
                 AuthField(
                   controller: _nameController,
-                  hintText: 'Nama Lengkap',
+                  hintText: 'Nama Mitra',
                 ),
                 const SizedBox(height: 10),
                 AuthField(
@@ -102,15 +109,68 @@ class _MitraRegisterPageState extends State<MitraRegisterPage> {
                   hintText: 'Email',
                 ),
                 const SizedBox(height: 10),
-                AuthField(
-                  controller: _phoneController,
-                  hintText: 'Nomor Handphone',
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    controller: _phoneController,
+                    decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        hintText: 'Nomor Handphone',
+                        hintStyle: TextStyle(color: Colors.grey[500])),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Mohon isi kolom Nomor Handphone";
+                      }
+                      return null;
+                    },
+                  ),
                 ),
                 const SizedBox(height: 10),
                 AuthField(
                   controller: _passwordController,
-                  hintText: 'Password',
+                  hintText: 'Kata sandi',
                   isObscureText: true,
+                ),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: TextFormField(
+                    controller: _confirmController,
+                    decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        hintText: 'Konfirmasi kata sandi',
+                        hintStyle: TextStyle(color: Colors.grey[500])),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Mohon isi kolom Konfirmasi kata sandi";
+                      } else if (value != _passwordController.text) {
+                        return "Kata sandi tidak sesuai";
+                      }
+                      return null;
+                    },
+                    obscureText: true,
+                  ),
                 ),
                 const SizedBox(height: 20),
                 InkWell(
@@ -132,7 +192,7 @@ class _MitraRegisterPageState extends State<MitraRegisterPage> {
                               ),
                             )
                           : const Text(
-                              'Register',
+                              'Daftar',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -143,27 +203,6 @@ class _MitraRegisterPageState extends State<MitraRegisterPage> {
                   ),
                 ),
                 const SizedBox(height: 20.0),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Text(
-                //       'Sudah punya akun?',
-                //       style: TextStyle(color: Colors.grey[700]),
-                //     ),
-                //     const SizedBox(width: 2),
-                //     TextButton(
-                //       onPressed: () {
-                //         Navigator.pop(context);
-                //       },
-                //       child: const Text(
-                //         'Login disini',
-                //         style: TextStyle(
-                //           color: Color.fromRGBO(76, 76, 220, 1),
-                //           fontWeight: FontWeight.bold,
-                //         ),
-                //       ),
-                //     ),
-                //   ],
                 // )
               ],
             ),
@@ -172,59 +211,4 @@ class _MitraRegisterPageState extends State<MitraRegisterPage> {
       ),
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: const Text('Register'),
-  //     ),
-  //     body: Padding(
-  //       padding: const EdgeInsets.all(20.0),
-  //       child: Column(
-  //         mainAxisAlignment: MainAxisAlignment.center,
-  //         children: [
-  //           const TextField(
-  //             decoration: InputDecoration(
-  //               labelText: 'Nama',
-  //             ),
-  //           ),
-  //           const SizedBox(height: 20.0),
-  //           const TextField(
-  //             decoration: InputDecoration(
-  //               labelText: 'Email',
-  //             ),
-  //           ),
-  //           const SizedBox(height: 20.0),
-  //           const TextField(
-  //             decoration: InputDecoration(
-  //               labelText: 'Nomor Handphone',
-  //             ),
-  //           ),
-  //           const SizedBox(height: 20.0),
-  //           const TextField(
-  //             obscureText: true,
-  //             decoration: InputDecoration(
-  //               labelText: 'Password',
-  //             ),
-  //           ),
-  //           const SizedBox(height: 20.0),
-  //           ElevatedButton(
-  //             onPressed: () {
-  //               // Tambahkan logika untuk registrasi di sini
-  //             },
-  //             child: const Text('Register'),
-  //           ),
-  //           const SizedBox(height: 10.0),
-  //           TextButton(
-  //             onPressed: () {
-  //               Navigator.pop(context);
-  //             },
-  //             child: const Text('Sudah punya akun? Login di sini'),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 }

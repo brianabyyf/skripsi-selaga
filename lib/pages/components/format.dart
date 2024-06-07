@@ -1,11 +1,20 @@
 import 'package:intl/intl.dart';
 
 class CurrencyFormat {
-  static String convertToIdr(String denom , dynamic number, int decimalDigit) {
-    NumberFormat currencyFormatter = NumberFormat.currency(
-      symbol: '$denom  ',
-      decimalDigits: decimalDigit,
-    );
+  static String convertToIdr(dynamic number) {
+    NumberFormat currencyFormatter =
+        NumberFormat.currency(symbol: 'Rp ', locale: 'id_ID', decimalDigits: 0);
+
+    if (number != null) {
+      return currencyFormatter.format(number);
+    }
+
+    return "";
+  }
+
+  static String convertToIdrNoSymbol(dynamic number) {
+    NumberFormat currencyFormatter =
+        NumberFormat.currency(symbol: '', locale: 'id_ID', decimalDigits: 0);
 
     if (number != null) {
       return currencyFormatter.format(number);

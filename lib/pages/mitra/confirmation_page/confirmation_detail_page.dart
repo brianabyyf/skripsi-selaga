@@ -47,7 +47,7 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                             subtitleTextStyle: const TextStyle(
                               // color: Color.fromRGBO(76, 76, 220, 1),
                               color: Colors.black,
-                              fontSize: 18.0,
+                              fontSize: 16.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -64,7 +64,7 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                             subtitleTextStyle: const TextStyle(
                               // color: Color.fromRGBO(76, 76, 220, 1),
                               color: Colors.black,
-                              fontSize: 18.0,
+                              fontSize: 16.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -80,7 +80,7 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                                 '${booking.hours}.00 - ${1 + int.parse(booking.hours)}.00'),
                             subtitleTextStyle: const TextStyle(
                               color: Colors.black,
-                              fontSize: 18.0,
+                              fontSize: 16.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -95,7 +95,7 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                             subtitle: Text(booking.timetable.nameVenue),
                             subtitleTextStyle: const TextStyle(
                               color: Colors.black,
-                              fontSize: 18.0,
+                              fontSize: 16.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -110,7 +110,7 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                             subtitle: Text(booking.timetable.nameLapangan),
                             subtitleTextStyle: const TextStyle(
                               color: Colors.black,
-                              fontSize: 18.0,
+                              fontSize: 16.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -118,9 +118,22 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                             indent: 8,
                             endIndent: 8,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 16.0),
-                            child: Text('Bukti Pembayaran'),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text('Bukti Pembayaran'),
+                                Text(
+                                  booking.payment,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           const SizedBox(
                             height: 10,

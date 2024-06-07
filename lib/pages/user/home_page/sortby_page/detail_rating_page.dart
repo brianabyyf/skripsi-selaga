@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:selaga_ver1/pages/components/format.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/booking_model.dart';
 import 'package:selaga_ver1/repositories/models/endpoints.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
 
-class ListPopulerVanuePage extends StatelessWidget {
-  const ListPopulerVanuePage({super.key});
+class ListRatingVanuePage extends StatelessWidget {
+  const ListRatingVanuePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tempat Populer'),
+        title: const Text('Berdasarkan Rating'),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -27,7 +28,7 @@ class ListPopulerVanuePage extends StatelessWidget {
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData &&
                 snapshot.connectionState == ConnectionState.done) {
-              List<VenueModel> venues = snapshot.data?[0].result ?? [];
+              List<VenueModel> venue = snapshot.data?[0].result ?? [];
               List<BookingModel> bookings = snapshot.data?[1].result ?? [];
 
               Map<int, int> orderCounts = {};
@@ -36,20 +37,17 @@ class ListPopulerVanuePage extends StatelessWidget {
                 orderCounts[e.timetable.lapanganBooking.venueId] =
                     (orderCounts[e.timetable.lapanganBooking.venueId] ?? 0) + 1;
               }
-
-              venues.sort((a, b) =>
-                  (orderCounts[b.id] ?? 0).compareTo(orderCounts[a.id] ?? 0));
+              venue.sort((a, b) => -a.rating!.compareTo(b.rating!));
 
               return Padding(
                 padding: const EdgeInsets.all(8),
                 child: ListView.builder(
-                  itemCount: venues.length,
+                  itemCount: venue.length,
                   itemBuilder: (context, index) {
-                    VenueModel venue = venues[index];
-                    int totalOrders = orderCounts[venue.id] ?? 0;
+                    int totalOrders = orderCounts[venue[index].id] ?? 0;
                     return InkWell(
                       onTap: () {
-                        context.read<UserId>().getUserId(venue.id ?? 0);
+                        context.read<UserId>().getUserId(venue[index].id ?? 0);
                         context.goNamed('user_detail_venue');
                       },
                       child: Padding(
@@ -74,9 +72,9 @@ class ListPopulerVanuePage extends StatelessWidget {
                               children: [
                                 ClipRRect(
                                     borderRadius: BorderRadius.circular(8.0),
-                                    child: venue.image != null
+                                    child: venue[index].image != null
                                         ? Image.network(
-                                            '${Endpoints().image}${venue.image!.split(',')[0]}',
+                                            '${Endpoints().image}${venue[index].image!.split(',')[0]}',
                                             height: 140,
                                             width: 140,
                                             fit: BoxFit.cover,
@@ -101,7 +99,7 @@ class ListPopulerVanuePage extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          venue.nameVenue ?? '',
+                                          venue[index].nameVenue ?? '',
                                           style: const TextStyle(
                                             fontSize: 16.0,
                                             fontWeight: FontWeight.bold,
@@ -110,25 +108,20 @@ class ListPopulerVanuePage extends StatelessWidget {
                                         ),
                                         const SizedBox(height: 5.0),
                                         Text(
-                                          venue.lokasiVenue ?? '',
+                                          venue[index].lokasiVenue ?? '',
                                           style: const TextStyle(
                                             fontSize: 14.0,
+                                            color: Colors.grey,
                                           ),
                                           // maxLines: 1,
                                         ),
                                         const SizedBox(height: 5.0),
                                         Row(
                                           children: [
-                                            const Text(
-                                              'Rp. ',
-                                              style: TextStyle(
-                                                  fontSize: 14.0,
-                                                  color: Color.fromRGBO(
-                                                      76, 76, 220, 1),
-                                                  fontWeight: FontWeight.bold),
-                                            ),
                                             Text(
-                                              venue.price ?? '',
+                                              CurrencyFormat.convertToIdr(
+                                                  double.parse(
+                                                      venue[index].price!)),
                                               style: const TextStyle(
                                                   fontSize: 14.0,
                                                   color: Color.fromRGBO(
@@ -138,14 +131,6 @@ class ListPopulerVanuePage extends StatelessWidget {
                                             ),
                                             const Text(' /jam')
                                           ],
-                                        ),
-                                        const SizedBox(height: 5.0),
-                                        Text(
-                                          '($totalOrders) kali dipesan',
-                                          style: const TextStyle(
-                                            fontSize: 14.0,
-                                          ),
-                                          // maxLines: 1,
                                         ),
                                         const SizedBox(height: 5.0),
                                         Row(
@@ -158,8 +143,10 @@ class ListPopulerVanuePage extends StatelessWidget {
                                             const SizedBox(
                                               width: 5,
                                             ),
-                                            Text(double.parse(venue.rating!)
-                                                .toStringAsFixed(2))
+                                            Text(double.parse(
+                                                    venue[index].rating!)
+                                                .toStringAsFixed(2)),
+                                            Text('  ($totalOrders)'),
                                           ],
                                         )
                                       ],

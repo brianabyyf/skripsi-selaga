@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:selaga_ver1/pages/components/format.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/endpoints.dart';
@@ -162,12 +163,8 @@ class DetailWidget extends StatelessWidget {
           ),
           Row(
             children: [
-              const Text(
-                'Rp. ',
-                style: TextStyle(color: Color.fromRGBO(76, 76, 220, 1)),
-              ),
               Text(
-                venue.price ?? '',
+                CurrencyFormat.convertToIdr(double.parse(venue.price!)),
                 style: const TextStyle(color: Color.fromRGBO(76, 76, 220, 1)),
               ),
               const Text(' /jam',
@@ -194,6 +191,11 @@ class DetailWidget extends StatelessWidget {
           const SizedBox(
             height: 5,
           ),
+          const Text('Deskripsi',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const SizedBox(
+            height: 5,
+          ),
           Flexible(
             child: Text('${venue.descVenue}',
                 style: const TextStyle(
@@ -203,7 +205,7 @@ class DetailWidget extends StatelessWidget {
           const SizedBox(
             height: 5,
           ),
-          const Text('Preview',
+          const Text('Foto lainnya',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           SizedBox(
             height: 150,

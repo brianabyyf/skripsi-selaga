@@ -207,7 +207,6 @@ class _EditJadwalPageState extends State<EditJadwalPage> {
                       lapanganId: dataJadwal.lapanganId ?? 0);
 
                   if (data.result != null) {
-
                     if (!context.mounted) {
                       return;
                     }
@@ -279,7 +278,7 @@ class _EditJadwalPageState extends State<EditJadwalPage> {
     AlertDialog alert = AlertDialog(
       title: const Text("Peringatan!"),
       content: const Text(
-          "Apakah anda ingin berumah status jadwal pada jam tersebut?"),
+          "Apakah anda ingin merubah status jadwal pada jam tersebut?"),
       actions: [
         cancelButton,
         continueButton,
@@ -322,7 +321,7 @@ class _EditJadwalPageState extends State<EditJadwalPage> {
     AlertDialog alert = AlertDialog(
       title: const Text("Peringatan!"),
       content: const Text(
-          "Apakah anda ingin berumah status jadwal pada jam tersebut?"),
+          "Apakah anda ingin merubah status jadwal pada jam tersebut?"),
       actions: [
         cancelButton,
         continueButton,

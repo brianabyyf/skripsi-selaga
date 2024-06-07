@@ -30,112 +30,125 @@ class _HomePageState extends State<HomePage> {
             if (snapshot.hasData &&
                 snapshot.connectionState == ConnectionState.done) {
               List<VenueModel> venue = snapshot.data?[0].result ?? [];
+
               List<BookingModel> bookings = snapshot.data?[1].result ?? [];
 
-              venue.sort((a, b) => -a.rating!.compareTo(b.rating!));
+              // venue.sort((a, b) => double.parse(b.rating ?? '0')
+              //     .compareTo(double.parse(a.rating ?? '0')));
+              // venue.sort((a, b) => -a.rating!.compareTo(b.rating!));
 
-              return SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 16, right: 16, bottom: 8),
-                      child: Text('Lokasi'),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.location_on,
-                            color: Color.fromRGBO(76, 76, 220, 1),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Bandung, Indonesia',
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
+              if (venue.isNotEmpty) {
+                return SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding:
+                            EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                        child: Text('Lokasi'),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 80,
-                      child: SearchBarTheme(
-                        data: SearchBarThemeData(
-                            surfaceTintColor:
-                                MaterialStatePropertyAll(Colors.grey)),
-                        child: Padding(
-                          padding: EdgeInsets.all(16),
-                          child: SearchBar(
-                            leading: Icon(Icons.search),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              color: Color.fromRGBO(76, 76, 220, 1),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Bandung, Indonesia',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 80,
+                        child: SearchBarTheme(
+                          data: SearchBarThemeData(
+                              surfaceTintColor:
+                                  MaterialStatePropertyAll(Colors.grey)),
+                          child: Padding(
+                            padding: EdgeInsets.all(16),
+                            child: SearchBar(
+                              leading: Icon(Icons.search),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Berdasarkan Rating',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              context.goNamed('user_venue_byrating');
-                            },
-                            child: const Text(
-                              'Lihat semua',
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Berdasarkan Rating',
                               style: TextStyle(
-                                color: Color.fromRGBO(76, 76, 220, 1),
+                                fontSize: 16.0,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    VenueByRating(venue: venue),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Tempat populer',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
+                            TextButton(
+                              onPressed: () {
+                                context.goNamed('user_venue_byrating');
+                              },
+                              child: const Text(
+                                'Lihat semua',
+                                style: TextStyle(
+                                  color: Color.fromRGBO(76, 76, 220, 1),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              context.goNamed('user_venue_bypopuler');
-                            },
-                            child: const Text(
-                              'Lihat semua',
+                          ],
+                        ),
+                      ),
+                      VenueByRating(
+                        venue: venue,
+                        bookings: bookings,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Tempat populer',
                               style: TextStyle(
-                                color: Color.fromRGBO(76, 76, 220, 1),
+                                fontSize: 16.0,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),
-                        ],
+                            TextButton(
+                              onPressed: () {
+                                context.goNamed('user_venue_bypopuler');
+                              },
+                              child: const Text(
+                                'Lihat semua',
+                                style: TextStyle(
+                                  color: Color.fromRGBO(76, 76, 220, 1),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    VenueByPopuler(venue: venue, booking: bookings)
-                  ],
-                ),
-              );
+                      VenueByPopuler(venue: venue, booking: bookings)
+                    ],
+                  ),
+                );
+              } else {
+                return const Center(
+                  child: Text('Belum ada venue yang tersedia'),
+                );
+              }
             } else if (snapshot.hasError) {
               return Center(
                 child: Column(

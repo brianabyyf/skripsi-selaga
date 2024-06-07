@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:selaga_ver1/pages/components/format.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
@@ -109,7 +110,7 @@ class _EditMyLapanganPageState extends State<EditMyLapanganPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tambah Lapangan'),
+        title: const Text('Edit Lapangan'),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -138,7 +139,9 @@ class _EditMyLapanganPageState extends State<EditMyLapanganPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('${widget.venue.price}',
+                    Text(
+                        CurrencyFormat.convertToIdrNoSymbol(
+                            int.parse(widget.venue.price!)),
                         style: const TextStyle(fontSize: 16)),
                     const Text('Rupiah',
                         style: TextStyle(

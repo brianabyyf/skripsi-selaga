@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
@@ -87,7 +89,17 @@ class HaveLapangan extends StatelessWidget {
                                       color: Color.fromRGBO(76, 76, 220, 1),
                                     )),
                                 IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      ArgumentsMitra args = ArgumentsMitra(
+                                          venueId: venue.id,
+                                          venue: venue,
+                                          lapangan: myLapangan.first,
+                                          selectedDateIndex: 0,
+                                          listLapangan: myLapangan,
+                                          listJadwal: []);
+                                      showAlertDialogUnavailabe(context,
+                                          myLapangan[index].id ?? 0, args);
+                                    },
                                     icon: const Icon(
                                       Icons.delete_forever_outlined,
                                       color: Colors.red,
@@ -139,6 +151,51 @@ class HaveLapangan extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  showAlertDialogUnavailabe(BuildContext context, int id, ArgumentsMitra args) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: const Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: const Text("Continue"),
+      onPressed: () async {
+        final token = Provider.of<Token>(context, listen: false).token;
+        var data = await ApiRepository().deleteLapangan(token, id);
+
+        if (data.result != null && data.error == null) {
+          args.toJson();
+          if (!context.mounted) {
+            return;
+          }
+          Navigator.of(context).pop();
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            context.goNamed("mitra_lapangan_page", extra: args);
+          });
+        }
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: const Text("Peringatan !"),
+      content: const Text("Apakah anda ingin menghapus lapangan ini?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

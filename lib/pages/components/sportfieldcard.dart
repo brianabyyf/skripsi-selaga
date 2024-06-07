@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:selaga_ver1/pages/components/format.dart';
 
 class SportsFieldCard extends StatelessWidget {
   final String fieldName;
@@ -6,6 +7,7 @@ class SportsFieldCard extends StatelessWidget {
   final String fieldLocation;
   final String fieldPrice;
   final String fieldRating;
+  final int totalOrders;
   final VoidCallback onPressed;
 
   const SportsFieldCard({
@@ -16,6 +18,7 @@ class SportsFieldCard extends StatelessWidget {
     required this.onPressed,
     required this.fieldPrice,
     required this.fieldRating,
+    required this.totalOrders,
   });
 
   @override
@@ -87,16 +90,9 @@ class SportsFieldCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          const Text(
-                            'Rp. ',
-                            style: TextStyle(
-                                fontSize: 14.0,
-                                color: Color.fromRGBO(76, 76, 220, 1),
-                                fontWeight: FontWeight.bold),
-                            // maxLines: 1,
-                          ),
                           Text(
-                            fieldPrice,
+                            CurrencyFormat.convertToIdr(
+                                double.parse(fieldPrice)),
                             style: const TextStyle(
                                 fontSize: 14.0,
                                 color: Color.fromRGBO(76, 76, 220, 1),
@@ -123,7 +119,8 @@ class SportsFieldCard extends StatelessWidget {
                           const SizedBox(
                             width: 5,
                           ),
-                          Text(double.parse(fieldRating).toStringAsFixed(2))
+                          Text(double.parse(fieldRating).toStringAsFixed(2)),
+                          Text('  ($totalOrders)')
                         ],
                       )
                     ],

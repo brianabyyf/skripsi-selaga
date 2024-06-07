@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:selaga_ver1/pages/components/format.dart';
 import 'package:selaga_ver1/pages/mitra/venue_detail/component/fasilitas.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/endpoints.dart';
@@ -44,7 +45,7 @@ class DetailWidget extends StatelessWidget {
             children: [
               Container(
                 height: 35,
-                width: 60,
+                width: 65,
                 decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 223, 222, 222),
                     borderRadius: BorderRadius.circular(8)),
@@ -59,7 +60,7 @@ class DetailWidget extends StatelessWidget {
                     const SizedBox(
                       width: 5,
                     ),
-                    Text('${venue.rating}')
+                    Text(double.parse(venue.rating!).toStringAsFixed(2))
                   ],
                 ),
               ),
@@ -75,12 +76,8 @@ class DetailWidget extends StatelessWidget {
           ),
           Row(
             children: [
-              const Text(
-                'Rp. ',
-                style: TextStyle(color: Color.fromRGBO(76, 76, 220, 1)),
-              ),
               Text(
-                venue.price ?? '',
+                CurrencyFormat.convertToIdr(double.parse(venue.price!)),
                 style: const TextStyle(color: Color.fromRGBO(76, 76, 220, 1)),
               ),
               const Text(' /jam',
@@ -101,12 +98,14 @@ class DetailWidget extends StatelessWidget {
               Text(venue.lokasiVenue!),
             ],
           ),
+          const Text('Deskripsi',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           Flexible(
               child: Text(
             venue.descVenue ?? '',
             textAlign: TextAlign.justify,
           )),
-          const Text('Preview',
+          const Text('Foto lainnya',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           SizedBox(
             height: 150,

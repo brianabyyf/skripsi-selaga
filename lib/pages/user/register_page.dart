@@ -34,7 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
           password: _passwordController.text,
           status: 'member'));
 
-      if (data.result != null) {
+      if (data.result != null && data.error == null) {
         if (!mounted) {
           return;
         }
@@ -47,10 +47,16 @@ class _RegisterPageState extends State<RegisterPage> {
         if (!mounted) {
           return;
         }
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     content: Text('${data.error}'),
+        //     duration: const Duration(milliseconds: 1200),
+        //   ),
+        // );
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${data.error}'),
-            duration: const Duration(milliseconds: 1200),
+          const SnackBar(
+            content: Text('Email atau Nomor HP sudah digunakan'),
+            duration: Duration(milliseconds: 1200),
           ),
         );
       }
@@ -104,21 +110,68 @@ class _RegisterPageState extends State<RegisterPage> {
                   hintText: 'Email',
                 ),
                 const SizedBox(height: 10),
-                AuthField(
-                  controller: _phoneController,
-                  hintText: 'Nomor Handphone',
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: TextFormField(
+                    keyboardType: TextInputType.phone,
+                    controller: _phoneController,
+                    decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        hintText: 'Nomor Handphone',
+                        hintStyle: TextStyle(color: Colors.grey[500])),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Mohon isi kolom Nomor Handphone";
+                      }
+                      return null;
+                    },
+                  ),
                 ),
                 const SizedBox(height: 10),
                 AuthField(
                   controller: _passwordController,
-                  hintText: 'Password',
+                  hintText: 'Kata Sandi',
                   isObscureText: true,
                 ),
                 const SizedBox(height: 10),
-                AuthField(
-                  controller: _confirmController,
-                  hintText: 'Confirm Password',
-                  isObscureText: true,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: TextFormField(
+                    controller: _confirmController,
+                    decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        hintText: 'Konfirmasi kata sandi',
+                        hintStyle: TextStyle(color: Colors.grey[500])),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Mohon isi kolom Konfirmasi kata sandi";
+                      } else if (value != _passwordController.text) {
+                        return "Kata sandi tidak sesuai";
+                      }
+                      return null;
+                    },
+                    obscureText: true,
+                  ),
                 ),
                 const SizedBox(height: 20),
                 InkWell(
@@ -140,7 +193,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             )
                           : const Text(
-                              'Register',
+                              'Daftar',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -151,29 +204,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(height: 20.0),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Text(
-                //       'Sudah punya akun?',
-                //       style: TextStyle(color: Colors.grey[700]),
-                //     ),
-                //     const SizedBox(width: 2),
-                //     TextButton(
-                //       onPressed: () {
-                //         context.go('/userLogin');
-                //         // Navigator.pop(context);
-                //       },
-                //       child: const Text(
-                //         'Login disini',
-                //         style: TextStyle(
-                //           color: Color.fromRGBO(76, 76, 220, 1),
-                //           fontWeight: FontWeight.bold,
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // )
               ],
             ),
           ),

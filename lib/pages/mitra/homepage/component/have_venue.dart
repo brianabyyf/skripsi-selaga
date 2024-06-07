@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
@@ -44,6 +46,7 @@ class HaveVenue extends StatelessWidget {
                     context.goNamed('mitra_detail_venue', extra: args);
                   },
                   child: Container(
+                    // height: 120,
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
@@ -58,30 +61,30 @@ class HaveVenue extends StatelessWidget {
                       ],
                     ),
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ClipRRect(
                             borderRadius: BorderRadius.circular(8.0),
                             child: myVenue[index].image!.isNotEmpty
                                 ? Image.network(
                                     '${Endpoints().image}${imgList?.first}',
-                                    height: 140,
-                                    width: 140,
+                                    height: 115,
+                                    width: 115,
                                     fit: BoxFit.cover,
                                   )
                                 : Container(
-                                    width: 140,
-                                    height: 140,
+                                    width: 115,
+                                    height: 115,
                                     decoration:
                                         const BoxDecoration(color: Colors.grey),
                                     child: const Icon(Icons.error_outline),
                                   )),
                         const SizedBox(
-                          width: 10,
+                          width: 12,
                         ),
                         Flexible(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
                                 myVenue[index].nameVenue ?? '',
@@ -97,18 +100,42 @@ class HaveVenue extends StatelessWidget {
                                 myVenue[index].lokasiVenue!,
                                 style: const TextStyle(
                                   fontSize: 14.0,
-                                  color: Colors.grey,
                                 ),
                                 // maxLines: 1,
                               ),
                               const SizedBox(height: 5.0),
-                              Text(
-                                'Rating ${myVenue[index].rating}',
-                                style: const TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.grey,
-                                ),
-                                // maxLines: 1,
+                              Row(
+                                children: [
+                                  Flexible(
+                                    child: SizedBox(
+                                      height: 20,
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount:
+                                            double.parse(myVenue[index].rating!)
+                                                .floor(),
+                                        itemBuilder: (context, index) {
+                                          return const Icon(
+                                            Icons.star,
+                                            color: Color.fromARGB(
+                                                255, 255, 230, 3),
+                                            size: 20,
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      double.parse(myVenue[index].rating!)
+                                          .toStringAsFixed(2),
+                                      style: const TextStyle(
+                                        fontSize: 14.0,
+                                      ),
+                                      // maxLines: 1,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),

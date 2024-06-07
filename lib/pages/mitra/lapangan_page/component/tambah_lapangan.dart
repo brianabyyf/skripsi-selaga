@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:selaga_ver1/pages/components/format.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
@@ -70,7 +71,6 @@ class _TambahLapanganPageState extends State<TambahLapanganPage> {
         'Lapangan ${widget.myLapangan.length + 1}', widget.venue.id!, myHour);
 
     if (data.result != null) {
-
       ArgumentsMitra args = ArgumentsMitra(
           venueId: widget.venue.id,
           venue: widget.venue,
@@ -140,7 +140,9 @@ class _TambahLapanganPageState extends State<TambahLapanganPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('${widget.venue.price}',
+                    Text(
+                        CurrencyFormat.convertToIdrNoSymbol(
+                            int.parse(widget.venue.price!)),
                         style: const TextStyle(fontSize: 16)),
                     const Text('Rupiah',
                         style: TextStyle(

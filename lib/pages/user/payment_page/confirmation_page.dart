@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:selaga_ver1/pages/components/format.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
@@ -74,7 +75,8 @@ class _DetailConfirmationPageState extends State<DetailConfirmationPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text('Total:'),
-                    Text('Rp. ${widget.venue.price}')
+                    Text(CurrencyFormat.convertToIdr(
+                        double.parse(widget.venue.price!)))
                   ],
                 ),
               )

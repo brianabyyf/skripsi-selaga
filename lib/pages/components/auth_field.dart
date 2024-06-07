@@ -32,7 +32,7 @@ class AuthField extends StatelessWidget {
             hintStyle: TextStyle(color: Colors.grey[500])),
         validator: (value) {
           if (value!.isEmpty) {
-            return "$hintText is missing!";
+            return "Mohon isi kolom $hintText";
           }
           return null;
         },
