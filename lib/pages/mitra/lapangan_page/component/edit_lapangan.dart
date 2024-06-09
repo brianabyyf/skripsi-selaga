@@ -124,7 +124,7 @@ class _EditMyLapanganPageState extends State<EditMyLapanganPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Lapangan ${widget.myLapangan.nameLapangan}',
+                  '${widget.myLapangan.nameLapangan}',
                   style: const TextStyle(
                       fontSize: 18, fontWeight: FontWeight.bold),
                 ),

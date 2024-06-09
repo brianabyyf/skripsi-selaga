@@ -157,13 +157,13 @@ class HaveLapangan extends StatelessWidget {
   showAlertDialogUnavailabe(BuildContext context, int id, ArgumentsMitra args) {
     // set up the buttons
     Widget cancelButton = TextButton(
-      child: const Text("Cancel"),
+      child: const Text("Batal"),
       onPressed: () {
         Navigator.of(context).pop();
       },
     );
     Widget continueButton = TextButton(
-      child: const Text("Continue"),
+      child: const Text("Ya"),
       onPressed: () async {
         final token = Provider.of<Token>(context, listen: false).token;
         var data = await ApiRepository().deleteLapangan(token, id);

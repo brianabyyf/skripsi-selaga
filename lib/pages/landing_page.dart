@@ -7,7 +7,7 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.white,
       body: SafeArea(
         top: false,
         child: Column(
@@ -60,12 +60,13 @@ class LandingPage extends StatelessWidget {
                         ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
-                          height: 50,
+                          height: 60,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.black,
                                 backgroundColor: Colors.white,
-                                side: const BorderSide(width: 1),
+                                side: const BorderSide(
+                                    width: 1, color: Colors.grey),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12))),
                             onPressed: () {
@@ -76,7 +77,11 @@ class LandingPage extends StatelessWidget {
                               //       builder: (context) => const LoginPage()),
                               // );
                             },
-                            child: const Text('Masuk'),
+                            child: const Text(
+                              'Masuk',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
                         const SizedBox(
@@ -84,12 +89,13 @@ class LandingPage extends StatelessWidget {
                         ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
-                          height: 50,
+                          height: 60,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.black,
                                 backgroundColor: Colors.white,
-                                side: const BorderSide(width: 1),
+                                side: const BorderSide(
+                                    width: 1, color: Colors.grey),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12))),
                             onPressed: () {
@@ -101,7 +107,11 @@ class LandingPage extends StatelessWidget {
                               //           const MitraLoginPage()),
                               // );
                             },
-                            child: const Text('Masuk sebagai Mitra'),
+                            child: const Text(
+                              'Masuk sebagai Mitra',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
                         Row(

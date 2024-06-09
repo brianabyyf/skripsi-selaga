@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:selaga_ver1/pages/components/format.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
@@ -273,7 +274,7 @@ class _MyJadwalState extends State<MyJadwal> {
                 ),
                 Column(
                   children: [
-                    const Text('Selected Date'),
+                    const Text('Tanggal yang dipilih'),
                     Text(
                       DateFormat('dd MMMM yyyy').format(DateTime(
                           DateTime.now().year,
@@ -306,9 +307,12 @@ class _MyJadwalState extends State<MyJadwal> {
                   Row(
                     children: [
                       Text(
-                        '${widget.venue.price}',
+                        CurrencyFormat.convertToIdr(
+                            double.parse(widget.venue.price ?? '0')),
                         style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            color: Color.fromRGBO(76, 76, 220, 1),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       ),
                       const Text(' /Jam'),
                     ],
@@ -539,15 +543,13 @@ class _MyJadwalState extends State<MyJadwal> {
         return;
       }
       SnackBar snackBar = SnackBar(
-        content: Text('${data.error}',
-            style: const TextStyle(fontSize: 16)),
+        content: Text('${data.error}', style: const TextStyle(fontSize: 16)),
         // backgroundColor: Colors.indigo,
         duration: const Duration(milliseconds: 1300),
         dismissDirection: DismissDirection.up,
         behavior: SnackBarBehavior.floating,
         margin: EdgeInsets.only(
-            bottom:
-            MediaQuery.of(context).size.height - 150,
+            bottom: MediaQuery.of(context).size.height - 150,
             left: 10,
             right: 10),
       );

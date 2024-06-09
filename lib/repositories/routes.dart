@@ -5,6 +5,7 @@ import 'package:selaga_ver1/pages/mitra/confirmation_page/confirmation_detail_pa
 import 'package:selaga_ver1/pages/mitra/daftar_venue/daftar_venue_page.dart';
 import 'package:selaga_ver1/pages/mitra/detail_lapangan/component/edit_jadwal.dart';
 import 'package:selaga_ver1/pages/mitra/detail_lapangan/detail_lapangan_page.dart';
+import 'package:selaga_ver1/pages/mitra/homepage/component/edit_venue.dart';
 import 'package:selaga_ver1/pages/mitra/lapangan_page/component/edit_lapangan.dart';
 import 'package:selaga_ver1/pages/mitra/lapangan_page/component/tambah_lapangan.dart';
 import 'package:selaga_ver1/pages/mitra/lapangan_page/lapangan_page.dart';
@@ -224,6 +225,11 @@ class MyRoutes {
           builder: (context, state) => const MitraHomePageNavigation(),
           routes: [
             GoRoute(
+              path: 'mitraEditVenue',
+              name: 'mitra_edit_venue',
+              builder: (context, state) => const EditVenueHandler(),
+            ),
+            GoRoute(
               path: 'mitraDetailKonfirmasi',
               name: 'mitra_detail_konfirmasi',
               builder: (context, state) => const MitraDetailConfirmation(),
@@ -318,7 +324,7 @@ class MyRoutes {
                 ]),
           ]),
     ],
-    initialLocation: '/mitraHome',
+    initialLocation: '/',
     routerNeglect: true,
     debugLogDiagnostics: true,
     // redirect: (context, state) async {

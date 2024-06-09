@@ -119,7 +119,8 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                             endIndent: 8,
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -207,7 +208,7 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                         ],
                       ),
                     ),
-                    booking.confirmation == 'pending'
+                    booking.confirmation == 'PENDING'
                         ? Row(
                             // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [

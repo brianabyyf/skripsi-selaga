@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/components/format.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
@@ -142,21 +141,12 @@ class MitraProfilePage extends StatelessWidget {
                             if (!context.mounted) {
                               return;
                             }
-                            SnackBar snackBar = SnackBar(
-                              content: Text('${data.error}',
-                                  style: const TextStyle(fontSize: 16)),
-                              // backgroundColor: Colors.indigo,
-                              duration: const Duration(milliseconds: 1300),
-                              dismissDirection: DismissDirection.up,
-                              behavior: SnackBarBehavior.floating,
-                              margin: EdgeInsets.only(
-                                  bottom:
-                                      MediaQuery.of(context).size.height - 150,
-                                  left: 10,
-                                  right: 10),
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('${data.error}'),
+                                duration: const Duration(milliseconds: 1200),
+                              ),
                             );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
                           }
                         },
                       ),

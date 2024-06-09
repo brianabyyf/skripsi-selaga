@@ -254,13 +254,13 @@ class _EditJadwalPageState extends State<EditJadwalPage> {
   showAlertDialogUnavailabe(BuildContext context, int index) {
     // set up the buttons
     Widget cancelButton = TextButton(
-      child: const Text("Cancel"),
+      child: const Text("Batal"),
       onPressed: () {
         Navigator.of(context).pop();
       },
     );
     Widget continueButton = TextButton(
-      child: const Text("Continue"),
+      child: const Text("Ya"),
       onPressed: () {
         Navigator.of(context).pop();
         setState(() {
@@ -297,13 +297,13 @@ class _EditJadwalPageState extends State<EditJadwalPage> {
   showAlertDialogAvailabe(BuildContext context, int index) {
     // set up the buttons
     Widget cancelButton = TextButton(
-      child: const Text("Cancel"),
+      child: const Text("Batal"),
       onPressed: () {
         Navigator.of(context).pop();
       },
     );
     Widget continueButton = TextButton(
-      child: const Text("Continue"),
+      child: const Text("Ya"),
       onPressed: () {
         Navigator.of(context).pop();
         setState(() {

@@ -151,7 +151,7 @@ class _MyJadwalCalendarState extends State<MyJadwalCalendar> {
           ),
           Column(
             children: [
-              const Text('Selected Date'),
+              const Text('Tanggal yang dipilih'),
               Text(
                 DateFormat('dd MMMM yyyy').format(DateTime(
                     DateTime.now().year,

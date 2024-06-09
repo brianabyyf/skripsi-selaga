@@ -107,7 +107,7 @@ class _ChooseJadwalPageState extends State<ChooseJadwalPage> {
                         DateTime.now().year,
                         DateTime.now().month,
                         DateTime.now().day +
-                            Provider.of<SelectedDate>(context, listen: false)
+                            Provider.of<SelectedDate>(context, listen: true)
                                 .selectedIndex))
                 ? SizedBox(
                     width: MediaQuery.of(context).size.width,

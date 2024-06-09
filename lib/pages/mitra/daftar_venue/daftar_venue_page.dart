@@ -163,7 +163,7 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
                   controller: _nameController,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Nama Venue is missing!";
+                      return "Mohon isi kolom Nama Venue";
                     }
                     return null;
                   },
@@ -178,7 +178,7 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
                   controller: _descController,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Deskripsi Venue is missing!";
+                      return "Mohon isi kolom Deskripsi Venue";
                     }
                     return null;
                   },
@@ -193,7 +193,7 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
                   controller: _alamatController,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Alamat Venue is missing!";
+                      return "Mohon isi kolom Alamat Venue";
                     }
                     return null;
                   },
@@ -209,7 +209,7 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
                   controller: _priceController,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Harga is missing!";
+                      return "Mohon isi kolom Harga";
                     }
                     return null;
                   },
@@ -308,9 +308,12 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
                           color: Colors.grey[300],
                           borderRadius: BorderRadius.circular(10)),
                       child: _image != null
-                          ? Image.file(
-                              File(_image!.path),
-                              fit: BoxFit.cover,
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.file(
+                                File(_image!.path),
+                                fit: BoxFit.cover,
+                              ),
                             )
                           : const Center(
                               child: Icon(
@@ -336,6 +339,7 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
                 MyUploadVenueButton(
                   isSending: _isSending,
                   onTap: _uploadVenue,
+                  hint: 'Daftar',
                 ),
               ],
             ),

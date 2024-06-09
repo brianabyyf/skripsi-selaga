@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:selaga_ver1/repositories/api_repository.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/endpoints.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
@@ -84,7 +84,7 @@ class HaveVenue extends StatelessWidget {
                         Flexible(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            // mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 myVenue[index].nameVenue ?? '',
@@ -96,36 +96,17 @@ class HaveVenue extends StatelessWidget {
                                 // maxLines: 1,
                               ),
                               const SizedBox(height: 5.0),
-                              Text(
-                                myVenue[index].lokasiVenue!,
-                                style: const TextStyle(
-                                  fontSize: 14.0,
-                                ),
-                                // maxLines: 1,
-                              ),
-                              const SizedBox(height: 5.0),
                               Row(
                                 children: [
-                                  Flexible(
-                                    child: SizedBox(
-                                      height: 20,
-                                      child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount:
-                                            double.parse(myVenue[index].rating!)
-                                                .floor(),
-                                        itemBuilder: (context, index) {
-                                          return const Icon(
-                                            Icons.star,
-                                            color: Color.fromARGB(
-                                                255, 255, 230, 3),
-                                            size: 20,
-                                          );
-                                        },
-                                      ),
-                                    ),
+                                  const Icon(
+                                    Icons.star,
+                                    color: Color.fromARGB(255, 255, 230, 3),
+                                    size: 20,
                                   ),
-                                  Expanded(
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Flexible(
                                     child: Text(
                                       double.parse(myVenue[index].rating!)
                                           .toStringAsFixed(2),
@@ -137,6 +118,46 @@ class HaveVenue extends StatelessWidget {
                                   ),
                                 ],
                               ),
+                              Row(
+                                children: [
+                                  IconButton(
+                                      onPressed: () {
+                                        // ArgumentsMitra args =
+                                        //     ArgumentsMitra(
+                                        //         venueId: venue.id,
+                                        //         venue: venue,
+                                        //         lapangan: myLapangan[index],
+                                        //         selectedDateIndex: 0,
+                                        //         listLapangan: myLapangan,
+                                        //         listJadwal: []);
+                                        // args.toJson();
+                                        // context.goNamed(
+                                        //     'mitra_edit_lapangan',
+                                        //     extra: args);
+                                      },
+                                      icon: const Icon(
+                                        Icons.edit_note_rounded,
+                                        color: Color.fromRGBO(76, 76, 220, 1),
+                                      )),
+                                  IconButton(
+                                      onPressed: () {
+                                        // ArgumentsMitra args =
+                                        //     ArgumentsMitra(
+                                        //         venueId: venue.id,
+                                        //         venue: venue,
+                                        //         lapangan: myLapangan.first,
+                                        //         selectedDateIndex: 0,
+                                        //         listLapangan: myLapangan,
+                                        //         listJadwal: []);
+                                        showAlertDialogUnavailabe(
+                                            context, myVenue[index].id ?? 0);
+                                      },
+                                      icon: const Icon(
+                                        Icons.delete_forever_outlined,
+                                        color: Colors.red,
+                                      ))
+                                ],
+                              )
                             ],
                           ),
                         ),
@@ -170,6 +191,50 @@ class HaveVenue extends StatelessWidget {
                   ))),
         ),
       ],
+    );
+  }
+
+  showAlertDialogUnavailabe(BuildContext context, int id) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: const Text("Batal"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: const Text("Ya"),
+      onPressed: () async {
+        final token = Provider.of<Token>(context, listen: false).token;
+        var data = await ApiRepository().deleteVenue(token, id);
+
+        if (data.result != null && data.error == null) {
+          if (!context.mounted) {
+            return;
+          }
+          Navigator.of(context).pop();
+          // SchedulerBinding.instance.addPostFrameCallback((_) {
+          //   context.goNamed("mitra_home");
+          // });
+        }
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: const Text("Peringatan !"),
+      content: const Text("Apakah anda ingin menghapus venue ini?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

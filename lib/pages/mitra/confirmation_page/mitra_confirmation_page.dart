@@ -74,7 +74,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                           },
                           child: Container(
                             // height: 125,
-                            height: 130,
+                            height: 180,
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
@@ -96,22 +96,38 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 16.0),
-                                        child: Text(
-                                          myBooking[index].order.name,
-                                          style: const TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          softWrap: true,
-                                          // maxLines: 1,
+                                      ListTile(
+                                        title: const Text('Nama Pemesan'),
+                                        titleTextStyle: const TextStyle(
+                                            color: Colors.black, fontSize: 14),
+                                        subtitle:
+                                            Text(myBooking[index].order.name),
+                                        subtitleTextStyle: const TextStyle(
+                                          // color: Color.fromRGBO(76, 76, 220, 1),
+                                          color: Colors.black,
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
+                                      // Padding(
+                                      //   padding:
+                                      //       const EdgeInsets.only(left: 16.0),
+                                      //   child: Text(
+                                      //     "Nama pemesan: ${myBooking[index].order.name}",
+                                      //     style: const TextStyle(
+                                      //       fontSize: 16.0,
+                                      //       fontWeight: FontWeight.bold,
+                                      //     ),
+                                      //     softWrap: true,
+                                      //     // maxLines: 1,
+                                      //   ),
+                                      // ),
                                       ListTile(
-                                          leading:
-                                              const Icon(Icons.calendar_month),
+                                          leading: const Icon(
+                                            Icons.calendar_month,
+                                            color:
+                                                Color.fromRGBO(76, 76, 220, 1),
+                                          ),
                                           title: Text(DateFormat('dd MMMM yyyy')
                                               .format(myBooking[index].date)),
                                           subtitle: Text(
@@ -119,10 +135,10 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                                     ],
                                   ),
                                 ),
-                                myBooking[index].confirmation == 'pending'
+                                myBooking[index].confirmation == 'PENDING'
                                     ? const Icon(
                                         Icons.arrow_forward_ios_rounded)
-                                    : myBooking[index].confirmation == 'cancel'
+                                    : myBooking[index].confirmation == 'CANCEL'
                                         ? const Text(
                                             'Ditolak',
                                             softWrap: true,

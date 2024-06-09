@@ -116,9 +116,14 @@ class _DetailConfirmationPageState extends State<DetailConfirmationPage> {
                                     listen: false)
                                 .hour;
 
+                            List<String> tempUnHour =
+                                dataJadwal.unavailableHour?.split(',') ?? [];
+
                             tempHour.remove(selectedHour);
+                            tempUnHour.add(selectedHour);
 
                             final availableHour = tempHour.join(',');
+                            final unAvailableHour = tempUnHour.join(',');
 
                             var data = await ApiRepository().postEditJadwal(
                                 token: token,
@@ -127,7 +132,7 @@ class _DetailConfirmationPageState extends State<DetailConfirmationPage> {
                                 date: dataJadwal.days ?? DateTime.now(),
                                 id: dataJadwal.id ?? 0,
                                 availableHour: availableHour,
-                                unavailableHour: selectedHour,
+                                unavailableHour: unAvailableHour,
                                 lapanganId: dataJadwal.lapanganId ?? 0);
 
                             ArgumentsUser args = ArgumentsUser(

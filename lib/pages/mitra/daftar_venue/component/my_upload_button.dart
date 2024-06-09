@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class MyUploadVenueButton extends StatelessWidget {
   final Function()? onTap;
+  final String hint;
   const MyUploadVenueButton({
     super.key,
     required bool isSending,
     this.onTap,
+    required this.hint,
   }) : _isSending = isSending;
 
   final bool _isSending;
@@ -40,9 +42,9 @@ class MyUploadVenueButton extends StatelessWidget {
                     color: Colors.white,
                   ),
                 )
-              : const Text(
-                  'Daftar',
-                  style: TextStyle(
+              : Text(
+                  hint,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,

@@ -181,7 +181,7 @@ class _BookingCalendarState extends State<BookingCalendar> {
           ),
           Column(
             children: [
-              const Text('Selected Date'),
+              const Text('Tanggal yang dipilih'),
               Text(
                 DateFormat('dd MMMM yyyy').format(DateTime(
                     DateTime.now().year,

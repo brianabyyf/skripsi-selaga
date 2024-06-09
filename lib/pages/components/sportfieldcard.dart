@@ -53,7 +53,7 @@ class SportsFieldCard extends StatelessWidget {
                           fieldImage!,
                           // width: MediaQuery.of(context).size.width,
                           // height: 100,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         )
                       : Container(
                           // width: MediaQuery.of(context).size.width,

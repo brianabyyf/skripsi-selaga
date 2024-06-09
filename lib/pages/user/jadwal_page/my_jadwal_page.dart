@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -56,7 +54,7 @@ class _MyJadwalBookedPageState extends State<MyJadwalBookedPage> {
 
               List<BookingModel> myJadwalBooking = myBooking
                   .where((e) =>
-                      e.date.isAtSameMomentAs(date) && e.confirmation == 'done')
+                      e.date.isAtSameMomentAs(date) && e.confirmation == 'DONE')
                   .toList();
 
               return Padding(

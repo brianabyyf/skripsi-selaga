@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:selaga_ver1/pages/mitra/homepage/home_page.dart';
 import 'package:selaga_ver1/pages/mitra/confirmation_page/mitra_confirmation_page.dart';
+import 'package:selaga_ver1/pages/mitra/jadwal_pesanan_page.dart';
 import 'package:selaga_ver1/pages/mitra/mitra_profile_page.dart';
 
 class MitraHomePageNavigation extends StatefulWidget {
@@ -20,8 +21,8 @@ class _MitraHomePageNavigationState extends State<MitraHomePageNavigation> {
     return Scaffold(
       body: [
         const MitraHomePage(),
+        const PesananPage(),
         const ConfirmationPage(),
-        const MemberPage(),
         const MitraProfilePage()
       ][_currentIndexPage],
       bottomNavigationBar: Container(
@@ -50,12 +51,12 @@ class _MitraHomePageNavigationState extends State<MitraHomePageNavigation> {
                 text: 'Beranda',
               ),
               GButton(
-                icon: Icons.view_list_rounded,
+                icon: Icons.calendar_month_outlined,
                 text: 'Pesanan',
               ),
               GButton(
-                icon: Icons.card_membership_sharp,
-                text: 'Member',
+                icon: Icons.view_list_rounded,
+                text: 'Konfirmasi',
               ),
               GButton(
                 icon: Icons.person,
@@ -71,21 +72,6 @@ class _MitraHomePageNavigationState extends State<MitraHomePageNavigation> {
           ),
         )),
       ),
-    );
-  }
-}
-
-class MemberPage extends StatelessWidget {
-  const MemberPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Member'),
-        centerTitle: true,
-      ),
-      body: const SafeArea(child: Center(child: Text('Segera hadir'))),
     );
   }
 }

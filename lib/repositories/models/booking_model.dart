@@ -14,20 +14,21 @@ class BookingModel {
   Timetable timetable;
   String image;
   String confirmation;
+  String ratingStatus;
 
-  BookingModel({
-    required this.id,
-    required this.orderName,
-    required this.date,
-    required this.hours,
-    required this.payment,
-    required this.orderId,
-    required this.bookingId,
-    required this.order,
-    required this.timetable,
-    required this.image,
-    required this.confirmation,
-  });
+  BookingModel(
+      {required this.id,
+      required this.orderName,
+      required this.date,
+      required this.hours,
+      required this.payment,
+      required this.orderId,
+      required this.bookingId,
+      required this.order,
+      required this.timetable,
+      required this.image,
+      required this.confirmation,
+      required this.ratingStatus});
 
   factory BookingModel.fromRawJson(String str) =>
       BookingModel.fromJson(json.decode(str));
@@ -46,6 +47,7 @@ class BookingModel {
         timetable: Timetable.fromJson(json["timetable"]),
         image: json["image"],
         confirmation: json["confirmation"],
+        ratingStatus: json['ratingStatus'] ?? 'PENDING',
       );
 
   Map<String, dynamic> toJson() => {
@@ -61,6 +63,7 @@ class BookingModel {
         "timetable": timetable.toJson(),
         "image": image,
         "confirmation": confirmation,
+        "ratingStatus": ratingStatus
       };
 }
 

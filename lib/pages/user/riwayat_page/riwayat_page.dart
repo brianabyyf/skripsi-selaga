@@ -58,8 +58,8 @@ class _RiwayatPageState extends State<RiwayatPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: InkWell(
                           onTap: () {
-                            if (myBooking[index].confirmation == 'pending' ||
-                                myBooking[index].confirmation == 'cancel') {
+                            if (myBooking[index].confirmation == 'PENDING' ||
+                                myBooking[index].confirmation == 'CANCEL') {
                               return;
                             } else {
                               Provider.of<BookingId>(context, listen: false)
@@ -108,7 +108,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                                         .format(myBooking[index].date)),
                                     subtitle: Text(
                                         '${myBooking[index].hours}.00 - ${1 + int.parse(myBooking[index].hours)}.00')),
-                                myBooking[index].confirmation == 'pending'
+                                myBooking[index].confirmation == 'PENDING'
                                     ? const Center(
                                         child: Text(
                                           'Harap menunggu konfirmasi dari pihak penyewa',
@@ -119,7 +119,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                                                   76, 76, 220, 1)),
                                         ),
                                       )
-                                    : myBooking[index].confirmation == 'cancel'
+                                    : myBooking[index].confirmation == 'CANCEL'
                                         ? const Center(
                                             child: Text(
                                               'Pesanan anda ditolak',

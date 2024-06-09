@@ -70,7 +70,7 @@ class SuccesssDaftarLapanganPage extends StatelessWidget {
                 args.toJson();
                 context.goNamed('mitra_lapangan_page', extra: args);
               },
-              buttonText: 'Selanjutnya')
+              buttonText: 'Kembali ke Lapangan')
         ],
       ),
     )));

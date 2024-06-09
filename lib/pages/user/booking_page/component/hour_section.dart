@@ -101,7 +101,6 @@ class _HourSectionState extends State<HourSection> {
                         : InkWell(
                             onTap: () {
                               setState(() {
-
                                 Provider.of<SelectedHour>(context,
                                         listen: false)
                                     .clear();

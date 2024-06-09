@@ -65,6 +65,9 @@ class _MitraRegisterPageState extends State<MitraRegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.grey[300],
+      ),
       backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: SingleChildScrollView(
@@ -72,7 +75,7 @@ class _MitraRegisterPageState extends State<MitraRegisterPage> {
             key: _formKey,
             child: Column(
               children: [
-                const SizedBox(height: 50),
+                // const SizedBox(height: 50),
 
                 // logo
                 const Icon(
@@ -203,7 +206,6 @@ class _MitraRegisterPageState extends State<MitraRegisterPage> {
                   ),
                 ),
                 const SizedBox(height: 20.0),
-                // )
               ],
             ),
           ),

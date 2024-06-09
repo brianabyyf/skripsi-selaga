@@ -65,20 +65,30 @@ class VenueLapangan extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 8, right: 8, top: 16),
                 child: InkWell(
                   onTap: () {
-                    Provider.of<SelectedDate>(context, listen: false)
-                        .getSelectedIndex(0);
-                    Provider.of<HourAvailable>(context, listen: false).clear();
-                    Provider.of<HourUnAvailable>(context, listen: false)
-                        .clear();
-                    Provider.of<SelectedHour>(context, listen: false).clear();
+                    if (hourList.isNotEmpty) {
+                      Provider.of<SelectedDate>(context, listen: false)
+                          .getSelectedIndex(0);
+                      Provider.of<HourAvailable>(context, listen: false)
+                          .clear();
+                      Provider.of<HourUnAvailable>(context, listen: false)
+                          .clear();
+                      Provider.of<SelectedHour>(context, listen: false).clear();
 
-                    ArgumentsUser args = ArgumentsUser(
-                        venue: venue,
-                        lapangan: myLapangan[index],
-                        listJadwal: myJadwal);
-                    args.toJson();
+                      ArgumentsUser args = ArgumentsUser(
+                          venue: venue,
+                          lapangan: myLapangan[index],
+                          listJadwal: myJadwal);
+                      args.toJson();
 
-                    context.goNamed('user_lapangan_detail', extra: args);
+                      context.goNamed('user_lapangan_detail', extra: args);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Tidak ada jadwal yang tersedia'),
+                          duration: Duration(milliseconds: 1100),
+                        ),
+                      );
+                    }
                   },
                   child: Container(
                     // height: 125,

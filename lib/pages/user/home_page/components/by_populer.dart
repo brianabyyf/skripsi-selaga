@@ -51,7 +51,6 @@ class VenueByPopuler extends StatelessWidget {
           ),
           child: Center(
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
@@ -69,11 +68,11 @@ class VenueByPopuler extends StatelessWidget {
                             child: const Icon(Icons.error_outline),
                           )),
                 const SizedBox(
-                  width: 5,
+                  width: 15,
                 ),
                 Flexible(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -90,7 +89,7 @@ class VenueByPopuler extends StatelessWidget {
                           venue[0].lokasiVenue ?? '',
                           style: const TextStyle(
                             fontSize: 14.0,
-                            color: Colors.grey,
+                            // color: Colors.grey,
                           ),
                           // maxLines: 1,
                         ),

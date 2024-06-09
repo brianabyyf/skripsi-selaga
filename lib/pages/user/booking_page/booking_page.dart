@@ -17,7 +17,7 @@ class BookingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Jadwal'),
+          title: const Text('Pilih Lapangan'),
           centerTitle: true,
         ),
         body: SafeArea(
@@ -55,7 +55,7 @@ class BookingPage extends StatelessWidget {
                               height: 5,
                             ),
                             Text(
-                              'Tidak ada jadwal yang tersedia',
+                              'Tidak ada lapangan yang tersedia',
                               style: TextStyle(
                                   // color: Colors.red,
                                   // fontWeight: FontWeight.bold,
