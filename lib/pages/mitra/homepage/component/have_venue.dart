@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
@@ -84,7 +83,6 @@ class HaveVenue extends StatelessWidget {
                         Flexible(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            // mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 myVenue[index].nameVenue ?? '',
@@ -121,34 +119,13 @@ class HaveVenue extends StatelessWidget {
                               Row(
                                 children: [
                                   IconButton(
-                                      onPressed: () {
-                                        // ArgumentsMitra args =
-                                        //     ArgumentsMitra(
-                                        //         venueId: venue.id,
-                                        //         venue: venue,
-                                        //         lapangan: myLapangan[index],
-                                        //         selectedDateIndex: 0,
-                                        //         listLapangan: myLapangan,
-                                        //         listJadwal: []);
-                                        // args.toJson();
-                                        // context.goNamed(
-                                        //     'mitra_edit_lapangan',
-                                        //     extra: args);
-                                      },
+                                      onPressed: () {},
                                       icon: const Icon(
                                         Icons.edit_note_rounded,
                                         color: Color.fromRGBO(76, 76, 220, 1),
                                       )),
                                   IconButton(
                                       onPressed: () {
-                                        // ArgumentsMitra args =
-                                        //     ArgumentsMitra(
-                                        //         venueId: venue.id,
-                                        //         venue: venue,
-                                        //         lapangan: myLapangan.first,
-                                        //         selectedDateIndex: 0,
-                                        //         listLapangan: myLapangan,
-                                        //         listJadwal: []);
                                         showAlertDialogUnavailabe(
                                             context, myVenue[index].id ?? 0);
                                       },
@@ -213,9 +190,6 @@ class HaveVenue extends StatelessWidget {
             return;
           }
           Navigator.of(context).pop();
-          // SchedulerBinding.instance.addPostFrameCallback((_) {
-          //   context.goNamed("mitra_home");
-          // });
         }
       },
     );
@@ -228,8 +202,6 @@ class HaveVenue extends StatelessWidget {
         continueButton,
       ],
     );
-
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {

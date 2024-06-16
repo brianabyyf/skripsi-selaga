@@ -78,42 +78,21 @@ class _EditJadwalPageState extends State<EditJadwalPage> {
                             shrinkWrap: true,
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount:
-                                        4, // number of items in each row
-                                    mainAxisSpacing:
-                                        8.0, // spacing between rows
-                                    crossAxisSpacing:
-                                        8.0, // spacing between columns
+                                    crossAxisCount: 4,
+                                    mainAxisSpacing: 8.0,
+                                    crossAxisSpacing: 8.0,
                                     childAspectRatio: (1 / .5)),
-                            padding: const EdgeInsets.all(
-                                8.0), // padding around the grid
-                            itemCount:
-                                _availableHour.length, // total number of items
+                            padding: const EdgeInsets.all(8.0),
+                            itemCount: _availableHour.length,
                             itemBuilder: (context, index) {
-                              // bool tapped = index == _selectedGridIndex;
                               return InkWell(
                                   onTap: () {
-                                    // setState(() {
-                                    // if (_hourSelected.contains(_hour[index])) {
-                                    //   _hourSelected.remove(_hour[index]);
-                                    //   // ScaffoldMessenger.of(context)
-                                    //   //     .showSnackBar(
-                                    //   //   const SnackBar(
-                                    //   //     content: Text('Jam sudah dipilih'),
-                                    //   //     duration:
-                                    //   //         Duration(milliseconds: 1200),
-                                    //   //   ),
-                                    //   // );
-                                    // } else {
-                                    //   _hourSelected.add(_hour[index]);
-                                    // }
-                                    // });
                                     showAlertDialogAvailabe(context, index);
                                   },
                                   child: Container(
                                       decoration: BoxDecoration(
-                                          color: const Color.fromARGB(34, 158,
-                                              158, 158), // color of grid items
+                                          color: const Color.fromARGB(
+                                              34, 158, 158, 158),
                                           borderRadius:
                                               BorderRadius.circular(8)),
                                       child: Center(
@@ -130,36 +109,15 @@ class _EditJadwalPageState extends State<EditJadwalPage> {
                             shrinkWrap: true,
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount:
-                                        4, // number of items in each row
-                                    mainAxisSpacing:
-                                        8.0, // spacing between rows
-                                    crossAxisSpacing:
-                                        8.0, // spacing between columns
+                                    crossAxisCount: 4,
+                                    mainAxisSpacing: 8.0,
+                                    crossAxisSpacing: 8.0,
                                     childAspectRatio: (1 / .5)),
-                            padding: const EdgeInsets.all(
-                                8.0), // padding around the grid
-                            itemCount: _unAvailableHour
-                                .length, // total number of items
+                            padding: const EdgeInsets.all(8.0),
+                            itemCount: _unAvailableHour.length,
                             itemBuilder: (context, index) {
-                              // bool tapped = index == _selectedGridIndex;
                               return InkWell(
                                   onTap: () {
-                                    // setState(() {
-                                    // if (_hourSelected.contains(_hour[index])) {
-                                    //   _hourSelected.remove(_hour[index]);
-                                    //   // ScaffoldMessenger.of(context)
-                                    //   //     .showSnackBar(
-                                    //   //   const SnackBar(
-                                    //   //     content: Text('Jam sudah dipilih'),
-                                    //   //     duration:
-                                    //   //         Duration(milliseconds: 1200),
-                                    //   //   ),
-                                    //   // );
-                                    // } else {
-                                    //   _hourSelected.add(_hour[index]);
-                                    // }
-                                    // });
                                     showAlertDialogUnavailabe(context, index);
                                   },
                                   child: Container(
@@ -227,7 +185,6 @@ class _EditJadwalPageState extends State<EditJadwalPage> {
                 },
                 child: Container(
                   padding: const EdgeInsets.all(20),
-                  // margin: const EdgeInsets.symmetric(horizontal: 25),
                   decoration: BoxDecoration(
                     color: const Color.fromRGBO(76, 76, 220, 1),
                     borderRadius: BorderRadius.circular(12),
@@ -252,7 +209,6 @@ class _EditJadwalPageState extends State<EditJadwalPage> {
   }
 
   showAlertDialogUnavailabe(BuildContext context, int index) {
-    // set up the buttons
     Widget cancelButton = TextButton(
       child: const Text("Batal"),
       onPressed: () {
@@ -274,7 +230,6 @@ class _EditJadwalPageState extends State<EditJadwalPage> {
       },
     );
 
-    // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: const Text("Peringatan!"),
       content: const Text(
@@ -285,7 +240,6 @@ class _EditJadwalPageState extends State<EditJadwalPage> {
       ],
     );
 
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -295,7 +249,6 @@ class _EditJadwalPageState extends State<EditJadwalPage> {
   }
 
   showAlertDialogAvailabe(BuildContext context, int index) {
-    // set up the buttons
     Widget cancelButton = TextButton(
       child: const Text("Batal"),
       onPressed: () {
@@ -317,7 +270,6 @@ class _EditJadwalPageState extends State<EditJadwalPage> {
       },
     );
 
-    // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: const Text("Peringatan!"),
       content: const Text(
@@ -328,7 +280,6 @@ class _EditJadwalPageState extends State<EditJadwalPage> {
       ],
     );
 
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {

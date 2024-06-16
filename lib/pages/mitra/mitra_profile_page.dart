@@ -57,7 +57,6 @@ class MitraProfilePage extends StatelessWidget {
                     children: [
                       const Center(
                         child: CircleAvatar(
-                          // backgroundColor: Colors.grey,
                           radius: 50,
                         ),
                       ),

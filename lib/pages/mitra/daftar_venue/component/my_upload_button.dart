@@ -16,19 +16,8 @@ class MyUploadVenueButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      // onTap: _isSending ? null : _uploadVenue,
-      // onTap: () {
-      //   Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (context) => SuccesssDaftarVenuePage(
-      //               token: widget.token,
-      //             )),
-      //   );
-      // },
       child: Container(
         padding: const EdgeInsets.all(20),
-        // margin: const EdgeInsets.symmetric(horizontal: 25),
         decoration: BoxDecoration(
           color: const Color.fromRGBO(76, 76, 220, 1),
           borderRadius: BorderRadius.circular(12),

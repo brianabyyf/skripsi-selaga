@@ -7,6 +7,7 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(),
       backgroundColor: Colors.white,
       body: SafeArea(
         top: false,
@@ -71,11 +72,6 @@ class LandingPage extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(12))),
                             onPressed: () {
                               context.goNamed('user_login');
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (context) => const LoginPage()),
-                              // );
                             },
                             child: const Text(
                               'Masuk',

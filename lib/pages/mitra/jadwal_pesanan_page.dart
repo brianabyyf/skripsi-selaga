@@ -53,22 +53,38 @@ class _PesananPageState extends State<PesananPage> {
 
               UserProfileModel profile = snapshot.data?[0].result;
               List<VenueModel> venue = snapshot.data?[1].result ?? [];
-              List<VenueModel> myVenue =
-                  venue.where((e) => e.mitraId == profile.id).toList();
+
+              List<VenueModel> myVenue = [];
+              if (venue.isNotEmpty) {
+                myVenue = venue.where((e) => e.mitraId == profile.id).toList();
+              }
 
               List<JadwalLapanganModel> jadwal = snapshot.data?[2].result ?? [];
-              List<JadwalLapanganModel> myJadwal = jadwal
-                  .where((e) => myVenue.any((v) => v.id == e.lapangan!.venueId))
-                  .toList();
+              List<JadwalLapanganModel> myJadwal = [];
+
+              if (jadwal.isNotEmpty) {
+                myJadwal = jadwal
+                    .where(
+                        (e) => myVenue.any((v) => v.id == e.lapangan!.venueId))
+                    .toList();
+              }
 
               List<BookingModel> booking = snapshot.data?[3].result ?? [];
-              List<BookingModel> myBooking = booking
-                  .where((e) => myJadwal.any((j) => j.id == e.timetable.id))
-                  .toList();
 
-              List<BookingModel> myJadwalBooking = myBooking
-                  .where((e) => e.date.isAtSameMomentAs(date))
-                  .toList();
+              List<BookingModel> myBooking = [];
+
+              if (booking.isNotEmpty) {
+                myBooking = booking
+                    .where((e) => myJadwal.any((j) => j.id == e.timetable.id))
+                    .toList();
+              }
+
+              List<BookingModel> myJadwalBooking = [];
+              if (myBooking.isNotEmpty) {
+                myJadwalBooking = myBooking
+                    .where((e) => e.date.isAtSameMomentAs(date))
+                    .toList();
+              }
 
               if (myJadwalBooking.isNotEmpty) {
                 return Padding(
@@ -90,7 +106,7 @@ class _PesananPageState extends State<PesananPage> {
                                           .selectedIndex))
                           ? Expanded(
                               child: ListView.builder(
-                                itemCount: myBooking.length,
+                                itemCount: myJadwalBooking.length,
                                 itemBuilder: (context, index) {
                                   return Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -142,7 +158,6 @@ class _PesananPageState extends State<PesananPage> {
                                                             .name),
                                                     subtitleTextStyle:
                                                         const TextStyle(
-                                                      // color: Color.fromRGBO(76, 76, 220, 1),
                                                       color: Colors.black,
                                                       fontSize: 16.0,
                                                       fontWeight:

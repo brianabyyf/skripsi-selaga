@@ -33,10 +33,6 @@ class _HomePageState extends State<HomePage> {
 
               List<BookingModel> bookings = snapshot.data?[1].result ?? [];
 
-              // venue.sort((a, b) => double.parse(b.rating ?? '0')
-              //     .compareTo(double.parse(a.rating ?? '0')));
-              // venue.sort((a, b) => -a.rating!.compareTo(b.rating!));
-
               if (venue.isNotEmpty) {
                 return SingleChildScrollView(
                   child: Column(

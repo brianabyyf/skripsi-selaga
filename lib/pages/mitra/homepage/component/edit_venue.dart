@@ -139,10 +139,6 @@ class _EditVenuePageState extends State<EditVenuePage> {
     }
 
     if (_formKey.currentState!.validate()) {
-      // setState(() {
-      //   _isSending = true;
-      // });
-
       showAlertDialogUnavailabe(context);
     }
   }
@@ -391,8 +387,6 @@ class _EditVenuePageState extends State<EditVenuePage> {
         continueButton,
       ],
     );
-
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {

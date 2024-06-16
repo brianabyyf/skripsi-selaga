@@ -66,26 +66,19 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.white
-          // backgroundColor: Colors.grey[300],
-          ),
+      appBar: AppBar(backgroundColor: Colors.white),
       backgroundColor: Colors.white,
-      // backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
             child: Column(
               children: [
-                // const SizedBox(height: 10),
-
-                // logo
                 const Icon(
                   color: Color.fromRGBO(76, 76, 220, 1),
                   Icons.app_registration_rounded,
                   size: 100,
                 ),
-
                 const SizedBox(height: 25),
                 Text(
                   'Jadilah Bagian dari Komunitas Kami ',
@@ -101,9 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     fontSize: 16,
                   ),
                 ),
-
                 const SizedBox(height: 35),
-
                 AuthField(
                   controller: _nameController,
                   hintText: 'Nama Lengkap',

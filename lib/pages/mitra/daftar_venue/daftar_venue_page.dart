@@ -118,8 +118,8 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
   void _selectImages() async {
     final XFile? selectedImages = await imagePicker.pickImage(
         source: ImageSource.gallery,
-        imageQuality: 50, // <- Reduce Image quality
-        maxHeight: 500, // <- reduce the image size
+        imageQuality: 50,
+        maxHeight: 500,
         maxWidth: 500);
 
     setState(() {
@@ -131,9 +131,7 @@ class _DaftarVenuePageState extends State<DaftarVenuePage> {
 
   void _selectMultiImages() async {
     final List<XFile> selectedImages = await imagePicker.pickMultiImage(
-        imageQuality: 50, // <- Reduce Image quality
-        maxHeight: 500, // <- reduce the image size
-        maxWidth: 500);
+        imageQuality: 50, maxHeight: 500, maxWidth: 500);
     if (selectedImages.isNotEmpty) {
       _imageFileList!.addAll(selectedImages);
     }

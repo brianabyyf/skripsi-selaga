@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +44,6 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                                 color: Colors.black, fontSize: 14),
                             subtitle: Text(booking.order.name),
                             subtitleTextStyle: const TextStyle(
-                              // color: Color.fromRGBO(76, 76, 220, 1),
                               color: Colors.black,
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
@@ -62,7 +60,6 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                             subtitle: Text(DateFormat('EEEE, dd MMMM yyyy')
                                 .format(booking.date)),
                             subtitleTextStyle: const TextStyle(
-                              // color: Color.fromRGBO(76, 76, 220, 1),
                               color: Colors.black,
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
@@ -174,7 +171,7 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                                                           .withOpacity(0.5),
                                                       shape: BoxShape.circle),
                                                   child: Icon(
-                                                    CupertinoIcons.xmark,
+                                                    Icons.close,
                                                     color: Colors.white
                                                         .withOpacity(0.9),
                                                     size: 30,
@@ -210,11 +207,9 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                     ),
                     booking.confirmation == 'PENDING'
                         ? Row(
-                            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Expanded(
                                 child: SizedBox(
-                                    // width: MediaQuery.of(context).size.width,
                                     height: 60,
                                     child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
@@ -331,12 +326,8 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                                       ),
                                     )),
                               ),
-                              // const SizedBox(
-                              //   width: 10,
-                              // ),
                               Expanded(
                                 child: SizedBox(
-                                    // width: MediaQuery.of(context).size.width,
                                     height: 60,
                                     child: ElevatedButton(
                                         style: ElevatedButton.styleFrom(
@@ -358,15 +349,12 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                                             return;
                                           }
                                           if (data.result != null) {
-                                            // context.goNamed(
-                                            //     'mitra_detail_konfirmasi');
                                             setState(() {});
                                             SnackBar snackBar = SnackBar(
                                               content: const Text(
                                                   'Pesanan diterima',
                                                   style:
                                                       TextStyle(fontSize: 16)),
-                                              // backgroundColor: Colors.indigo,
                                               duration: const Duration(
                                                   milliseconds: 1300),
                                               dismissDirection:

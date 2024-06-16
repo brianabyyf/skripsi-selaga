@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/components/auth_field.dart';
@@ -56,7 +55,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.grey[300],
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
@@ -66,24 +64,14 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 30),
-                  // logo
                   SizedBox(
                     height: 200,
                     width: 200,
-                    // decoration: BoxDecoration(boxShadow: [
-                    //   BoxShadow(
-                    //     color: Colors.grey.withOpacity(0.1),
-                    //     spreadRadius: 5,
-                    //     blurRadius: 7,
-                    //     offset: Offset(0, 1), // changes position of shadow
-                    //   ),
-                    // ]),
                     child: Image.asset(
-                      'assets/logo_selaga_edited_2.png',
+                      'assets/selaga_logo.png',
                     ),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 15),
                   Text(
                     'Selamat Datang Kembali !',
                     style: TextStyle(
@@ -91,10 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                       fontSize: 16,
                     ),
                   ),
-
                   const SizedBox(height: 35),
-
-                  // email textfield
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: TextFormField(
@@ -115,19 +100,13 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                   ),
-
                   const SizedBox(height: 10),
-
-                  // password textfield
                   AuthField(
                     controller: _passwordController,
                     hintText: 'Kata sandi',
                     isObscureText: true,
                   ),
-
                   const SizedBox(height: 20),
-
-                  // sign in button
                   InkWell(
                     onTap: _isSending ? null : _signInUser,
                     child: Container(

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:selaga_ver1/repositories/models/api_response.dart';
 import 'package:selaga_ver1/repositories/models/booking_model.dart';
 import 'package:selaga_ver1/repositories/models/lapangan_model.dart';
@@ -66,15 +65,7 @@ class ApiRepository {
       final result = await api.post("/register", data: user.toRawJson());
       return ApiResponse(result: result.data['token'].toString());
     } on DioException catch (e) {
-      // final data = e.response?.data;
-      // if (data['errors']['email'] != null && data['errors']['phone'] == null) {
-      //   return ApiResponse(error: e.response?.data['errors']['email']);
-      // } else if (data['errors']['phone'] != null &&
-      //     data['errors']['email'] == null) {
-      //   return ApiResponse(error: e.response?.data['errors']['email']);
-      // } else {
       return ApiResponse(error: e.message?.toString());
-      // }
     }
   }
 
@@ -128,27 +119,6 @@ class ApiRepository {
     }
   }
 
-  // Future<File> downloadImage(String url, String fileName) async {
-  //   try {
-  //     // Mendapatkan direktori penyimpanan sementara
-  //     Directory tempDir = await getTemporaryDirectory();
-  //     String tempPath = tempDir.path;
-
-  //     // File path untuk menyimpan gambar yang diunduh
-  //     String filePath = '$tempPath/$fileName';
-
-  //     // Mengunduh gambar
-  //     Dio dio = Dio();
-  //     await dio.download(url, filePath);
-
-  //     // Membuat objek File dari file path
-  //     return File(filePath);
-  //   } catch (e) {
-  //     print('Error downloading image: $e');
-  //     rethrow;
-  //   }
-  // }
-
   Future<ApiResponse<String>> editVenue(String token, VenueModel venue) async {
     var formData = FormData.fromMap({
       "nameVenue": venue.nameVenue,
@@ -173,37 +143,6 @@ class ApiRepository {
       return ApiResponse(error: e.response?.data['message'].toString());
     }
   }
-
-  // Future<ApiResponse<String>> editVenue(
-  //     {required int id,
-  //     required String token,
-  //     required String name,
-  //     required String lokasi,
-  //     required String price,
-  //     required String desc,
-  //     required List<String> fasilitas}) async {
-  //   var formData = FormData.fromMap({
-  //     "nameVenue": name,
-  //     "lokasiVenue": lokasi,
-  //     "descVenue": desc,
-  //     "price": price,
-  //   }, ListFormat.multiCompatible);
-
-  //   for (var e in fasilitas) {
-  //     formData.fields.addAll([MapEntry('fasilitasVenue[]', e)]);
-  //   }
-
-  //   try {
-  //     final result = await api.post("/venuenoimage/$id?_method=PATCH",
-  //         options: Options(headers: {
-  //           'Authorization': 'Bearer $token',
-  //         }),
-  //         data: formData);
-  //     return ApiResponse(result: result.data['message'].toString());
-  //   } on DioException catch (e) {
-  //     return ApiResponse(error: e.response?.data['message'].toString());
-  //   }
-  // }
 
   Future<ApiResponse<String>> updateVenueRating(
       String token, VenueModel venue, String rating) async {
@@ -530,27 +469,9 @@ class ApiRepository {
     required String token,
     required int id,
     required String confirmation,
-    // required JadwalLapanganModel jadwal,
-    // required File img,
-    // required String name,
-    // required String hour,
-    // required String payment
   }) async {
-    var formData = FormData.fromMap({
-      // "orderName": name,
-      // "date": jadwal.days,
-      // "hours": hour,
-      // "payment": payment,
-      // "bookingId": jadwal.id,
-      "confirmation": confirmation
-    }, ListFormat.multiCompatible);
-
-    // formData.files.addAll([
-    //   MapEntry(
-    //       "file",
-    //       await MultipartFile.fromFile(img.path,
-    //           filename: img.path.split('/').last)),
-    // ]);
+    var formData = FormData.fromMap(
+        {"confirmation": confirmation}, ListFormat.multiCompatible);
     try {
       final result = await api.post("/booking/$id?_method=PATCH",
           options: Options(headers: {
@@ -566,27 +487,9 @@ class ApiRepository {
   Future<ApiResponse<String>> updateBookingRating({
     required String token,
     required int id,
-    // required JadwalLapanganModel jadwal,
-    // required File img,
-    // required String name,
-    // required String hour,
-    // required String payment
   }) async {
-    var formData = FormData.fromMap({
-      // "orderName": name,
-      // "date": jadwal.days,
-      // "hours": hour,
-      // "payment": payment,
-      // "bookingId": jadwal.id,
-      "ratingStatus": "DONE"
-    }, ListFormat.multiCompatible);
-
-    // formData.files.addAll([
-    //   MapEntry(
-    //       "file",
-    //       await MultipartFile.fromFile(img.path,
-    //           filename: img.path.split('/').last)),
-    // ]);
+    var formData =
+        FormData.fromMap({"ratingStatus": "DONE"}, ListFormat.multiCompatible);
     try {
       final result = await api.post("/bookingratingstatus/$id?_method=PATCH",
           options: Options(headers: {

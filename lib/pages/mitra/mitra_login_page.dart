@@ -55,7 +55,7 @@ class _MitraLoginPageState extends State<MitraLoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -64,24 +64,14 @@ class _MitraLoginPageState extends State<MitraLoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 30),
-
                   SizedBox(
                     height: 200,
                     width: 200,
                     child: Image.asset(
-                      'assets/selaga-logo.png',
+                      'assets/selaga_logo.png',
                     ),
                   ),
-
-                  // const Icon(
-                  //   Icons.lock,
-                  //   size: 100,
-                  // ),
-
-                  const SizedBox(height: 40),
-
-                  // welcome back, you've been missed!
+                  const SizedBox(height: 15),
                   Text(
                     'Selamat Datang Kembali !',
                     style: TextStyle(
@@ -89,44 +79,36 @@ class _MitraLoginPageState extends State<MitraLoginPage> {
                       fontSize: 16,
                     ),
                   ),
-
                   const SizedBox(height: 35),
-
-                  // email textfield
-                  // email textfield
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: TextFormField(
-                      controller: _emailController,
-                      decoration: myAuthDecoration('Email'),
-                      validator: (value) {
-                        RegExp regex = RegExp(
-                            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
-                        if (value!.isEmpty) {
-                          return 'Mohon isi kolom email';
-                        } else {
-                          if (!regex.hasMatch(value)) {
-                            return 'Isi alamat email yang valid';
+                    child: Container(
+                      child: TextFormField(
+                        controller: _emailController,
+                        decoration: myAuthDecoration('Email'),
+                        validator: (value) {
+                          RegExp regex = RegExp(
+                              r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+                          if (value!.isEmpty) {
+                            return 'Mohon isi kolom email';
                           } else {
-                            return null;
+                            if (!regex.hasMatch(value)) {
+                              return 'Isi alamat email yang valid';
+                            } else {
+                              return null;
+                            }
                           }
-                        }
-                      },
+                        },
+                      ),
                     ),
                   ),
-
                   const SizedBox(height: 10),
-
-                  // password textfield
                   AuthField(
                     controller: _passwordController,
                     hintText: 'Kata sandi',
                     isObscureText: true,
                   ),
-
                   const SizedBox(height: 20),
-
-                  // sign in button
                   InkWell(
                     onTap: _isSending ? null : _signInUser,
                     child: Container(
@@ -156,37 +138,6 @@ class _MitraLoginPageState extends State<MitraLoginPage> {
                       ),
                     ),
                   ),
-
-                  // const SizedBox(height: 50),
-
-                  // not a member? register now
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     Text(
-                  //       'Belum punya akun?',
-                  //       style: TextStyle(color: Colors.grey[700]),
-                  //     ),
-                  //     const SizedBox(width: 2),
-                  //     TextButton(
-                  //       onPressed: () {
-                  //         Navigator.push(
-                  //           context,
-                  //           MaterialPageRoute(
-                  //               builder: (context) =>
-                  //                   const MitraRegisterPage()),
-                  //         );
-                  //       },
-                  //       child: const Text(
-                  //         'Daftar disini',
-                  //         style: TextStyle(
-                  //           color: Color.fromRGBO(76, 76, 220, 1),
-                  //           fontWeight: FontWeight.bold,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // )
                 ],
               ),
             ),
