@@ -89,7 +89,7 @@ class _EditMyLapanganPageState extends State<EditMyLapanganPage> {
           listLapangan: [widget.myLapangan],
           listJadwal: []);
       args.toJson();
-      context.goNamed('mitra_lapangan_page', extra: args);
+      context.goNamed('mitra_edit_lapangan_success', extra: args);
     } else {
       setState(() {
         _isSending = false;

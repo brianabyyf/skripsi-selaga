@@ -50,7 +50,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
               List<JadwalLapanganModel> jadwal = snapshot.data?[2].result ?? [];
               List<JadwalLapanganModel> myJadwal = jadwal
-                  .where((e) => myVenue.any((v) => v.id == e.lapangan!.venueId))
+                  .where((e) => myVenue.any((v) => v.id == e.lapangan?.venueId))
                   .toList();
 
               List<BookingModel> booking = snapshot.data?[3].result ?? [];
@@ -103,25 +103,11 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                                         subtitle:
                                             Text(myBooking[index].order.name),
                                         subtitleTextStyle: const TextStyle(
-                                          // color: Color.fromRGBO(76, 76, 220, 1),
                                           color: Colors.black,
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      // Padding(
-                                      //   padding:
-                                      //       const EdgeInsets.only(left: 16.0),
-                                      //   child: Text(
-                                      //     "Nama pemesan: ${myBooking[index].order.name}",
-                                      //     style: const TextStyle(
-                                      //       fontSize: 16.0,
-                                      //       fontWeight: FontWeight.bold,
-                                      //     ),
-                                      //     softWrap: true,
-                                      //     // maxLines: 1,
-                                      //   ),
-                                      // ),
                                       ListTile(
                                           leading: const Icon(
                                             Icons.calendar_month,

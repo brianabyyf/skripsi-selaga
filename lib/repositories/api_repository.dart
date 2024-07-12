@@ -18,6 +18,9 @@ class ApiRepository {
     api.options.receiveDataWhenStatusError = true;
   }
 
+  // https://selaga.my.id/api
+  // http://192.168.0.106/skripsi-selaga/public/api
+
   Future<ApiResponse<UserProfileMitraModel>> getMyMitraProfile(
       String token) async {
     try {

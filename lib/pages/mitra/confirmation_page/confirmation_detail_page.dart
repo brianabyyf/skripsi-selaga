@@ -247,7 +247,7 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                                             .updateBooking(
                                                 token: myToken.token,
                                                 id: myBooking.id,
-                                                confirmation: 'cancel')
+                                                confirmation: 'CANCEL')
                                             .whenComplete(() => ApiRepository()
                                                 .postEditJadwal(
                                                     token: myToken.token,
@@ -344,7 +344,7 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                                               .updateBooking(
                                                   token: myToken.token,
                                                   id: myBooking.id,
-                                                  confirmation: 'done');
+                                                  confirmation: 'DONE');
                                           if (!context.mounted) {
                                             return;
                                           }

@@ -65,7 +65,7 @@ class _PesananPageState extends State<PesananPage> {
               if (jadwal.isNotEmpty) {
                 myJadwal = jadwal
                     .where(
-                        (e) => myVenue.any((v) => v.id == e.lapangan!.venueId))
+                        (e) => myVenue.any((v) => v.id == e.lapangan?.venueId))
                     .toList();
               }
 

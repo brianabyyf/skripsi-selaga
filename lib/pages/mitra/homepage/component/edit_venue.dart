@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/components/my_checkbox.dart';
 import 'package:selaga_ver1/pages/mitra/daftar_venue/component/my_upload_button.dart';
 import 'package:selaga_ver1/repositories/api_repository.dart';
-import 'package:selaga_ver1/repositories/models/arguments.dart';
 import 'package:selaga_ver1/repositories/models/endpoints.dart';
 import 'package:selaga_ver1/repositories/models/venue_model.dart';
 import 'package:selaga_ver1/repositories/providers.dart';
@@ -354,16 +353,7 @@ class _EditVenuePageState extends State<EditVenuePage> {
           return;
         }
         if (data.result != null) {
-          ArgumentsMitra args = ArgumentsMitra(
-              venueId: widget.venue.id,
-              venue: widget.venue,
-              lapangan: widget.venue.lapangans,
-              selectedDateIndex: 0,
-              listLapangan: widget.venue.lapangans,
-              listJadwal: []);
-          args.toJson();
-
-          context.goNamed('Pesanan', extra: args);
+          context.goNamed('mitra_edit_venue_success');
         } else {
           setState(() {
             _isSending = false;

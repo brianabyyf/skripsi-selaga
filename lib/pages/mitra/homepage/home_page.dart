@@ -56,7 +56,6 @@ class _MitraHomePageState extends State<MitraHomePage> {
                           1;
                 }
                 return myVenue.isNotEmpty
-                    // ? HaveVenue(myVenue: myVenue)
                     ? Column(
                         children: [
                           Expanded(
@@ -181,13 +180,6 @@ class _MitraHomePageState extends State<MitraHomePage> {
                                                                       0);
                                                           context.goNamed(
                                                               'mitra_edit_venue');
-
-                                                          // var data = await ApiRepository()
-                                                          //     .downloadImage(
-                                                          //         '${Endpoints().image}${imgList?.first}',
-                                                          //         '${imgList?.first}');
-
-                                                          // print(data);
                                                         },
                                                         icon: const Icon(
                                                           Icons
@@ -281,7 +273,6 @@ class _MitraHomePageState extends State<MitraHomePage> {
   }
 
   showAlertDialogUnavailabe(BuildContext context, int id) {
-    // set up the buttons
     Widget cancelButton = TextButton(
       child: const Text("Batal"),
       onPressed: () {
@@ -298,9 +289,6 @@ class _MitraHomePageState extends State<MitraHomePage> {
           if (!context.mounted) {
             return;
           }
-          // SchedulerBinding.instance.addPostFrameCallback((_) {
-          //   Navigator.of(context).pushNamed("login");
-          // });
           Navigator.of(context).pop();
           setState(() {});
         }
@@ -315,8 +303,6 @@ class _MitraHomePageState extends State<MitraHomePage> {
         continueButton,
       ],
     );
-
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {

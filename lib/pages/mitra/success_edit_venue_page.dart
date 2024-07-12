@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:selaga_ver1/pages/components/my_button.dart';
 
-class SuccesssDaftarVenuePage extends StatelessWidget {
-  const SuccesssDaftarVenuePage({super.key});
+class SuccessEditVenuePage extends StatelessWidget {
+  const SuccessEditVenuePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class SuccesssDaftarVenuePage extends StatelessWidget {
                       height: 30,
                     ),
                     const Text(
-                      'Venue Berhasil ditambahkan!',
+                      'Venue Berhasil diubah!',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,

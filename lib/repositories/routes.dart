@@ -1,5 +1,4 @@
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:selaga_ver1/pages/landing_page.dart';
 import 'package:selaga_ver1/pages/mitra/confirmation_page/confirmation_detail_page.dart';
 import 'package:selaga_ver1/pages/mitra/daftar_venue/daftar_venue_page.dart';
@@ -14,6 +13,8 @@ import 'package:selaga_ver1/pages/mitra/mitra_navigation_page.dart';
 import 'package:selaga_ver1/pages/mitra/mitra_register_page.dart';
 import 'package:selaga_ver1/pages/mitra/success_daftar_lapangan_page.dart';
 import 'package:selaga_ver1/pages/mitra/success_daftar_venue_page.dart';
+import 'package:selaga_ver1/pages/mitra/success_edit_lapangan_page.dart';
+import 'package:selaga_ver1/pages/mitra/success_edit_venue_page.dart';
 import 'package:selaga_ver1/pages/mitra/venue_detail/venue_detail_page.dart';
 import 'package:selaga_ver1/pages/user/booking_page/booking_page.dart';
 import 'package:selaga_ver1/pages/user/booking_page/component/choose_jadwal.dart';
@@ -29,8 +30,6 @@ import 'package:selaga_ver1/pages/user/payment_page/payment_page.dart';
 import 'package:selaga_ver1/pages/user/register_page.dart';
 import 'package:selaga_ver1/pages/user/riwayat_page/detail_riwayat_page.dart';
 import 'package:selaga_ver1/repositories/models/arguments.dart';
-import 'package:selaga_ver1/repositories/providers.dart';
-import 'package:selaga_ver1/shared_preference/shared_preference_repository.dart';
 
 class MyRoutes {
   final _router = GoRouter(
@@ -39,23 +38,6 @@ class MyRoutes {
           path: '/',
           name: 'landing_page',
           builder: (context, state) => const LandingPage(),
-          // redirect: (context, state) async {
-          //   final SharedPreferenceRepository sharedPreferences =
-          //       SharedPreferenceRepositoryImpl();
-
-          //   final data = await sharedPreferences.getValue("token");
-          //   final user = await sharedPreferences.getValue("user");
-
-          //   if (data == null) {
-          //     return '/';
-          //   } else if (user == "penyewa") {
-          //     return "/userHome";
-          //   } else if (user == "mitra") {
-          //     return "/mitraHome";
-          //   } else {
-          //     return null;
-          //   }
-          // },
           routes: [
             GoRoute(
               path: 'userLogin',
@@ -77,23 +59,20 @@ class MyRoutes {
               name: 'mitra_register',
               builder: (context, state) => const MitraRegisterPage(),
             ),
-            // GoRoute(
-            //   path: 'mitraDaftarVenueSuccess',
-            //   name: 'mitra_daftar_venue_success',
-            //   builder: (context, state) => const SuccesssDaftarVenuePage(),
-            // ),
-            // GoRoute(
-            //   path: 'mitraDaftarLapanganSuccess',
-            //   name: 'mitra_daftar_lapangan_success',
-            //   builder: (context, state) {
-            //     ArgumentsMitra args = state.extra as ArgumentsMitra;
-            //     return SuccesssDaftarLapanganPage(venue: args.venue!);
-            //   },
-            // ),
             GoRoute(
               path: 'userBookingLapanganSuccess',
               name: 'user_booking_lapangan_success',
               builder: (context, state) => const SuccesssBookingLapanganPage(),
+            ),
+            GoRoute(
+              path: 'mitraDaftarVenueSuccess',
+              name: 'mitra_daftar_venue_success',
+              builder: (context, state) => const SuccesssDaftarVenuePage(),
+            ),
+            GoRoute(
+              path: 'mitraEditVenueSuccess',
+              name: 'mitra_edit_venue_success',
+              builder: (context, state) => const SuccessEditVenuePage(),
             ),
           ]),
       GoRoute(
@@ -151,42 +130,6 @@ class MyRoutes {
                                       lapangan: args.lapangan,
                                       venue: args.venue);
                                 },
-                                // onExit: (context, state) async {
-                                //   var response = await showDialog<bool>(
-                                //     context: context,
-                                //     builder: (BuildContext context) {
-                                //       return AlertDialog(
-                                //         title: const Text(
-                                //             'Apakah anda ingin membatalkan konfirmasi?'),
-                                //         actions: <Widget>[
-                                //           TextButton(
-                                //             style: TextButton.styleFrom(
-                                //               textStyle: Theme.of(context)
-                                //                   .textTheme
-                                //                   .labelLarge,
-                                //             ),
-                                //             child: const Text('Cancel'),
-                                //             onPressed: () {
-                                //               Navigator.of(context).pop(false);
-                                //             },
-                                //           ),
-                                //           TextButton(
-                                //             style: TextButton.styleFrom(
-                                //               textStyle: Theme.of(context)
-                                //                   .textTheme
-                                //                   .labelLarge,
-                                //             ),
-                                //             child: const Text('Confirm'),
-                                //             onPressed: () async {
-                                //               Navigator.of(context).pop(true);
-                                //             },
-                                //           ),
-                                //         ],
-                                //       );
-                                //     },
-                                //   );
-                                //   return response ?? false;
-                                // },
                                 routes: [
                                   GoRoute(
                                       path: 'userLapanganPayment',
@@ -240,11 +183,6 @@ class MyRoutes {
               builder: (context, state) => const DaftarVenuePage(),
             ),
             GoRoute(
-              path: 'mitraDaftarVenueSuccess',
-              name: 'mitra_daftar_venue_success',
-              builder: (context, state) => const SuccesssDaftarVenuePage(),
-            ),
-            GoRoute(
                 path: 'mitraDetailVenue',
                 name: 'mitra_detail_venue',
                 builder: (context, state) {
@@ -269,6 +207,14 @@ class MyRoutes {
                             ArgumentsMitra args = state.extra as ArgumentsMitra;
                             return SuccesssDaftarLapanganPage(
                                 venue: args.venue!);
+                          },
+                        ),
+                        GoRoute(
+                          path: 'mitraEditLapanganSuccess',
+                          name: 'mitra_edit_lapangan_success',
+                          builder: (context, state) {
+                            ArgumentsMitra args = state.extra as ArgumentsMitra;
+                            return SuccessEditLapanganPage(venue: args.venue!);
                           },
                         ),
                         GoRoute(
@@ -327,30 +273,6 @@ class MyRoutes {
     initialLocation: '/',
     routerNeglect: true,
     debugLogDiagnostics: true,
-    // redirect: (context, state) async {
-    //   final SharedPreferenceRepository sharedPreferences =
-    //       SharedPreferenceRepositoryImpl();
-
-    //   final data = await sharedPreferences.getValue("token");
-    //   final user = await sharedPreferences.getValue("user");
-    //   // if (data != null && user == "penyewa") {
-    //   //   return "/userHome";
-    //   // }
-    //   // if (data != null && user == "mitra") {
-    //   //   return "/mitraHome";
-    //   // }
-    //   // return null;
-
-    //   if (data == null) {
-    //     return '/';
-    //     // } else if (user == "penyewa") {
-    //     //   return "/userHome";
-    //     // } else if (user == "mitra") {
-    //     //   return "/mitraHome";
-    //   } else {
-    //     return null;
-    //   }
-    // },
   );
 
   GoRouter get router => _router;

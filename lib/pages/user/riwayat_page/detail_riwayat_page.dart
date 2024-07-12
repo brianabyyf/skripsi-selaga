@@ -381,8 +381,8 @@ class _RatingWidgetState extends State<RatingWidget> {
       return const Padding(
         padding: EdgeInsets.all(8.0),
         child: Center(
-            child: Text(
-                "Terimakasih sudah memberikan penilaian untuk venue ini.")),
+            child:
+                Text("Terimakasih sudah memberikan Rating untuk venue ini.")),
       );
     }
   }
