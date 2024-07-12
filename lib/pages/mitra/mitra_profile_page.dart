@@ -33,7 +33,7 @@ class MitraProfilePage extends StatelessWidget {
                     .where((e) =>
                         e.timetable.lapanganBooking.venueBooking.mitraId ==
                             profile?.id &&
-                        e.confirmation == 'done')
+                        e.confirmation == 'DONE')
                     .toList();
 
                 List<String> salary = [];
