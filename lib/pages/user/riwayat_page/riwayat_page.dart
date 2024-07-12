@@ -90,7 +90,12 @@ class _RiwayatPageState extends State<RiwayatPage> {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 16.0),
                                   child: Text(
-                                    myBooking[index].timetable.nameVenue,
+                                    myBooking[index]
+                                            .timetable
+                                            .lapanganBooking
+                                            .venueBooking
+                                            .nameVenue ??
+                                        'noname',
                                     style: const TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.bold,

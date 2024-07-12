@@ -138,8 +138,11 @@ class _MyJadwalBookedPageState extends State<MyJadwalBookedPage> {
                                             children: [
                                               Text(
                                                 myJadwalBooking[index]
-                                                    .timetable
-                                                    .nameVenue,
+                                                        .timetable
+                                                        .lapanganBooking
+                                                        .venueBooking
+                                                        .nameVenue ??
+                                                    'noname',
                                                 style: const TextStyle(
                                                   fontSize: 16.0,
                                                   fontWeight: FontWeight.bold,

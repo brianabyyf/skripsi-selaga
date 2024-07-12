@@ -48,7 +48,9 @@ class DetailRiwayatPage extends StatelessWidget {
                             title: const Text('Venue'),
                             titleTextStyle: const TextStyle(
                                 color: Colors.black, fontSize: 14),
-                            subtitle: Text(booking.timetable.nameVenue),
+                            subtitle: Text(booking.timetable.lapanganBooking
+                                    .venueBooking.nameVenue ??
+                                'noname'),
                             subtitleTextStyle: const TextStyle(
                               color: Color.fromRGBO(76, 76, 220, 1),
                               fontSize: 18.0,
