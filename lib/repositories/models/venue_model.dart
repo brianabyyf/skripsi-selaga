@@ -10,7 +10,7 @@ class VenueModel {
   String? rating;
   String? price;
   String? image;
-  int? mitraId;
+  dynamic mitraId;
   Owner? owner;
   List<Lapangan>? lapangans;
 
@@ -72,10 +72,10 @@ class Lapangan {
   String? nameLapangan;
   DateTime? days;
   String? hour;
-  int? venueId;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-  dynamic deletedAt;
+  dynamic venueId;
+  // DateTime? createdAt;
+  // DateTime? updatedAt;
+  // dynamic deletedAt;
 
   Lapangan({
     this.id,
@@ -83,9 +83,9 @@ class Lapangan {
     this.days,
     this.hour,
     this.venueId,
-    this.createdAt,
-    this.updatedAt,
-    this.deletedAt,
+    // this.createdAt,
+    // this.updatedAt,
+    // this.deletedAt,
   });
 
   factory Lapangan.fromRawJson(String str) =>
@@ -99,13 +99,13 @@ class Lapangan {
         days: json["days"] == null ? null : DateTime.parse(json["days"]),
         hour: json["hour"],
         venueId: json["venueId"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null
-            ? null
-            : DateTime.parse(json["updated_at"]),
-        deletedAt: json["deleted_at"],
+        // createdAt: json["created_at"] == null
+        //     ? null
+        //     : DateTime.parse(json["created_at"]),
+        // updatedAt: json["updated_at"] == null
+        //     ? null
+        //     : DateTime.parse(json["updated_at"]),
+        // deletedAt: json["deleted_at"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -115,9 +115,9 @@ class Lapangan {
             "${days!.year.toString().padLeft(4, '0')}-${days!.month.toString().padLeft(2, '0')}-${days!.day.toString().padLeft(2, '0')}",
         "hour": hour,
         "venueId": venueId,
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
-        "deleted_at": deletedAt,
+        // "created_at": createdAt?.toIso8601String(),
+        // "updated_at": updatedAt?.toIso8601String(),
+        // "deleted_at": deletedAt,
       };
 }
 

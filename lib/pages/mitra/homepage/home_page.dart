@@ -45,14 +45,17 @@ class _MitraHomePageState extends State<MitraHomePage> {
                 UserProfileModel myId = snapshot.data![0].result!;
                 List<VenueModel> venue = snapshot.data![1].result!;
                 List<BookingModel> bookings = snapshot.data?[2].result ?? [];
-                List<VenueModel> myVenue =
-                    venue.where((e) => e.mitraId == myId.id).toList();
+                List<VenueModel> myVenue = venue
+                    .where((e) => int.parse(e.mitraId) == myId.id)
+                    .toList();
 
                 Map<int, int> orderCounts = {};
 
                 for (BookingModel e in bookings) {
-                  orderCounts[e.timetable.lapanganBooking.venueId] =
-                      (orderCounts[e.timetable.lapanganBooking.venueId] ?? 0) +
+                  orderCounts[int.parse(e.timetable.lapanganBooking.venueId)] =
+                      (orderCounts[int.parse(
+                                  e.timetable.lapanganBooking.venueId)] ??
+                              0) +
                           1;
                 }
                 return myVenue.isNotEmpty

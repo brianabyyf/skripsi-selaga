@@ -251,7 +251,8 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                                             .whenComplete(() => ApiRepository()
                                                 .postEditJadwal(
                                                     token: myToken.token,
-                                                    id: booking.timetable.id,
+                                                    id:
+                                                        '${booking.timetable.id}',
                                                     nameVenue: booking
                                                         .timetable.nameVenue,
                                                     nameLapangan: booking
@@ -262,8 +263,8 @@ class _MitraDetailConfirmationState extends State<MitraDetailConfirmation> {
                                                         availableHour,
                                                     unavailableHour:
                                                         unAvailableHour,
-                                                    lapanganId: booking
-                                                        .timetable.lapanganId));
+                                                    lapanganId:
+                                                        '${booking.timetable.lapanganId}'));
 
                                         if (!context.mounted) {
                                           return;

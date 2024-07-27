@@ -14,7 +14,7 @@ class ApiRepository {
   final Dio api;
 
   ApiRepository({Dio? dio}) : api = dio ?? Dio() {
-    api.options.baseUrl = "http://192.168.0.106/skripsi-selaga/public/api";
+    api.options.baseUrl = "https://selaga.my.id/api";
     api.options.receiveDataWhenStatusError = true;
   }
 
@@ -375,8 +375,8 @@ class ApiRepository {
 
   Future<ApiResponse<String>> postEditJadwal({
     required String token,
-    required int id,
-    required int lapanganId,
+    required String id,
+    required String lapanganId,
     required String nameVenue,
     required String nameLapangan,
     required DateTime date,

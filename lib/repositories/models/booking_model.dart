@@ -8,8 +8,8 @@ class BookingModel {
   DateTime date;
   String hours;
   String payment;
-  int orderId;
-  int bookingId;
+  dynamic orderId;
+  dynamic bookingId;
   Order order;
   Timetable timetable;
   String image;
@@ -106,7 +106,7 @@ class Timetable {
   DateTime days;
   String availableHour;
   String unavailableHour;
-  int lapanganId;
+  dynamic lapanganId;
   LapanganBooking lapanganBooking;
 
   Timetable({
@@ -154,7 +154,7 @@ class LapanganBooking {
   String nameLapangan;
   DateTime days;
   String hour;
-  int venueId;
+  dynamic venueId;
   VenueModel venueBooking;
 
   LapanganBooking({
@@ -201,7 +201,7 @@ class VenueBooking {
   String price;
   String rating;
   String image;
-  int mitraId;
+  dynamic mitraId;
 
   VenueBooking({
     required this.id,

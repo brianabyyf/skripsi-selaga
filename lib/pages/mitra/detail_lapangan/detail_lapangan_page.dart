@@ -31,8 +31,9 @@ class DetailLapanganPage extends StatelessWidget {
             if (snapshot.hasData &&
                 snapshot.connectionState == ConnectionState.done) {
               List<JadwalLapanganModel> jadwal = snapshot.data?.result ?? [];
-              List<JadwalLapanganModel> myJadwal =
-                  jadwal.where((e) => e.lapanganId == lapangan.id).toList();
+              List<JadwalLapanganModel> myJadwal = jadwal
+                  .where((e) => int.parse(e.lapanganId) == lapangan.id)
+                  .toList();
               return MyJadwal(
                 myJadwal: myJadwal,
                 lapangan: lapangan,

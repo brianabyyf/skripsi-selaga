@@ -159,7 +159,7 @@ class _EditJadwalPageState extends State<EditJadwalPage> {
                       nameLapangan: dataJadwal.nameLapangan ?? '',
                       nameVenue: dataJadwal.nameVenue ?? '',
                       date: dataJadwal.days ?? DateTime.now(),
-                      id: dataJadwal.id ?? 0,
+                      id: '${dataJadwal.id ?? 0}',
                       availableHour: availableHour,
                       unavailableHour: unavailableHour,
                       lapanganId: dataJadwal.lapanganId ?? 0);

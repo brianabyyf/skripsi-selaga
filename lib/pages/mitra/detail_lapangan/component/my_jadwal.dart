@@ -438,15 +438,6 @@ class _MyJadwalState extends State<MyJadwal> {
                               .selectedIndex))
               ? InkWell(
                   onTap: () {
-                    // Navigator.pushReplacement(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => EditJadwalPage(
-                    //             lapangan: widget.lapangan,
-                    //             venue: widget.venue,
-                    //             myJadwal: widget.myJadwal,
-                    //           )),
-                    // );
                     List<JadwalLapanganModel> selectedJadwal = [];
 
                     if (widget.myJadwal.any((e) =>
@@ -472,12 +463,10 @@ class _MyJadwalState extends State<MyJadwal> {
                         listJadwal: selectedJadwal);
                     args.toJson();
 
-                    // print(args);
                     context.goNamed('mitra_edit_jadwal_lapangan', extra: args);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(20),
-                    // margin: const EdgeInsets.symmetric(horizontal: 25),
                     decoration: BoxDecoration(
                       color: const Color.fromRGBO(76, 76, 220, 1),
                       borderRadius: BorderRadius.circular(12),

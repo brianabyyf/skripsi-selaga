@@ -130,7 +130,7 @@ class _DetailConfirmationPageState extends State<DetailConfirmationPage> {
                                 nameLapangan: dataJadwal.nameLapangan ?? '',
                                 nameVenue: dataJadwal.nameVenue ?? '',
                                 date: dataJadwal.days ?? DateTime.now(),
-                                id: dataJadwal.id ?? 0,
+                                id: '${dataJadwal.id ?? 0}',
                                 availableHour: availableHour,
                                 unavailableHour: unAvailableHour,
                                 lapanganId: dataJadwal.lapanganId ?? 0);

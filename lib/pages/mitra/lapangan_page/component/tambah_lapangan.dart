@@ -75,14 +75,15 @@ class _TambahLapanganPageState extends State<TambahLapanganPage> {
           venueId: widget.venue.id,
           venue: widget.venue,
           lapangan: Lapangan(
-              venueId: widget.venue.id,
-              nameLapangan: 'no name',
-              createdAt: DateTime.now(),
-              days: DateTime.now(),
-              hour: '0',
-              id: 0,
-              updatedAt: DateTime.now(),
-              deletedAt: null),
+            venueId: widget.venue.id,
+            nameLapangan: 'no name',
+            // createdAt: DateTime.now(),
+            days: DateTime.now(),
+            hour: '0',
+            id: 0,
+            // updatedAt: DateTime.now(),
+            // deletedAt: null
+          ),
           selectedDateIndex: 0,
           listLapangan: widget.myLapangan,
           listJadwal: []);

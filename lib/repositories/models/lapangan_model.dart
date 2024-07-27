@@ -7,7 +7,7 @@ class JadwalLapanganModel {
   DateTime? days;
   String? availableHour;
   String? unavailableHour;
-  int? lapanganId;
+  dynamic lapanganId;
   LapanganInfo? lapangan;
 
   JadwalLapanganModel({
@@ -58,7 +58,7 @@ class LapanganInfo {
   String? nameLapangan;
   DateTime? days;
   String? hour;
-  int? venueId;
+  dynamic venueId;
 
   LapanganInfo({
     this.id,

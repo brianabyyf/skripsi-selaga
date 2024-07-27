@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -67,7 +66,7 @@ class _PesananPageState extends State<PesananPage> {
                       List<VenueModel> myVenue = [];
                       if (venue.isNotEmpty) {
                         myVenue = venue
-                            .where((e) => e.mitraId == profile.id)
+                            .where((e) => int.parse(e.mitraId) == profile.id)
                             .toList();
                       }
 
@@ -78,7 +77,9 @@ class _PesananPageState extends State<PesananPage> {
                       if (jadwal.isNotEmpty) {
                         myJadwal = jadwal
                             .where((e) =>
-                                myVenue.any((v) => v.id == e.lapangan?.venueId))
+                                e.lapangan != null &&
+                                myVenue.any((v) =>
+                                    v.id == int.parse(e.lapangan?.venueId)))
                             .toList();
                       }
 

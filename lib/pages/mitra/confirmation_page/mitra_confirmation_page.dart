@@ -46,11 +46,13 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               UserProfileModel myId = snapshot.data?[0].result ?? [];
               List<VenueModel> venue = snapshot.data?[1].result ?? [];
               List<VenueModel> myVenue =
-                  venue.where((e) => e.mitraId == myId.id).toList();
+                  venue.where((e) => int.parse(e.mitraId) == myId.id).toList();
 
               List<JadwalLapanganModel> jadwal = snapshot.data?[2].result ?? [];
               List<JadwalLapanganModel> myJadwal = jadwal
-                  .where((e) => myVenue.any((v) => v.id == e.lapangan?.venueId))
+                  .where((e) => myVenue.any((v) =>
+                      e.lapangan != null &&
+                      v.id == int.parse(e.lapangan?.venueId)))
                   .toList();
 
               List<BookingModel> booking = snapshot.data?[3].result ?? [];

@@ -29,14 +29,15 @@ class NoLapangan extends StatelessWidget {
                   venueId: venue.id,
                   venue: venue,
                   lapangan: Lapangan(
-                      venueId: venue.id,
-                      nameLapangan: 'no name',
-                      createdAt: DateTime.now(),
-                      days: DateTime.now(),
-                      hour: '0',
-                      id: 0,
-                      updatedAt: DateTime.now(),
-                      deletedAt: null),
+                    venueId: venue.id,
+                    nameLapangan: 'no name',
+                    // createdAt: DateTime.now(),
+                    days: DateTime.now(),
+                    hour: '0',
+                    id: 0,
+                    // updatedAt: DateTime.now(),
+                    // deletedAt: null
+                  ),
                   selectedDateIndex: 0,
                   listLapangan: myLapangan,
                   listJadwal: []);

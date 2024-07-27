@@ -22,8 +22,9 @@ class VenueByPopuler extends StatelessWidget {
     Map<int, int> orderCounts = {};
 
     for (BookingModel e in booking) {
-      orderCounts[e.timetable.lapanganBooking.venueId] =
-          (orderCounts[e.timetable.lapanganBooking.venueId] ?? 0) + 1;
+      orderCounts[int.parse(e.timetable.lapanganBooking.venueId)] =
+          (orderCounts[int.parse(e.timetable.lapanganBooking.venueId)] ?? 0) +
+              1;
     }
 
     venue.sort(

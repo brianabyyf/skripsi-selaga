@@ -26,9 +26,8 @@ class VenueLapangan extends StatelessWidget {
             itemCount: myLapangan.length,
             itemBuilder: (context, index) {
               List<JadwalLapanganModel> myJadwal = jadwal
-                  .where((e) => e.lapanganId == myLapangan[index].id)
+                  .where((e) => int.parse(e.lapanganId) == myLapangan[index].id)
                   .toList();
-
               List<String> hourList = [];
 
               for (var e in myJadwal) {

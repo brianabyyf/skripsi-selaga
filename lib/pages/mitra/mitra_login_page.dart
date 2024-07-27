@@ -82,24 +82,22 @@ class _MitraLoginPageState extends State<MitraLoginPage> {
                   const SizedBox(height: 35),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Container(
-                      child: TextFormField(
-                        controller: _emailController,
-                        decoration: myAuthDecoration('Email'),
-                        validator: (value) {
-                          RegExp regex = RegExp(
-                              r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
-                          if (value!.isEmpty) {
-                            return 'Mohon isi kolom email';
+                    child: TextFormField(
+                      controller: _emailController,
+                      decoration: myAuthDecoration('Email'),
+                      validator: (value) {
+                        RegExp regex = RegExp(
+                            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+                        if (value!.isEmpty) {
+                          return 'Mohon isi kolom email';
+                        } else {
+                          if (!regex.hasMatch(value)) {
+                            return 'Isi alamat email yang valid';
                           } else {
-                            if (!regex.hasMatch(value)) {
-                              return 'Isi alamat email yang valid';
-                            } else {
-                              return null;
-                            }
+                            return null;
                           }
-                        },
-                      ),
+                        }
+                      },
                     ),
                   ),
                   const SizedBox(height: 10),
