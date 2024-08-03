@@ -31,7 +31,8 @@ class MitraProfilePage extends StatelessWidget {
 
                 List<BookingModel> myBooking = booking
                     .where((e) =>
-                        e.timetable.lapanganBooking.venueBooking.mitraId ==
+                        int.parse(e.timetable.lapanganBooking.venueBooking
+                                .mitraId) ==
                             profile?.id &&
                         e.confirmation == 'DONE')
                     .toList();

@@ -270,7 +270,7 @@ class MyRoutes {
                 ]),
           ]),
     ],
-    initialLocation: '/userHome',
+    initialLocation: '/',
     routerNeglect: true,
     debugLogDiagnostics: true,
   );
