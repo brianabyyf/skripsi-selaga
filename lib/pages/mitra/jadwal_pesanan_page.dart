@@ -64,6 +64,11 @@ class _PesananPageState extends State<PesananPage> {
                       List<VenueModel> venue = snapshot.data?[1].result ?? [];
 
                       List<VenueModel> myVenue = [];
+                      // if (venue.isNotEmpty) {
+                      //   myVenue = venue
+                      //       .where((e) => e.mitraId == profile.id)
+                      //       .toList();
+                      // }
                       if (venue.isNotEmpty) {
                         myVenue = venue
                             .where((e) => int.parse(e.mitraId) == profile.id)

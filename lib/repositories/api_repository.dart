@@ -18,6 +18,11 @@ class ApiRepository {
     api.options.receiveDataWhenStatusError = true;
   }
 
+  // ApiRepository({Dio? dio}) : api = dio ?? Dio() {
+  //   api.options.baseUrl = "http://192.168.0.106/skripsi-selaga/public/api";
+  //   api.options.receiveDataWhenStatusError = true;
+  // }
+
   // https://selaga.my.id/api
   // http://192.168.0.106/skripsi-selaga/public/api
 

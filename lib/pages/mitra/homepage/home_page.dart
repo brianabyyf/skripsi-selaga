@@ -49,7 +49,16 @@ class _MitraHomePageState extends State<MitraHomePage> {
                     .where((e) => int.parse(e.mitraId) == myId.id)
                     .toList();
 
+                // List<VenueModel> myVenue =
+                //     venue.where((e) => e.mitraId == myId.id).toList();
+
                 Map<int, int> orderCounts = {};
+
+                // for (BookingModel e in bookings) {
+                //   orderCounts[e.timetable.lapanganBooking.venueId] =
+                //       (orderCounts[e.timetable.lapanganBooking.venueId] ?? 0) +
+                //           1;
+                // }
 
                 for (BookingModel e in bookings) {
                   orderCounts[int.parse(e.timetable.lapanganBooking.venueId)] =

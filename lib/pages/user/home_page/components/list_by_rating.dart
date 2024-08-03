@@ -23,6 +23,11 @@ class VenueByRating extends StatelessWidget {
 
     Map<int, int> orderCounts = {};
 
+    // for (BookingModel e in bookings) {
+    //   orderCounts[e.timetable.lapanganBooking.venueId] =
+    //       (orderCounts[e.timetable.lapanganBooking.venueId] ?? 0) + 1;
+    // }
+
     for (BookingModel e in bookings) {
       orderCounts[int.parse(e.timetable.lapanganBooking.venueId)] =
           (orderCounts[int.parse(e.timetable.lapanganBooking.venueId)] ?? 0) +

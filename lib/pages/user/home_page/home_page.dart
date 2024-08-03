@@ -15,6 +15,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final SearchController controller = SearchController();
+  late Iterable<Widget> _lastOptions = <Widget>[];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,17 +67,52 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 80,
                         child: SearchBarTheme(
-                          data: SearchBarThemeData(
+                          data: const SearchBarThemeData(
                               surfaceTintColor:
                                   MaterialStatePropertyAll(Colors.grey)),
                           child: Padding(
-                            padding: EdgeInsets.all(16),
-                            child: SearchBar(
-                              leading: Icon(Icons.search),
-                            ),
+                            padding: const EdgeInsets.all(16),
+                            child: SearchAnchor.bar(
+                                searchController: controller,
+                                suggestionsBuilder: (BuildContext context,
+                                    SearchController controller) {
+                                  final List<VenueModel> options = venue
+                                      .where((venue) => venue.nameVenue!
+                                          .toLowerCase()
+                                          .contains(controller.text
+                                              .trim()
+                                              .toLowerCase()))
+                                      .toList();
+
+                                  if (controller.text.trim() == '') {
+                                    return [];
+                                  }
+
+                                  if (controller.text.trim() !=
+                                      controller.text) {
+                                    return _lastOptions;
+                                  }
+
+                                  _lastOptions = List<ListTile>.generate(
+                                      options.length, (int index) {
+                                    final String item =
+                                        options[index].nameVenue ?? 'no name';
+                                    return ListTile(
+                                      title: Text(item),
+                                      onTap: () {
+                                        context
+                                            .read<UserId>()
+                                            .getUserId(venue[index].id ?? 0);
+                                        context.pushNamed('user_detail_venue');
+                                      },
+                                    );
+                                  });
+
+                                  return _lastOptions;
+                                }),
                           ),
                         ),
                       ),
