@@ -21,7 +21,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: SafeArea(
           child: Consumer<Token>(
         builder: (context, mytoken, child) => FutureBuilder(
@@ -148,7 +147,8 @@ class _HomePageState extends State<HomePage> {
                         bookings: bookings,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 8.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
