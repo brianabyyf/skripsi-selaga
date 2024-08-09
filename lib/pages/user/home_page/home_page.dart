@@ -41,8 +41,8 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Padding(
-                        padding:
-                            EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                        padding: EdgeInsets.only(
+                            left: 16, right: 16, bottom: 8, top: 8),
                         child: Text('Lokasi'),
                       ),
                       const Padding(

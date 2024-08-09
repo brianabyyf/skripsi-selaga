@@ -129,7 +129,7 @@ class _PesananPageState extends State<PesananPage> {
                                             Provider.of<BookingId>(context,
                                                     listen: false)
                                                 .updateBookingId(
-                                                    myBooking[index].id);
+                                                    myJadwalBooking[index].id);
                                             context.goNamed(
                                                 'mitra_detail_konfirmasi');
                                           },
@@ -170,7 +170,8 @@ class _PesananPageState extends State<PesananPage> {
                                                                     .black,
                                                                 fontSize: 14),
                                                         subtitle: Text(
-                                                            myBooking[index]
+                                                            myJadwalBooking[
+                                                                    index]
                                                                 .order
                                                                 .name),
                                                         subtitleTextStyle:
@@ -194,11 +195,12 @@ class _PesananPageState extends State<PesananPage> {
                                                           ),
                                                           title: Text(DateFormat(
                                                                   'dd MMMM yyyy')
-                                                              .format(myBooking[
-                                                                      index]
-                                                                  .date)),
+                                                              .format(
+                                                                  myJadwalBooking[
+                                                                          index]
+                                                                      .date)),
                                                           subtitle: Text(
-                                                              '${myBooking[index].hours}.00 - ${1 + int.parse(myBooking[index].hours)}.00')),
+                                                              '${myJadwalBooking[index].hours}.00 - ${1 + int.parse(myBooking[index].hours)}.00')),
                                                     ],
                                                   ),
                                                 ),

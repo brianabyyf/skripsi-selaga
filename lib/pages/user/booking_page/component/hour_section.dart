@@ -21,23 +21,28 @@ class HourSection extends StatefulWidget {
 
 class _HourSectionState extends State<HourSection> {
   List<String> _hour = [];
-  // List<String> _availableHour = [];
+  List<String> _availableHour = [];
   List<String> _unAvailableHour = [];
   List<String> _selectedHour = [];
+  List<String> _passedHour = [];
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     // Menggunakan Provider di dalam didChangeDependencies
-    // _availableHour = Provider.of<HourAvailable>(context).hour;
+    _availableHour = Provider.of<HourAvailable>(context).hour;
     // _hour = Provider.of<HourAvailable>(context).hour;
     _unAvailableHour = Provider.of<HourUnAvailable>(context).hour;
+
     if (_hour.contains('0')) {
       _hour.remove('0');
     }
     if (_unAvailableHour.contains('0')) {
       _unAvailableHour.remove('0');
+    }
+    if (_availableHour.contains('0')) {
+      _availableHour.remove('0');
     }
   }
 
@@ -60,6 +65,14 @@ class _HourSectionState extends State<HourSection> {
                 .add(unAvailableHour));
       }
     }
+
+    DateTime now = DateTime.now();
+    int currentHour = now.hour;
+
+    _passedHour = _hour.where((hour) {
+      int hourInt = int.parse(hour.split(':')[0]);
+      return hourInt <= currentHour;
+    }).toList();
 
     super.initState();
   }
@@ -98,39 +111,56 @@ class _HourSectionState extends State<HourSection> {
                                     style: const TextStyle(
                                         fontSize: 18.0, color: Colors.white))),
                           )
-                        : InkWell(
-                            onTap: () {
-                              setState(() {
-                                Provider.of<SelectedHour>(context,
-                                        listen: false)
-                                    .clear();
+                        : Provider.of<SelectedDate>(context, listen: true)
+                                        .selectedIndex ==
+                                    0 &&
+                                _passedHour.contains(_hour[index])
+                            ? Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.red, // color of grid items
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: Center(
+                                    child: Text('${_hour[index]}.00',
+                                        style: const TextStyle(
+                                            fontSize: 18.0,
+                                            color: Colors.white))),
+                              )
+                            : InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    Provider.of<SelectedHour>(context,
+                                            listen: false)
+                                        .clear();
 
-                                if (_selectedHour.contains(_hour[index])) {
-                                  _selectedHour.remove(_hour[index]);
-                                } else {
-                                  _selectedHour.clear();
-                                  _selectedHour.add(_hour[index]);
-                                }
-                                Provider.of<SelectedHour>(context,
-                                        listen: false)
-                                    .add(_selectedHour);
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: _selectedHour.contains(_hour[index])
-                                      ? const Color.fromRGBO(76, 76, 220, 1)
-                                      : const Color.fromARGB(34, 158, 158,
-                                          158), // color of grid items
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                child: Text('${_hour[index]}.00',
-                                    style: _selectedHour.contains(_hour[index])
-                                        ? const TextStyle(
-                                            fontSize: 18.0, color: Colors.white)
-                                        : const TextStyle(fontSize: 18.0)),
-                              ),
-                            ));
+                                    if (_selectedHour.contains(_hour[index])) {
+                                      _selectedHour.remove(_hour[index]);
+                                    } else {
+                                      _selectedHour.clear();
+                                      _selectedHour.add(_hour[index]);
+                                    }
+                                    Provider.of<SelectedHour>(context,
+                                            listen: false)
+                                        .add(_selectedHour);
+                                  });
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: _selectedHour
+                                              .contains(_hour[index])
+                                          ? const Color.fromRGBO(76, 76, 220, 1)
+                                          : const Color.fromARGB(34, 158, 158,
+                                              158), // color of grid items
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Center(
+                                    child: Text('${_hour[index]}.00',
+                                        style: _selectedHour
+                                                .contains(_hour[index])
+                                            ? const TextStyle(
+                                                fontSize: 18.0,
+                                                color: Colors.white)
+                                            : const TextStyle(fontSize: 18.0)),
+                                  ),
+                                ));
                   },
                 ),
               )

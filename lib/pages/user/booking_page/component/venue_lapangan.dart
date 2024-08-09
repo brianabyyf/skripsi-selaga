@@ -29,6 +29,7 @@ class VenueLapangan extends StatelessWidget {
                   .where((e) => int.parse(e.lapanganId) == myLapangan[index].id)
                   .toList();
               List<String> hourList = [];
+              List<String> passedhourList = [];
 
               for (var e in myJadwal) {
                 var tempList = [];
@@ -39,6 +40,22 @@ class VenueLapangan extends StatelessWidget {
                   for (var element in tempList) {
                     hourList.add(element);
                   }
+                  DateTime now = DateTime.now();
+                  int currentHour = now.hour;
+
+                  // Membuat list untuk menyimpan jam yang sudah dilewati
+                  passedhourList = hourList.where((hour) {
+                    int hourInt = int.parse(hour.split(':')[0]);
+                    return hourInt <= currentHour;
+                  }).toList();
+
+                  List<String> commonElements = hourList
+                      .where((element) => passedhourList.contains(element))
+                      .toList();
+
+                  // Menghapus elemen yang sama dari kedua daftar
+                  hourList.removeWhere(
+                      (element) => commonElements.contains(element));
                 }
 
                 if (e.days ==
@@ -59,7 +76,6 @@ class VenueLapangan extends StatelessWidget {
                   }
                 }
               }
-
               return Padding(
                 padding: const EdgeInsets.only(left: 8, right: 8, top: 16),
                 child: InkWell(
