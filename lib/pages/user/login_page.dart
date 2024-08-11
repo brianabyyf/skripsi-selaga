@@ -34,6 +34,20 @@ class _LoginPageState extends State<LoginPage> {
 
         context.read<Token>().getToken(data.result!);
         context.go('/userHome');
+      } else if (data.error == null) {
+        _passwordController.clear();
+        setState(() {
+          _isSending = false;
+        });
+        if (!mounted) {
+          return;
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No Internet'),
+            duration: Duration(milliseconds: 1200),
+          ),
+        );
       } else {
         _passwordController.clear();
         setState(() {

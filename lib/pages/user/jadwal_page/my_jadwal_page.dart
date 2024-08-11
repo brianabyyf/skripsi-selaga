@@ -56,7 +56,11 @@ class _MyJadwalBookedPageState extends State<MyJadwalBookedPage> {
                           DateTime.now().day +
                               Provider.of<SelectedDate>(context, listen: false)
                                   .selectedIndex);
-                      UserProfileModel profile = snapshot.data?[0].result;
+                      late UserProfileModel profile;
+
+                      if (snapshot.data?[0].result != null) {
+                        profile = snapshot.data?[0].result;
+                      }
                       List<BookingModel> booking =
                           snapshot.data?[1].result ?? [];
                       List<BookingModel> myBooking = booking

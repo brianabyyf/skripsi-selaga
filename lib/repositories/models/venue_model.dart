@@ -158,7 +158,7 @@ class RegisterVenue {
   String lokasiVenue;
   String descVenue;
   String price;
-  String rating = "5";
+  String rating = "0";
   List<String> fasilitas;
   List<File> img;
 

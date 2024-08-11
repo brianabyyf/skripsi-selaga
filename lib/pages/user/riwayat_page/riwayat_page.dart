@@ -39,7 +39,12 @@ class _RiwayatPageState extends State<RiwayatPage> {
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData &&
                 snapshot.connectionState == ConnectionState.done) {
-              UserProfileModel profile = snapshot.data?[0].result;
+              late UserProfileModel profile;
+
+              if (snapshot.data?[0].result != null) {
+                profile = snapshot.data?[0].result;
+              }
+
               List<BookingModel> booking = snapshot.data?[1].result ?? [];
               List<BookingModel> myBooking =
                   booking.where((e) => profile.id == e.order.id).toList();

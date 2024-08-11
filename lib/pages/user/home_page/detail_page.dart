@@ -32,9 +32,14 @@ class _FieldDetailPageState extends State<FieldDetailPage> {
             builder: (context, snapshot) {
               if (snapshot.hasData &&
                   snapshot.connectionState == ConnectionState.done) {
-                return DetailWidget(
-                  venue: snapshot.data!.result!,
-                );
+                if (snapshot.data?.result == null) {
+                  return const Center(
+                      child: Text('Please Check Your Internet Connection'));
+                } else {
+                  return DetailWidget(
+                    venue: snapshot.data!.result!,
+                  );
+                }
               } else if (snapshot.hasError) {
                 return Column(
                   children: [
@@ -171,6 +176,22 @@ class DetailWidget extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.grey,
                   ))
+            ],
+          ),
+          Row(
+            children: [
+              const Icon(
+                Icons.phone,
+                color: Color.fromRGBO(76, 76, 220, 1),
+                // size: 20,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Text(venue.owner?.phone ?? '',
+                  style: const TextStyle(
+                    fontSize: 15,
+                  )),
             ],
           ),
           Row(

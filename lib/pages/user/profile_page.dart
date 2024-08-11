@@ -39,7 +39,7 @@ class ProfilePage extends StatelessWidget {
                         const SizedBox(height: 30.0),
                         ListTile(
                           title: const Text('Nama'),
-                          subtitle: Text("${profile?.name}"),
+                          subtitle: Text(profile?.name ?? 'no data'),
                         ),
                         const Divider(
                           indent: 15,
@@ -47,7 +47,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                         ListTile(
                           title: const Text('Telepon'),
-                          subtitle: Text("${profile?.phone}"),
+                          subtitle: Text(profile?.phone ?? 'no data'),
                         ),
                         const Divider(
                           indent: 15,
@@ -55,7 +55,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                         ListTile(
                           title: const Text('Email'),
-                          subtitle: Text("${profile?.email}"),
+                          subtitle: Text(profile?.email ?? 'no data'),
                         ),
                         const Divider(
                           indent: 15,

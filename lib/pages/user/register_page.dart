@@ -32,7 +32,7 @@ class _RegisterPageState extends State<RegisterPage> {
           email: _emailController.text,
           phone: _phoneController.text,
           password: _passwordController.text,
-          status: 'member'));
+          status: 'reguler'));
 
       if (data.result != null && data.error == null) {
         if (!mounted) {
@@ -40,6 +40,19 @@ class _RegisterPageState extends State<RegisterPage> {
         }
         context.read<Token>().getToken(data.result!);
         context.goNamed('user_home');
+      } else if (data.error == null) {
+        setState(() {
+          _isSending = false;
+        });
+        if (!mounted) {
+          return;
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No Internet'),
+            duration: Duration(milliseconds: 1200),
+          ),
+        );
       } else {
         setState(() {
           _isSending = false;
